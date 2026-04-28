@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thơ của Cỏ Xanh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=WindSong:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .windsong-regular {
+            font-family: "WindSong", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .windsong-medium {
+            font-family: "WindSong", cursive;
+            font-weight: 500;
+            font-style: normal;
+        }
+    </style>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            height: auto;
+            margin: 0 auto;
+            padding: 0 9px;
+        }
+
+        /* Header styles */
+        header {
+            background: #f9f9f9;
+            color: black;
+            padding: 18px 0 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .site-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .site-description {
+            font-size: 1.9rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: black;
+        }
+
+        /* Navigation styles */
+        nav {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 12px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            font-weight: 500;
+            color: #444;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: #2575fc;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: #2575fc;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-item:hover::after {
+            width: 80%;
+        }
+
+        /* Main content layout */
+        .main-content {
+            margin-bottom: 20px;
+        }
+
+        .poem-section {
+            flex: 2;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            padding-bottom: 48px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar {
+            flex: 1;
+        }
+
+        /* Poem header */
+        .poem-header {
+            margin-bottom: 10px;
+        }
+
+        .poem-title {
+            font-size: 2.5rem;
+            color: #0d6dcd;
+            margin-bottom: 10px;
+        }
+
+        .poem-author {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+
+        .poem-content {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            white-space: pre-line;
+            text-align: center;
+            margin: 30px 0;
+            color: #2c3e50;
+        }
+
+        .poem-separate{
+            padding-top: 42px;
+            padding-bottom: 64px;
+        }
+
+        .poem-separator{
+            border-bottom: 2px solid #f9f9f9;
+        }
+
+        .poem-author {
+            text-decoration: none;
+        }
+
+        .poem-author:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer styles */
+        footer {
+            background: #f9f9f9;
+            color: #ecf0f1;
+            padding: 30px 0;
+            padding-top: 15px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            color: #7f7f7f;
+        }
+
+        /* Responsive design */
+        @media (max-width: 900px) {
+            .site-description {
+                font-size: 1.5rem;
+            }
+
+            .nav-item {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+
+            .poem-title {
+                font-size: 2rem;
+                line-height: 0.9;
+                margin-bottom: 18px;
+            }
+
+            .poem-content {
+                margin: 15px 0;
+            }
+
+            .footer-info {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+
+    <style>
+       .pagination {
+            text-align: center;
+            margin: 16px 0;
+            margin-top: 32px;
+        }
+
+        .pagination a {
+            color: #666;
+            text-decoration: none;
+            padding: 6px 10px;
+            margin: 0 2px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+        }
+
+        .pagination a:hover {
+            background: #eee;
+        }
+
+        .pagination .current {
+            color: #333;
+            padding: 6px 10px;
+            margin: 0 2px;
+            border: 1px solid #ccc;
+            background: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .pagination a {
+                padding: 4px 2px;
+                margin: 0 2px;
+                font-size: 12px;
+            }
+            
+            .pagination .current {
+                padding: 4px 2px;
+                margin: 0 2px;
+                font-size: 12px;
+            }
+
+            .poem-section {
+                padding: 15px;
+                padding-bottom: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <p class="site-description windsong-regular">
+                Những điều nhỏ nhắn vu vơ<br>
+                Ghép lại thành những bài thơ sắc màu
+            </p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="../../index.html" class="nav-item">mới nhất</a>
+            <a href="index.html" class="nav-item">hay nhất</a>
+            
+                <a href="../../the-loai/da-dang/index.html" class="nav-item">đa dạng :o</a>
+            
+                <a href="../../the-loai/tinh-yeu/index.html" class="nav-item">tình yêu &lt;3</a>
+            
+                <a href="../../the-loai/vui-vui/index.html" class="nav-item">vui vui :)</a>
+            
+            <a href="../../about/index.html" class="nav-item">về tác giả</a>
+        </div>
+    </nav>
+
+    
+<div class="container main-content">
+    <div class="poem-section">
+        
+            <div class="poem-full" data-poem-id="10">
+                <div class="poem-header">
+                    <h2 class="poem-title windsong-medium">Thông báo đóng quỹ tháng 8 năm 2025</h2>
+                    <a href="../../tho/thong-bao-ong-quy-thang-8-nam-2025/index.html" class="poem-author">
+                        Ngày đăng: 14/09/2025 / Lượt xem: 23
+                    </a>
+                </div>
+
+                
+                    <p class="poem-intro">
+                        Tháng 8 mưa bão quá, mong cho mọi người đều bình yên. Cơ mà vẫn phải thông báo đóng quỹ thôi.
+                    </p>
+                
+
+                <p class="poem-content">Tháng Tám như cơn bão vụt qua 🌊
+Làm nước dâng nên ngập cả nhà 💧
+Cây cối nghiêng ngả rơi cành lá 🍃
+Lương về như cây ra hoa 🌷
+Đóng thêm tiền quỹ để hoa ra quả 🌱
+[Link danh sách đóng quỹ]</p>
+
+                
+            </div>
+
+            
+                <div class="poem-separate">
+                    <div class="poem-separator"></div>
+                </div>
+            
+        
+            <div class="poem-full" data-poem-id="22">
+                <div class="poem-header">
+                    <h2 class="poem-title windsong-medium">Hạnh phúc là gì?</h2>
+                    <a href="../../tho/hanh-phuc-la-gi/index.html" class="poem-author">
+                        Ngày đăng: 14/09/2025 / Lượt xem: 11
+                    </a>
+                </div>
+
+                
+                    <p class="poem-intro">
+                        Mình thử viết 1 bài thơ thật dài, công nhận viết thơ dài khó thật. Viết được một hồi lại không nghĩ được ra câu tiếp theo.
+                    </p>
+                
+
+                <p class="poem-content">Có ai mong muốn khổ đau
+Có ai mong đợi một màu tối đen
+Màn đêm không một ánh đèn
+Đầm lầy không có hoa sen vươn mình
+Trái tim thiếu vắng sợi tình
+Trời đêm vắng bóng hoa quỳnh nở bông
+Cạn trơ khắp cả dòng sông
+Héo tàn bông lúa, cánh đồng xác xơ
+Người tìm hạnh phúc trong mơ
+Người ngóng chờ đến từng giờ phút giây
+Cho người tình cảm đong đầy
+Cho bông hoa nở, cành cây đâm chồi
+Ngọt ngào chạm đến đôi môi
+Dòng sông thắm thiết, núi đồi dịu êm
+Bầu trời sao sáng ban đêm
+Lòng người hiu quạnh có thêm chữ tình
+Vốn là vô dạng vô hình
+Chỉ trong thoáng chốc vô tình vội đi
+Phải chăng hạnh phúc là gì?
+Mà ai cũng muốn đến si hết lòng
+Ngày chờ đêm nhớ đêm mong
+Mong cho hạnh phúc thành dòng cuốn trôi
+Cuốn đi từng giọt mồ hôi
+Bao nhiêu vất vả qua rồi biến tan
+Chỉ còn vui sướng miên man
+Không còn đau khổ kêu than đêm ngày
+Thân tâm nhẹ dịu như mây
+Không còn rắc rối loay hoay tìm đường
+Đến nhanh đi vội khắp phương
+Như bông hoa tỏa mùi hương cho đời
+Mong cho hương tỏa muôn nơi
+Cho đời đẹp đẽ sáng ngời như thơ
+Cuộc đời sẽ đẹp như mơ
+Dẫu rằng mong muốn chẳng chờ đợi ai</p>
+
+                
+            </div>
+
+            
+                <div class="poem-separate">
+                    <div class="poem-separator"></div>
+                </div>
+            
+        
+            <div class="poem-full" data-poem-id="9">
+                <div class="poem-header">
+                    <h2 class="poem-title windsong-medium">Thông báo đóng quỹ tháng 7 năm 2025 - không đăng</h2>
+                    <a href="../../tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/index.html" class="poem-author">
+                        Ngày đăng: 14/09/2025 / Lượt xem: 11
+                    </a>
+                </div>
+
+                
+                    <p class="poem-intro">
+                        Tháng 7 mình đã viết 1 bài thơ lúc đầu tháng để sẵn để cuối tháng đăng, nhưng đến lúc cuối tháng mưa to quá, nó lại không giống nội dung bài thơ nên đành viết 1 bài khác.
+                    </p>
+                
+
+                <p class="poem-content">Tháng Bảy mưa thuận gió hòa 🌞
+Nắng dịu nhẹ làn gió thổi qua ✨
+Làm tán cây đung đưa cành lá 🌳
+Đóng tiền quỹ ăn hương ăn hoa 💐
+Để tiền quỹ đầy như cây ra quả 🌴
+[Link danh sách đóng quỹ]</p>
+
+                
+            </div>
+
+            
+                <div class="poem-separate">
+                    <div class="poem-separator"></div>
+                </div>
+            
+        
+            <div class="poem-full" data-poem-id="3">
+                <div class="poem-header">
+                    <h2 class="poem-title windsong-medium">Thông báo đóng quỹ tháng 1 năm 2025</h2>
+                    <a href="../../tho/thong-bao-ong-quy-thang-1-nam-2025-1/index.html" class="poem-author">
+                        Ngày đăng: 14/09/2025 / Lượt xem: 9
+                    </a>
+                </div>
+
+                
+                    <p class="poem-intro">
+                        Muốn làm một chút gì đó thơ nhân dịp đầu năm, sẵn tiện mình vừa được giao làm thủ quỹ, làm luôn bài thơ mơi mơi đóng tiền mới được :)))
+                    </p>
+                
+
+                <p class="poem-content">Mỗi năm hoa đào nở 🌷
+Lại thấy màu xuân về 🌞
+Không khí tết tràn trề 😁
+Hãy đóng quỹ ngay đê 💰
+[Link danh sách đóng quỹ]</p>
+
+                
+            </div>
+
+            
+                <div class="poem-separate">
+                    <div class="poem-separator"></div>
+                </div>
+            
+        
+            <div class="poem-full" data-poem-id="20">
+                <div class="poem-header">
+                    <h2 class="poem-title windsong-medium">Một ngày kia</h2>
+                    <a href="../../tho/mot-ngay-kia/index.html" class="poem-author">
+                        Ngày đăng: 14/09/2025 / Lượt xem: 9
+                    </a>
+                </div>
+
+                
+
+                <p class="poem-content">Nghĩ thầm có một ngày kia
+Có người tâm sự đến khuya cùng mình
+Chuyện to chuyện nhỏ linh tinh
+Cùng nhau chia sẻ chuyện tình ấm êm
+Nỗi buồn vơi chuyện vui thêm
+Cho ngày thêm ngọt cho đêm thêm nồng</p>
+
+                
+            </div>
+
+            
+                <div class="poem-separate">
+                    <div class="poem-separator"></div>
+                </div>
+            
+        
+            <div class="poem-full" data-poem-id="6">
+                <div class="poem-header">
+                    <h2 class="poem-title windsong-medium">Thông báo đóng quỹ tháng 5 năm 2025</h2>
+                    <a href="../../tho/thong-bao-ong-quy-thang-5-nam-2025/index.html" class="poem-author">
+                        Ngày đăng: 14/09/2025 / Lượt xem: 8
+                    </a>
+                </div>
+
+                
+                    <p class="poem-intro">
+                        Tháng 5 này nắng nóng quá, mình vẫn chưa quen lắm. Thôi thì thông báo đóng quỹ thôi
+                    </p>
+                
+
+                <p class="poem-content">Tháng năm nắng chói chang ☀️
+Chiếu rọi khung cửa ngang 🌤
+Đêm qua mau đến sáng 💫
+Nắng nóng chiếm không gian 🔥
+Mát mẻ chợt biến tan 🥵
+Như tiền quỹ hàng tháng 💰
+Chưa được đóng hoàn toàn 🎯
+[Link danh sách đóng quỹ]</p>
+
+                
+            </div>
+
+            
+        
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            
+
+            <span class="current">
+                trang 1 / 4
+            </span>
+
+            
+                <a href="index.html%3Fpage=2.html">tiếp ></a>
+                <a href="index.html%3Fpage=4.html">trang cuối >></a>
+            
+        </span>
+    </div>
+</div>
+
+
+    <footer>
+        <div class="container footer-content">
+            <p class="footer-info">© 2025 Thơ của Cỏ Xanh - Chia sẻ các bài thơ của Cỏ Xanh</p>
+            <p class="footer-info">Liên hệ: lmcuongcv@gmail.com</p>
+        </div>
+    </footer>
+</body>
+
+</html>
