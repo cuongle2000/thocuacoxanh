@@ -1,0 +1,306 @@
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.windsong-regular {
+    font-family: "WindSong", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.windsong-medium {
+    font-family: "WindSong", cursive;
+    font-weight: 500;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    padding: 0 9px;
+}
+
+header {
+    background: #f9f9f9;
+    color: black;
+    padding: 18px 0 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.site-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.site-description {
+    font-size: 1.9rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: black;
+}
+
+nav {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 12px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.nav-item {
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #444;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    color: #2575fc;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #2575fc;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-item:hover::after {
+    width: 80%;
+}
+
+.main-content {
+    margin-bottom: 20px;
+}
+
+.poem-section {
+    flex: 2;
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    padding-bottom: 48px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar {
+    flex: 1;
+}
+
+.poem-header {
+    margin-bottom: 10px;
+}
+
+.poem-title {
+    font-size: 2.5rem;
+    color: #0d6dcd;
+    margin-bottom: 10px;
+}
+
+.poem-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-style: italic;
+    color: #7f8c8d;
+    font-size: 0.8rem;
+}
+
+.poem-author {
+    font-style: italic;
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.poem-author:hover {
+    text-decoration: underline;
+}
+
+.poem-social-links a {
+    font-style: normal;
+    color: #7f8c8d;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-left: 6px;
+}
+
+.poem-social-links a:hover {
+    color: #0d6dcd;
+}
+
+.poem-social-links .social-separator {
+    color: #bbb;
+    margin: 0 2px;
+}
+
+.poem-content {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    white-space: pre-line;
+    text-align: center;
+    margin: 30px 0;
+    color: #2c3e50;
+}
+
+.poem-intro {
+    font-size: 1rem;
+    color: #555;
+    margin: 15px 0;
+    line-height: 1.6;
+}
+
+.poem-separate {
+    padding-top: 42px;
+    padding-bottom: 64px;
+}
+
+.poem-separator {
+    border-bottom: 2px solid #f9f9f9;
+}
+
+footer {
+    background: #f9f9f9;
+    color: #ecf0f1;
+    padding: 30px 0;
+    padding-top: 15px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-info {
+    color: #7f7f7f;
+}
+
+.pagination {
+    text-align: center;
+    margin: 16px 0;
+    margin-top: 32px;
+}
+
+.pagination a {
+    color: #666;
+    text-decoration: none;
+    padding: 6px 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+.pagination a:hover {
+    background: #eee;
+}
+
+.pagination .current {
+    color: #333;
+    padding: 6px 10px;
+    margin: 0 2px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.page-heading {
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 900px) {
+    .site-description {
+        font-size: 1.5rem;
+    }
+
+    .nav-item {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+
+    .poem-title {
+        font-size: 2rem;
+        line-height: 0.9;
+        margin-bottom: 18px;
+    }
+
+    .poem-content {
+        margin: 15px 0;
+    }
+
+    .footer-info {
+        font-size: 0.6rem;
+    }
+
+    .pagination a {
+        padding: 4px 2px;
+        margin: 0 2px;
+        font-size: 12px;
+    }
+
+    .pagination .current {
+        padding: 4px 2px;
+        margin: 0 2px;
+        font-size: 12px;
+    }
+
+    .poem-section {
+        padding: 15px;
+        padding-bottom: 36px;
+    }
+}
+
+.about-image {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.about-image img {
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 900px) {
+    .about-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+}
