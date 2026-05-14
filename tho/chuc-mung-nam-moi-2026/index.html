@@ -27,83 +27,1060 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-N6LMXDGZQ1');
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=WindSong:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=WindSong:wght@400;500&display=swap" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="../../static/poems/css/style.2093457f5b9b.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <style>/* ── Design System ── */
+:root {
+  --bg:            #f7f7f5;
+  --bg:            oklch(97% 0.012 98);
+  --surface:       #fcfcfb;
+  --surface:       oklch(99.5% 0.006 95);
+  --fg:            #2a3a2a;
+  --fg:            oklch(22% 0.035 145);
+  --muted:         #5a6b5a;
+  --muted:         oklch(50% 0.028 135);
+  --border:        #e8e8e6;
+  --border:        oklch(91% 0.014 100);
+  --accent:        #3d8b3d;
+  --accent:        oklch(56% 0.12 145);
+  --accent-soft:   #8cb88c;
+  --accent-soft:   oklch(75% 0.08 140);
+  --sunlight:      #f0ece5;
+  --sunlight:      oklch(94% 0.045 95);
+  --sunlight-soft: #f7f5f0;
+  --sunlight-soft: oklch(97% 0.025 95);
+
+  --font-display: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+[data-theme='dark'] {
+  --bg:            oklch(14% 0.025 150);
+  --surface:       oklch(18% 0.02 145);
+  --fg:            oklch(90% 0.015 140);
+  --muted:         oklch(62% 0.03 130);
+  --border:        oklch(28% 0.025 145);
+  --accent:        oklch(68% 0.15 145);
+  --accent-soft:   oklch(58% 0.10 140);
+  --sunlight:      oklch(22% 0.04 130);
+  --sunlight-soft: oklch(16% 0.03 140);
+}
+[data-theme='dark'] .hero-bg {
+  background: linear-gradient(180deg, oklch(16% 0.03 150) 0%, oklch(10% 0.04 140) 35%, oklch(14% 0.025 150) 70%, oklch(10% 0.045 140) 100%);
+}
+[data-theme='dark'] .hero-bg::after {
+  background: radial-gradient(ellipse 80% 60% at 50% 35%, oklch(35% 0.1 140 / 0.2), transparent 70%);
+}
+[data-theme='dark'] .masthead.scrolled,
+[data-theme='dark'] .categories.scrolled {
+  background: oklch(14% 0.025 150 / 0.78);
+}
+[data-theme='dark'] .poem-card,
+[data-theme='dark'] .quote-card,
+[data-theme='dark'] .reading-frame,
+[data-theme='dark'] .bio-card,
+[data-theme='dark'] .story-card {
+  background: oklch(18% 0.02 145);
+}
+[data-theme='dark'] .ambient-toggle,
+[data-theme='dark'] .music-player,
+[data-theme='dark'] .theme-toggle {
+  background: oklch(18% 0.02 145);
+  border-color: oklch(28% 0.025 145);
+}
+[data-theme='dark'] .categories .pill {
+  background: oklch(18% 0.02 145);
+  border-color: oklch(28% 0.025 145);
+}
+[data-theme='dark'] .footer {
+  border-top-color: oklch(28% 0.025 145);
+}
+[data-theme='dark'] .page-bg {
+  background: linear-gradient(180deg, oklch(16% 0.03 150) 0%, oklch(10% 0.04 140) 30%, oklch(14% 0.025 150) 70%, oklch(10% 0.045 140) 100%);
+}
+[data-theme='dark'] .page-bg::after {
+  background: radial-gradient(ellipse 60% 40% at 50% 25%, oklch(35% 0.1 140 / 0.15), transparent 70%);
+}
+[data-theme='dark'] #particles-canvas {
+  opacity: 0.4;
+}
+[data-theme='dark'] .reading-bg::after {
+  background: radial-gradient(ellipse 50% 30% at 50% 25%, oklch(35% 0.1 140 / 0.15), transparent 70%);
+}
+
+.masthead, .categories, .poem-card, .quote-card, .footer, .categories .pill,
+.ambient-toggle, .theme-toggle, .music-player, .card-deco,
+.reading-frame, .bio-card, .story-card {
+  transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; word-break: normal; overflow-wrap: break-word; }
+
+html { scroll-behavior: smooth; width: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.5s, color 0.5s;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* ── Canvas layers ── */
+#particles-canvas {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+}
+
+main { position: relative; z-index: 1; }
+
+/* ── Masthead ── */
+.masthead {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  mix-blend-mode: normal;
+  transition: background 0.5s, backdrop-filter 0.5s;
+}
+.masthead.scrolled {
+  background: oklch(97% 0.012 98 / 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.masthead .wordmark {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.masthead nav { display: flex; gap: 28px; }
+.masthead nav a {
+  font-size: 13px; font-weight: 450;
+  color: var(--muted); text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.3s;
+}
+.masthead nav a:hover { color: var(--accent); }
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(180deg, var(--sunlight-soft) 0%, var(--sunlight) 35%, var(--bg) 70%, oklch(95% 0.018 120) 100%);
+}
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 35%, oklch(94% 0.05 95 / 0.5), transparent 70%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 720px; width: 100%; padding: 0 24px; flex-shrink: 0; align-self: center; }
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+  margin-bottom: 18px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero .tagline {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto 36px;
+}
+.hero .scroll-hint {
+  margin-top: 48px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0.6;
+}
+.hero .scroll-hint span {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted);
+}
+.hero .scroll-hint .line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
+}
+
+/* ── Categories ── */
+.categories {
+  position: sticky; top: 72px; z-index: 50;
+  padding: 20px 0;
+  text-align: center;
+  transition: background 0.4s;
+}
+.categories.scrolled {
+  background: oklch(97% 0.012 98 / 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.categories .pills {
+  display: inline-flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center;
+}
+.categories .pill {
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.3s;
+  user-select: none;
+  text-decoration: none;
+}
+.categories .pill:hover {
+  border-color: var(--accent-soft);
+  color: var(--fg);
+}
+.categories .pill.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── Poems grid ── */
+.poems-section {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+}
+.poems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+.poem-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 28px 28px;
+  cursor: default;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.5s;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  min-width: 0;
+  word-break: normal;
+}
+.poem-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.poem-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-soft);
+  box-shadow: 0 8px 40px oklch(50% 0.03 140 / 0.06);
+}
+.poem-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.poem-card:hover::before { opacity: 1; }
+.poem-card .card-category {
+  font-size: 10px; font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.poem-card .card-title {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 600;
+  line-height: 1.3; letter-spacing: -0.01em;
+  color: var(--fg);
+  margin-bottom: 10px;
+  text-decoration: none;
+  display: block;
+}
+.poem-card .card-title:hover { color: var(--accent); }
+.poem-card .card-excerpt {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 400;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.poem-card .card-date {
+  margin-top: 16px;
+  font-size: 12px; color: oklch(62% 0.018 130);
+  letter-spacing: 0.02em;
+}
+.poem-card .card-deco {
+  position: absolute; bottom: -20px; right: -20px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(75% 0.08 140 / 0.06), transparent 70%);
+  pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.poem-card:hover .card-deco {
+  transform: scale(1.5);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center; padding: 60px 24px 48px;
+  border-top: 1px solid var(--border);
+}
+.footer .closing {
+  font-family: var(--font-display);
+  font-size: 18px; font-style: italic;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.footer .copyright {
+  font-size: 12px; color: oklch(62% 0.018 130);
+  letter-spacing: 0.02em;
+}
+
+/* ── Floating controls ── */
+.floating-controls {
+  position: fixed; bottom: 28px; right: 28px; z-index: 200;
+  display: flex; flex-direction: column; gap: 10px;
+  align-items: flex-end;
+}
+
+.ambient-toggle {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px oklch(22% 0.02 50 / 0.04);
+  position: relative;
+}
+.ambient-toggle:hover { border-color: var(--accent-soft); color: var(--accent); }
+.ambient-toggle.active {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  box-shadow: 0 4px 20px oklch(56% 0.12 145 / 0.25);
+}
+.ambient-toggle .sound-label {
+  position: absolute; right: 52px;
+  font-size: 11px; color: var(--muted);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0; transition: opacity 0.3s;
+}
+.ambient-toggle:hover .sound-label { opacity: 1; }
+
+.music-player {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 8px 16px 8px 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px oklch(22% 0.02 50 / 0.04);
+  transition: all 0.3s;
+  user-select: none;
+}
+.music-player.playing { border-color: var(--accent-soft); }
+.music-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: transform 0.2s, background 0.3s;
+}
+.music-btn:hover { transform: scale(1.08); }
+.music-btn.paused { background: var(--muted); }
+.music-label {
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.music-vis {
+  display: flex; align-items: flex-end; gap: 2px; height: 16px;
+}
+.music-vis .bar {
+  width: 2px; border-radius: 1px;
+  background: var(--accent-soft);
+  transition: height 0.15s;
+}
+
+.theme-toggle {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px oklch(22% 0.02 50 / 0.04);
+  position: relative;
+}
+.theme-toggle:hover { border-color: var(--accent-soft); color: var(--accent); }
+.theme-toggle .theme-label {
+  position: absolute; right: 52px;
+  font-size: 11px; color: var(--muted);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0; transition: opacity 0.3s;
+}
+.theme-toggle:hover .theme-label { opacity: 1; }
+
+/* ── Grass blades at hero bottom ── */
+.grass-field {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;
+  height: 160px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.grass-field svg { width: 100%; height: 100%; }
+.grass-blade {
+  transform-origin: bottom center;
+  animation: sway 3.5s ease-in-out infinite;
+}
+.grass-blade:nth-child(odd) { animation-delay: -1.2s; animation-duration: 4s; }
+.grass-blade:nth-child(3n) { animation-delay: -2.4s; animation-duration: 3.2s; }
+.grass-blade:nth-child(5n+2) { animation-delay: -0.6s; animation-duration: 4.5s; }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* ── Random quote section ── */
+.quote-section {
+  max-width: 680px;
+  margin: 64px auto 48px;
+  padding: 0 24px;
+  text-align: center;
+}
+.quote-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px 36px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  user-select: none;
+  overflow: hidden;
+}
+.quote-card:hover {
+  border-color: var(--accent-soft);
+  transform: translateY(-2px);
+}
+.quote-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.quote-card:hover::before { opacity: 1; }
+.quote-card .quote-mark {
+  font-family: var(--font-display);
+  font-size: 52px;
+  line-height: 1;
+  color: var(--accent-soft);
+  margin-bottom: 8px;
+}
+.quote-card .quote-text {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-style: italic;
+  line-height: 1.75;
+  color: var(--fg);
+  margin-bottom: 24px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.quote-card .quote-hint {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  transition: color 0.3s;
+}
+.quote-card:hover .quote-hint { color: var(--accent-soft); }
+.quote-card .quote-deco {
+  position: absolute; bottom: -30px; right: -30px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(75% 0.08 140 / 0.05), transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Watercolor decorative blobs ── */
+.watercolor-blob {
+  position: absolute;
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  pointer-events: none;
+  animation: blobMorph 10s ease-in-out infinite;
+}
+.watercolor-blob:nth-child(1) {
+  top: 15%; left: 8%;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, oklch(72% 0.12 145), oklch(80% 0.08 135));
+  animation-delay: 0s;
+}
+.watercolor-blob:nth-child(2) {
+  top: 55%; right: 5%;
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, oklch(78% 0.1 130), oklch(85% 0.05 120));
+  animation-delay: -4s;
+  animation-duration: 12s;
+}
+.watercolor-blob:nth-child(3) {
+  bottom: 10%; left: 30%;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, oklch(74% 0.11 148), oklch(82% 0.07 142));
+  animation-delay: -7s;
+  animation-duration: 9s;
+}
+
+@keyframes blobMorph {
+  0%, 100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; transform: translate(0, 0) scale(1); }
+  33% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translate(10px, -10px) scale(1.05); }
+  66% { border-radius: 55% 45% 60% 40% / 40% 55% 45% 60%; transform: translate(-5px, 8px) scale(0.97); }
+}
+
+/* ── Reading page ── */
+.reading-progress {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+.reading-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: linear-gradient(180deg, var(--sunlight-soft) 0%, var(--sunlight) 25%, var(--bg) 60%, oklch(95% 0.018 120) 100%);
+}
+.reading-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 30% at 50% 25%, oklch(94% 0.05 95 / 0.4), transparent 70%);
+}
+.reading-main {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 150px 24px 100px;
+}
+.back-link {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  margin-bottom: 36px;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: opacity 0.3s;
+}
+.back-link:hover { opacity: 0.7; }
+.reading-frame {
+  max-width: 640px;
+  width: 100%;
+  background: oklch(99% 0.005 95 / 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 44px 44px 40px;
+  position: relative;
+}
+.poem-meta {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.poem-meta .category-tag {
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  border: 1px solid var(--accent-soft);
+  border-radius: 9999px;
+  padding: 4px 14px;
+}
+.poem-meta .poem-date {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.poem-title-detail {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.poem-subtitle {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 32px;
+}
+.decorative-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--accent-soft), var(--accent));
+  border-radius: 1px;
+  margin: 0 auto 32px;
+  opacity: 0.6;
+}
+.poem-stanzas { display: flex; flex-direction: column; gap: 24px; }
+.stanza { opacity: 0; transform: translateY(20px); transition: opacity 0.8s, transform 0.8s; }
+.stanza.visible { opacity: 1; transform: translateY(0); }
+.stanza p {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2.5vw, 20px);
+  line-height: 2;
+  color: var(--fg);
+  letter-spacing: 0.005em;
+  text-align: center;
+  text-wrap: pretty;
+}
+.stanza-break { height: 8px; }
+.poem-footer-detail {
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.poem-footer-detail .signature {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--muted);
+}
+.reading-nav {
+  display: flex; gap: 24px; justify-content: center;
+  margin-top: 48px;
+}
+.reading-nav a {
+  font-size: 13px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  padding: 8px 20px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  transition: all 0.3s;
+}
+.reading-nav a:hover {
+  border-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ── About page ── */
+.page-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: linear-gradient(180deg, var(--sunlight-soft) 0%, var(--sunlight) 30%, var(--bg) 70%, oklch(95% 0.018 120) 100%);
+}
+.page-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 25%, oklch(94% 0.05 95 / 0.35), transparent 70%);
+}
+.about-hero {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  padding: 160px 24px 64px;
+  position: relative; z-index: 1;
+}
+.about-hero .eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.about-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 16px;
+}
+.about-hero .subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 520px;
+}
+.avatar-section {
+  display: flex; justify-content: center;
+  margin-bottom: 48px;
+  position: relative; z-index: 1;
+}
+.avatar-frame {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: linear-gradient(135deg, oklch(78% 0.08 140 / 0.3), oklch(88% 0.04 120 / 0.2));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 48px;
+  color: var(--accent-soft);
+  position: relative;
+  overflow: hidden;
+}
+.avatar-frame::after {
+  content: '\1F33F';
+  font-size: 52px;
+}
+.content-section {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px 120px;
+  display: flex; flex-direction: column; gap: 28px;
+  position: relative; z-index: 1;
+}
+.bio-card, .story-card {
+  background: oklch(99% 0.005 95 / 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px 36px;
+  transition: background-color 0.5s, border-color 0.5s;
+}
+.bio-card h2, .story-card h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+.bio-card p, .story-card p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--fg);
+  text-wrap: pretty;
+}
+.bio-card p + p, .story-card p + p {
+  margin-top: 14px;
+}
+.highlight {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-style: italic;
+}
+.about-quote {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+  position: relative; z-index: 1;
+}
+.about-quote blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2.5vw, 21px);
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--muted);
+  text-align: center;
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Pagination ── */
+.pagination {
+  text-align: center;
+  margin: 48px 0 24px;
+}
+.pagination a, .pagination .current {
+  display: inline-block;
+  font-size: 13px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  transition: all 0.3s;
+  margin: 0 4px;
+}
+.pagination a:hover {
+  border-color: var(--accent-soft);
+  color: var(--accent);
+}
+.pagination .current {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── Search page overrides ── */
+.search-box {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  border: 2px solid var(--border);
+  border-radius: 30px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: var(--font-body);
+  background: var(--surface);
+  color: var(--fg);
+}
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(56% 0.12 145 / 0.1);
+}
+.search-input::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+.search-hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+.no-results, .search-placeholder {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 0;
+  font-size: 1.1rem;
+}
+
+/* ── Watercolor dots ── */
+.watercolor-dot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.09;
+  pointer-events: none;
+}
+.watercolor-dot:nth-child(1) {
+  top: 20%; left: -60px;
+  width: 240px; height: 240px;
+  background: oklch(72% 0.12 145);
+}
+.watercolor-dot:nth-child(2) {
+  bottom: 15%; right: -40px;
+  width: 200px; height: 200px;
+  background: oklch(78% 0.1 130);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .masthead { padding: 16px 24px; }
+  .masthead nav { gap: 20px; }
+  .masthead nav a { font-size: 13px; }
+  .hero { padding: 120px 28px 72px; min-height: auto; }
+  .hero h1 { font-size: clamp(34px, 7.5vw, 56px); }
+  .hero .tagline { font-size: 16px; margin-bottom: 36px; }
+  .hero .scroll-hint { margin-top: 48px; }
+  .hero .scroll-hint .line { height: 44px; }
+  .hero-content { max-width: 580px; }
+  .quote-section { margin: 60px auto 52px; padding: 0 24px; }
+  .quote-card { padding: 40px 32px; }
+  .quote-card .quote-mark { font-size: 44px; margin-bottom: 10px; }
+  .quote-card .quote-text { font-size: 17px; margin-bottom: 28px; }
+  .poems-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .poems-section { padding: 56px 20px 96px; }
+  .categories { top: 64px; padding: 16px 0; }
+  .categories .pill { padding: 10px 22px; font-size: 13px; }
+  .floating-controls { bottom: 24px; right: 24px; }
+  .grass-field { height: 100px; }
+  .watercolor-blob:nth-child(1) { width: 200px; height: 200px; }
+  .watercolor-blob:nth-child(2) { width: 250px; height: 250px; }
+  .watercolor-blob:nth-child(3) { display: none; }
+  .footer { padding: 64px 24px 56px; }
+  .reading-main { padding: 110px 16px 72px; }
+  .reading-frame { padding: 32px 28px 28px; }
+  .back-link { margin-bottom: 28px; }
+  .poem-meta { margin-bottom: 24px; }
+  .poem-subtitle { margin-bottom: 24px; }
+  .decorative-line { margin: 0 auto 24px; }
+  .poem-stanzas { gap: 18px; }
+  .poem-footer-detail { margin-top: 28px; padding-top: 20px; }
+  .reading-nav { margin-top: 32px; }
+  .poem-title-detail { font-size: clamp(28px, 6vw, 40px); }
+  .stanza p { font-size: 17px; line-height: 1.85; }
+  .about-hero { padding: 100px 20px 36px; }
+  .content-section { padding: 0 16px 64px; gap: 20px; }
+  .bio-card, .story-card { padding: 28px 24px; }
+  .about-quote { padding: 0 16px 36px; }
+}
+
+@media (max-width: 480px) {
+  .masthead nav a:nth-child(3),
+  .masthead nav a:nth-child(4) { display: none; }
+  .hero { padding: 112px 20px 64px; }
+  .hero h1 { font-size: clamp(30px, 8.5vw, 42px); }
+  .hero .tagline { font-size: 15px; margin-bottom: 32px; max-width: 100%; }
+  .hero .scroll-hint { margin-top: 44px; }
+  .hero .scroll-hint .line { height: 40px; }
+  .hero .scroll-hint span { font-size: 12px; }
+  .quote-section { margin: 52px auto 44px; padding: 0 16px; }
+  .quote-card { padding: 34px 24px; border-radius: 20px; }
+  .quote-card .quote-mark { font-size: 38px; margin-bottom: 12px; }
+  .quote-card .quote-text { font-size: 16px; line-height: 1.75; margin-bottom: 28px; }
+  .poem-card { padding: 30px 24px 32px; border-radius: 20px; }
+  .poem-card .card-title { font-size: 20px; }
+  .poem-card .card-tag { padding: 4px 14px; font-size: 11px; margin-bottom: 16px; }
+  .poem-card .card-excerpt { font-size: 14px; line-height: 1.75; }
+  .poems-section { padding: 64px 16px 96px; }
+  .categories { top: 56px; padding: 16px 0; }
+  .categories .pill { padding: 9px 18px; font-size: 13px; }
+  .music-label { display: none; }
+  .floating-controls { bottom: 20px; right: 16px; gap: 10px; }
+  .theme-toggle { width: 40px; height: 40px; font-size: 17px; }
+  .ambient-toggle { width: 40px; height: 40px; font-size: 17px; }
+  .footer { padding: 56px 20px 52px; }
+  .reading-main { padding: 100px 12px 56px; }
+  .reading-frame { padding: 28px 18px 24px; border-radius: 20px; }
+  .back-link { margin-bottom: 22px; font-size: 12px; }
+  .poem-meta { margin-bottom: 20px; gap: 10px; }
+  .poem-subtitle { margin-bottom: 20px; font-size: 14px; }
+  .decorative-line { margin: 0 auto 20px; }
+  .poem-stanzas { gap: 14px; }
+  .poem-footer-detail { margin-top: 22px; padding-top: 16px; }
+  .reading-nav { margin-top: 24px; }
+  .stanza p { font-size: 16px; line-height: 1.8; }
+  .reading-nav { gap: 12px; }
+  .reading-nav a { font-size: 12px; padding: 6px 16px; }
+  .about-hero { padding: 88px 16px 28px; }
+  .about-hero h1 { font-size: clamp(28px, 7vw, 40px); }
+  .content-section { padding: 0 12px 48px; }
+  .bio-card, .story-card { padding: 24px 18px; border-radius: 16px; }
+  .bio-card p, .story-card p { font-size: 14px; }
+  .about-quote { padding: 0 12px 28px; }
+}
+</style>
     
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <p class="site-description windsong-regular">
-                Những điều nhỏ nhắn vu vơ<br>
-                Ghép lại thành những bài thơ sắc màu
-            </p>
-        </div>
-    </header>
 
+<canvas id="particles-canvas"></canvas>
+
+<main>
+  <header class="masthead" id="masthead">
+    <a href="../../index.html" class="wordmark">Thơ của Cỏ Xanh</a>
     <nav>
-        <div class="container nav-container">
-            <a href="../../index.html" class="nav-item">mới nhất</a>
-            <a href="../../tim-kiem/index.html" class="nav-item">tìm kiếm</a>
-            
-                <a href="../../the-loai/da-dang/index.html" class="nav-item">đa dạng :o</a>
-            
-                <a href="../../the-loai/tinh-yeu/index.html" class="nav-item">tình yêu &lt;3</a>
-            
-                <a href="../../the-loai/vui-vui/index.html" class="nav-item">vui vui :)</a>
-            
-            <a href="../../about/index.html" class="nav-item">về tác giả</a>
-        </div>
+      <a href="../../index.html">Trang chủ</a>
+      <a href="../../about/index.html">Về tôi</a>
+      <a href="../../tim-kiem/index.html">Tìm kiếm</a>
     </nav>
+  </header>
 
-    
-<div class="container main-content">
-    <div class="poem-section">
-        <div class="poem-full" data-poem-id="23">
-            <div class="poem-header">
-                <h1 class="poem-title windsong-medium">Chúc mừng năm mới 2026</h1>
-                <div class="poem-meta">
-                    <a href="index.html" class="poem-author">
-                        Ngày đăng: 30/04/2026
-                    </a>
-                    <div class="poem-social-links">
-                        
-                        
-                        
-                        
-                        <a href="https://www.youtube.com/shorts/ir4wceoOOSs" target="_blank" rel="noopener noreferrer">YouTube</a>
-                    </div>
-                </div>
-            </div>
+  
 
-            
-                <p class="poem-intro">
-                    Chúc mừng năm mới 2026 tới mọi người
-                </p>
-            
+<div class="reading-progress" id="readingProgress"></div>
 
-            <p class="poem-content">Năm mới,
-Chúc mọi người
-Sức khỏe đầy đủ
-Vui vẻ vi vu
-Sung vầy ấm áp
-Hạnh phúc đong đầy
-Lộc đến bao la
-Bình an đến nhà
-May mắn nặng túi
-Vững vàng như núi</p>
-
-            
-        </div>
-    </div>
+<div class="reading-bg" aria-hidden="true">
+  <div class="watercolor-dot"></div>
+  <div class="watercolor-dot"></div>
 </div>
+
+<main class="reading-main">
+  <a href="../../index.html" class="back-link">← Về vườn thơ</a>
+
+  <article class="reading-frame">
+    <div class="poem-meta">
+      <span class="category-tag">thơ</span>
+      <span class="poem-date">30 tháng 04, 2026</span>
+    </div>
+
+    <h1 class="poem-title-detail">Chúc mừng năm mới 2026</h1>
+    
+      <p class="poem-subtitle">Chúc mừng năm mới 2026 tới mọi người</p>
+    
+
+    <div class="decorative-line" aria-hidden="true"></div>
+
+    <div class="poem-stanzas" id="poem-stanzas"></div>
+
+    <div class="poem-footer-detail">
+      <p class="signature">— Cỏ Xanh</p>
+    </div>
+  </article>
+
+  <nav class="reading-nav">
+    <a href="../../index.html">← Tất cả bài thơ</a>
+  </nav>
+</main>
 
 <script type="application/ld+json">
 {
@@ -126,12 +1103,438 @@ Vững vàng như núi</p>
 </script>
 
 
-    <footer>
-        <div class="container footer-content">
-            <p class="footer-info">&copy; 2025 Thơ của Cỏ Xanh - Chia sẻ các bài thơ của Cỏ Xanh</p>
-            <p class="footer-info">Liên hệ: caysautotlua@gmail.com</p>
-        </div>
-    </footer>
+  <footer class="footer">
+    <p class="closing">Cám ơn bạn đã ghé thăm vườn thơ nhỏ này.</p>
+    <p class="copyright">© 2026 Thơ của Cỏ Xanh. Những ngọn cỏ viết bằng trái tim.</p>
+  </footer>
+</main>
+
+<div class="floating-controls">
+  <button class="theme-toggle" id="themeToggle" aria-label="Chuyển chế độ tối/sáng">
+    <span class="theme-label" id="themeLabel">tối</span>🌙
+  </button>
+  <div class="music-player" id="musicPlayer">
+    <button class="music-btn paused" id="musicBtn" aria-label="Play lofi music">▶</button>
+    <span class="music-label">lofi</span>
+    <div class="music-vis" id="musicVis">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+  </div>
+  <button class="ambient-toggle" id="ambientToggle" aria-label="Toggle ambient sound">
+    <span class="sound-label" id="soundLabel">tắt</span>
+    🌿
+  </button>
+</div>
+
+<script>
+// ── Floating particles ──
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let w, h;
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const PARTICLE_COUNT = 60;
+
+class Particle {
+  constructor() {
+    this.reset(true);
+  }
+  reset(init) {
+    this.x = Math.random() * w;
+    this.y = init ? Math.random() * h : h + 10;
+    this.size = Math.random() * 2.5 + 0.8;
+    this.speedY = -(Math.random() * 0.35 + 0.12);
+    this.speedX = (Math.random() - 0.5) * 0.25;
+    this.opacity = Math.random() * 0.45 + 0.1;
+    this.wobble = Math.random() * Math.PI * 2;
+    this.wobbleSpeed = (Math.random() - 0.5) * 0.015;
+  }
+  update() {
+    this.y += this.speedY;
+    this.x += this.speedX + Math.sin(this.wobble) * 0.2;
+    this.wobble += this.wobbleSpeed;
+    if (this.y < -10) this.reset(false);
+    if (this.x < -10) this.x = w + 10;
+    if (this.x > w + 10) this.x = -10;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `oklch(88% 0.04 100 / ${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  particles.push(new Particle());
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, w, h);
+  for (const p of particles) {
+    p.update();
+    p.draw();
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ── Scroll effects ──
+const masthead = document.getElementById('masthead');
+const categories = document.getElementById('categories');
+
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > 60) {
+    masthead.classList.add('scrolled');
+  } else {
+    masthead.classList.remove('scrolled');
+  }
+  if (categories) {
+    if (y > window.innerHeight * 0.3) {
+      categories.classList.add('scrolled');
+    } else {
+      categories.classList.remove('scrolled');
+    }
+  }
+}, { passive: true });
+
+// ── Dark mode toggle ──
+const themeToggle = document.getElementById('themeToggle');
+const themeLabel = document.getElementById('themeLabel');
+const storedTheme = localStorage.getItem('od-theme') || 'light';
+document.documentElement.setAttribute('data-theme', storedTheme);
+if (storedTheme === 'dark') {
+  themeToggle.innerHTML = '<span class="theme-label" id="themeLabel">sáng</span>☀️';
+}
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('od-theme', next);
+  if (next === 'dark') {
+    themeToggle.innerHTML = '<span class="theme-label" id="themeLabel">sáng</span>☀️';
+  } else {
+    themeToggle.innerHTML = '<span class="theme-label" id="themeLabel">tối</span>🌙';
+  }
+});
+
+// ── Ambient sound engine (Web Audio API) ──
+let audioCtx = null;
+let ambientNode = null;
+let ambientGain = null;
+let ambientMode = 'off';
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function stopAmbient() {
+  if (ambientNode) {
+    try { ambientNode.stop(); } catch(e) {}
+    ambientNode.disconnect();
+    ambientNode = null;
+  }
+  if (ambientGain) {
+    ambientGain.disconnect();
+    ambientGain = null;
+  }
+}
+
+function createRain() {
+  const ctx = getAudioCtx();
+  const bufferSize = ctx.sampleRate * 2;
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = (Math.random() * 2 - 1) * 0.3;
+  }
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+
+  const lpFilter = ctx.createBiquadFilter();
+  lpFilter.type = 'lowpass';
+  lpFilter.frequency.value = 800;
+
+  const hpFilter = ctx.createBiquadFilter();
+  hpFilter.type = 'highpass';
+  hpFilter.frequency.value = 200;
+
+  const gain = ctx.createGain();
+  gain.gain.value = 0.25;
+
+  source.connect(hpFilter);
+  hpFilter.connect(lpFilter);
+  lpFilter.connect(gain);
+  gain.connect(ctx.destination);
+
+  ambientNode = source;
+  ambientGain = gain;
+  source.start();
+}
+
+function createBirds() {
+  const ctx = getAudioCtx();
+  const gain = ctx.createGain();
+  gain.gain.value = 0.12;
+  gain.connect(ctx.destination);
+  ambientGain = gain;
+
+  function chirp() {
+    if (ambientMode !== 'birds') return;
+    const osc = ctx.createOscillator();
+    osc.type = 'sine';
+    const baseFreq = 1800 + Math.random() * 2000;
+    osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.7, ctx.currentTime + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.2, ctx.currentTime + 0.14);
+
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.02);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.15);
+
+    osc.connect(g);
+    g.connect(gain);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.15);
+
+    const delay = 800 + Math.random() * 3000;
+    setTimeout(chirp, delay);
+  }
+  chirp();
+  ambientNode = { stop: () => { ambientMode = 'off'; } };
+}
+
+function createWind() {
+  const ctx = getAudioCtx();
+  const bufferSize = ctx.sampleRate * 3;
+  const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = (Math.random() * 2 - 1);
+  }
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+
+  const lp = ctx.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.value = 400;
+
+  const gain = ctx.createGain();
+  gain.gain.value = 0.15;
+
+  const lfo = ctx.createOscillator();
+  lfo.type = 'sine';
+  lfo.frequency.value = 0.15;
+  const lfoGain = ctx.createGain();
+  lfoGain.gain.value = 0.06;
+  lfo.connect(lfoGain);
+  lfoGain.connect(gain.gain);
+
+  source.connect(lp);
+  lp.connect(gain);
+  gain.connect(ctx.destination);
+  lfo.start();
+
+  ambientNode = source;
+  ambientGain = gain;
+  source.start();
+}
+
+const ambientToggle = document.getElementById('ambientToggle');
+const soundLabel = document.getElementById('soundLabel');
+
+ambientToggle.addEventListener('click', async () => {
+  const ctx = getAudioCtx();
+  if (ctx.state === 'suspended') await ctx.resume();
+
+  if (ambientMode === 'off') {
+    ambientMode = 'rain';
+    createRain();
+    ambientToggle.classList.add('active');
+    ambientToggle.innerHTML = '<span class="sound-label" id="soundLabel">mưa</span>🌧️';
+  } else if (ambientMode === 'rain') {
+    stopAmbient();
+    ambientMode = 'birds';
+    createBirds();
+    ambientToggle.innerHTML = '<span class="sound-label" id="soundLabel">chim</span>🐦';
+  } else if (ambientMode === 'birds') {
+    stopAmbient();
+    ambientMode = 'wind';
+    createWind();
+    ambientToggle.innerHTML = '<span class="sound-label" id="soundLabel">gió</span>🍃';
+  } else {
+    stopAmbient();
+    ambientMode = 'off';
+    ambientToggle.classList.remove('active');
+    ambientToggle.innerHTML = '<span class="sound-label" id="soundLabel">tắt</span>🌿';
+  }
+});
+
+// ── Lofi music player (Web Audio API) ──
+let lofiPlaying = false;
+let lofiNodes = [];
+let lofiGain = null;
+let musicVisualInterval = null;
+
+const musicBtn = document.getElementById('musicBtn');
+const musicPlayer = document.getElementById('musicPlayer');
+const musicVis = document.getElementById('musicVis');
+
+const lofiChords = [
+  [261.63, 329.63, 392.00],
+  [293.66, 369.99, 440.00],
+  [329.63, 392.00, 493.88],
+  [261.63, 349.23, 392.00],
+  [293.66, 369.99, 440.00],
+  [246.94, 329.63, 392.00],
+  [261.63, 329.63, 392.00],
+  [246.94, 329.63, 392.00],
+];
+
+let chordIndex = 0;
+let lofiTimeout = null;
+
+function playLofiChord() {
+  if (!lofiPlaying) return;
+  const ctx = getAudioCtx();
+  const freqs = lofiChords[chordIndex % lofiChords.length];
+
+  freqs.forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+
+    const g = ctx.createGain();
+    const now = ctx.currentTime;
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.06, now + 0.08);
+    g.gain.linearRampToValueAtTime(0.03, now + 1.6);
+    g.gain.linearRampToValueAtTime(0, now + 1.9);
+
+    osc.connect(g);
+    g.connect(lofiGain);
+    osc.start(now);
+    osc.stop(now + 2.0);
+    lofiNodes.push(osc);
+  });
+
+  chordIndex++;
+  lofiTimeout = setTimeout(playLofiChord, 2200);
+}
+
+function startLofi() {
+  const ctx = getAudioCtx();
+  if (ctx.state === 'suspended') ctx.resume();
+
+  lofiGain = ctx.createGain();
+  lofiGain.gain.value = 0.6;
+  lofiGain.connect(ctx.destination);
+
+  lofiPlaying = true;
+  chordIndex = 0;
+  playLofiChord();
+  musicBtn.textContent = '⏸';
+  musicBtn.classList.remove('paused');
+  musicPlayer.classList.add('playing');
+
+  const bars = musicVis.querySelectorAll('.bar');
+  musicVisualInterval = setInterval(() => {
+    bars.forEach(b => {
+      b.style.height = `${4 + Math.random() * 12}px`;
+    });
+  }, 150);
+}
+
+function stopLofi() {
+  lofiPlaying = false;
+  if (lofiTimeout) clearTimeout(lofiTimeout);
+  lofiNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+  lofiNodes = [];
+  if (lofiGain) { lofiGain.disconnect(); lofiGain = null; }
+
+  musicBtn.textContent = '▶';
+  musicBtn.classList.add('paused');
+  musicPlayer.classList.remove('playing');
+
+  if (musicVisualInterval) clearInterval(musicVisualInterval);
+  const bars = musicVis.querySelectorAll('.bar');
+  bars.forEach(b => { b.style.height = '3px'; });
+}
+
+musicBtn.addEventListener('click', () => {
+  if (lofiPlaying) {
+    stopLofi();
+  } else {
+    startLofi();
+  }
+});
+
+// Animate visual bars idly
+setInterval(() => {
+  if (lofiPlaying) return;
+  const bars = musicVis.querySelectorAll('.bar');
+  bars.forEach(b => {
+    b.style.height = `${2 + Math.random() * 4}px`;
+  });
+}, 600);
+</script>
+
+<script>
+// Build stanzas from raw poem text
+const container = document.getElementById('poem-stanzas');
+const raw = `Năm mới,\u000D\u000AChúc mọi người\u000D\u000ASức khỏe đầy đủ\u000D\u000AVui vẻ vi vu\u000D\u000ASung vầy ấm áp\u000D\u000AHạnh phúc đong đầy\u000D\u000ALộc đến bao la\u000D\u000ABình an đến nhà\u000D\u000AMay mắn nặng túi\u000D\u000AVững vàng như núi`;
+const blocks = raw.split(/\n\s*\n/);
+blocks.forEach(block => {
+  const lines = block.trim().split('\n');
+  if (lines.length === 0 || (lines.length === 1 && lines[0] === '')) return;
+  const stanza = document.createElement('div');
+  stanza.className = 'stanza';
+  lines.forEach(line => {
+    const p = document.createElement('p');
+    p.textContent = line;
+    stanza.appendChild(p);
+  });
+  container.appendChild(stanza);
+});
+
+// ── Reading progress bar ──
+const progressBar = document.getElementById('readingProgress');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = `${Math.min(progress, 100)}%`;
+}, { passive: true });
+
+// ── Fade-in stanzas ──
+const stanzaObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const stanza = entry.target;
+      const idx = Array.from(stanza.parentNode.children).indexOf(stanza);
+      stanza.style.transitionDelay = `${idx * 0.1}s`;
+      stanza.classList.add('visible');
+      stanzaObserver.unobserve(stanza);
+    }
+  });
+}, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.stanza').forEach(s => stanzaObserver.observe(s));
+</script>
+
+
 </body>
 
 </html>
