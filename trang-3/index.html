@@ -4,11 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Đọc thơ ngắn mỗi ngày về tình yêu, cuộc sống và những điều nhỏ nhặt. Thơ của Cỏ Xanh - nơi chia sẻ những vần thơ giản dị, nhẹ nhàng.">
+    <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('od-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+    </script>
+    <meta name="description" content="Trang 3 trong tuyển tập Thơ của Cỏ Xanh — 50 bài thơ.">
     <meta name="keywords" content="thơ, thơ ngắn, thơ tình, thơ vui, thơ của cỏ xanh">
-    <title>Thơ của Cỏ Xanh - Những bài thơ nhẹ nhàng, vui vẻ</title>
-    <link rel="icon" href="../static/poems/images/favicon.088bf193f6e4.ico" type="image/x-icon">
+    <title>Thơ của Cỏ Xanh - Những bài thơ nhẹ nhàng, vui vẻ - Trang 3/9</title>
+    <link rel="icon" href="/static/poems/images/favicon.088bf193f6e4.ico" type="image/x-icon">
     <link rel="canonical" href="https://thocuacoxanh.vn/trang-3/">
+    <meta name="robots" content="noindex, follow">
     
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Thơ của Cỏ Xanh">
@@ -32,9 +41,31 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Roboto:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script type="speculationrules">
+    {
+      "prerender": [{
+        "where": {
+          "and": [
+            { "href_matches": "/tho/*" },
+            { "not": { "href_matches": "/ngau-nhien/*" } }
+          ]
+        },
+        "eagerness": "moderate"
+      }],
+      "prefetch": [{
+        "where": { "href_matches": "/*" },
+        "eagerness": "conservative"
+      }]
+    }
+    </script>
     <style>/* ── Design System ── */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
 :root {
+  color-scheme: light dark;
   --bg:            #f7f7f5;
   --bg:            oklch(97% 0.012 98);
   --surface:       #fcfcfb;
@@ -54,8 +85,8 @@
   --sunlight-soft: #f7f5f0;
   --sunlight-soft: oklch(97% 0.025 95);
 
-  --font-display: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
-  --font-body:    'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Playfair Display', 'Noto Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-body:    'Roboto', 'Inter', 'Noto Sans', 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 [data-theme='dark'] {
@@ -624,7 +655,7 @@ main { position: relative; z-index: 1; }
 .reading-main {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center;
-  padding: 150px 24px 100px;
+  padding: 66px 24px 100px;
 }
 .back-link {
   align-self: flex-start;
@@ -663,6 +694,24 @@ main { position: relative; z-index: 1; }
   border-radius: 9999px;
   padding: 4px 14px;
 }
+.poem-meta__share {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 4px 14px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.poem-meta__share:hover {
+  color: var(--accent);
+  border-color: var(--accent-soft);
+}
 .poem-meta .poem-date {
   font-size: 13px;
   color: var(--muted);
@@ -695,8 +744,16 @@ main { position: relative; z-index: 1; }
   opacity: 0.6;
 }
 .poem-stanzas { display: flex; flex-direction: column; gap: 24px; }
-.stanza { opacity: 0; transform: translateY(20px); transition: opacity 0.8s, transform 0.8s; }
-.stanza.visible { opacity: 1; transform: translateY(0); }
+.stanza { opacity: 1; transform: none; }
+.js-anim .stanza {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.js-anim .stanza.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .js-anim .stanza { opacity: 1; transform: none; transition: none; }
+}
 .stanza p {
   font-family: var(--font-display);
   font-size: clamp(17px, 2.5vw, 20px);
@@ -736,6 +793,172 @@ main { position: relative; z-index: 1; }
 .reading-nav a:hover {
   border-color: var(--accent-soft);
   color: var(--accent);
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto 20px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb [aria-current="page"] { color: var(--fg); }
+
+/* ── Poem prev/next nav ── */
+.poem-nav {
+  max-width: 640px;
+  width: 100%;
+  margin: 36px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.poem-nav__prev, .poem-nav__next {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 4px 0;
+  text-decoration: none;
+}
+.poem-nav__next { justify-content: flex-end; text-align: right; grid-column: 2; }
+.poem-nav__arrow {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1;
+  color: var(--accent-soft);
+  transition: transform 0.3s, color 0.3s;
+}
+.poem-nav__prev:hover .poem-nav__arrow { transform: translateX(-4px); color: var(--accent); }
+.poem-nav__next:hover .poem-nav__arrow { transform: translateX(4px); color: var(--accent); }
+.poem-nav__text {
+  display: flex; flex-direction: column; gap: 3px;
+  min-width: 0;
+}
+.poem-nav__label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.poem-nav__title {
+  font-family: var(--font-display);
+  font-size: 14px; font-style: italic;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s;
+}
+.poem-nav__prev:hover .poem-nav__title,
+.poem-nav__next:hover .poem-nav__title {
+  color: var(--accent);
+}
+
+/* ── Related / discover ── */
+.related, .discover {
+  max-width: 640px;
+  width: 100%;
+  margin: 32px auto 0;
+}
+.related h2, .discover h2 {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.related__list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.related__list a {
+  display: block;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  text-decoration: none;
+  transition: border-color 0.3s;
+}
+.related__list a:hover { border-color: var(--accent-soft); }
+.related__title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 15px; color: var(--fg);
+  margin-bottom: 4px;
+}
+.related__excerpt {
+  display: block;
+  font-size: 13px; color: var(--muted); font-style: italic;
+}
+.related__more {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 13px; color: var(--accent);
+  text-decoration: none;
+}
+.related__more:hover { opacity: 0.8; }
+.discover ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.discover li {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.discover a { color: var(--fg); text-decoration: none; }
+.discover a:hover { color: var(--accent); }
+.discover em { color: var(--muted); font-style: italic; font-size: 12px; }
+
+/* ── Poem footer nav (tất cả bài thơ / ngẫu nhiên) ── */
+.poem-footer-nav {
+  max-width: 640px;
+  width: 100%;
+  margin: 32px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.poem-footer-nav a {
+  font-size: 13px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  padding: 8px 20px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  transition: all 0.3s;
+}
+.poem-footer-nav a:hover {
+  border-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .poem-nav { gap: 10px; }
+  .poem-nav__prev, .poem-nav__next { gap: 8px; }
+  .poem-nav__arrow { font-size: 22px; }
+  .poem-nav__label { font-size: 9px; letter-spacing: 0.06em; }
+  .poem-nav__title { font-size: 12px; }
+
+  .poem-meta { gap: 8px; }
+  .poem-meta .category-tag,
+  .poem-meta__share {
+    font-size: 9px;
+    padding: 3px 10px;
+    letter-spacing: 0.05em;
+  }
+  .poem-meta .poem-date { font-size: 11px; }
+
+  .poem-footer-nav { gap: 8px; }
+  .poem-footer-nav a { font-size: 12px; padding: 7px 14px; }
 }
 
 /* ── About page ── */
@@ -967,7 +1190,7 @@ main { position: relative; z-index: 1; }
   .watercolor-blob:nth-child(2) { width: 250px; height: 250px; }
   .watercolor-blob:nth-child(3) { display: none; }
   .footer { padding: 64px 24px 56px; }
-  .reading-main { padding: 110px 16px 72px; }
+  .reading-main { padding: 66px 16px 72px; }
   .reading-frame { padding: 32px 28px 28px; }
   .back-link { margin-bottom: 28px; }
   .poem-meta { margin-bottom: 24px; }
@@ -1009,10 +1232,10 @@ main { position: relative; z-index: 1; }
   .theme-toggle { width: 40px; height: 40px; font-size: 17px; }
   .ambient-toggle { width: 40px; height: 40px; font-size: 17px; }
   .footer { padding: 56px 20px 52px; }
-  .reading-main { padding: 100px 12px 56px; }
+  .reading-main { padding: 60px 12px 56px; }
   .reading-frame { padding: 28px 18px 24px; border-radius: 20px; }
   .back-link { margin-bottom: 22px; font-size: 12px; }
-  .poem-meta { margin-bottom: 20px; gap: 10px; }
+  .poem-meta { margin-bottom: 20px; }
   .poem-subtitle { margin-bottom: 20px; font-size: 14px; }
   .decorative-line { margin: 0 auto 20px; }
   .poem-stanzas { gap: 14px; }
@@ -1038,11 +1261,11 @@ main { position: relative; z-index: 1; }
 
 <main>
   <header class="masthead" id="masthead">
-    <a href="../index.html" class="wordmark">Thơ của Cỏ Xanh</a>
+    <a href="/" class="wordmark">Thơ của Cỏ Xanh</a>
     <nav>
-      <a href="../index.html">Trang chủ</a>
-      <a href="../about/index.html">Về tôi</a>
-      <a href="../tim-kiem/index.html">Tìm kiếm</a>
+      <a href="/">Trang chủ</a>
+      <a href="/about/">Về tôi</a>
+      <a href="/tim-kiem/">Tìm kiếm</a>
     </nav>
   </header>
 
@@ -1118,13 +1341,13 @@ main { position: relative; z-index: 1; }
 
 <div class="categories" id="categories">
   <div class="pills">
-    <a href="../index.html" class="pill active">Tất cả</a>
+    <a href="/" class="pill active">Tất cả</a>
     
-      <a href="../the-loai/da-dang/index.html" class="pill ">đa dạng :o</a>
+      <a href="/the-loai/da-dang/" class="pill ">đa dạng :o</a>
     
-      <a href="../the-loai/tinh-yeu/index.html" class="pill ">tình yêu &lt;3</a>
+      <a href="/the-loai/tinh-yeu/" class="pill ">tình yêu &lt;3</a>
     
-      <a href="../the-loai/vui-vui/index.html" class="pill ">vui vui :)</a>
+      <a href="/the-loai/vui-vui/" class="pill ">vui vui :)</a>
     
   </div>
 </div>
@@ -1132,60 +1355,60 @@ main { position: relative; z-index: 1; }
 <section class="poems-section" data-od-id="poems-grid">
   <div class="poems-grid" id="poemsGrid">
     
-      <article class="poem-card" data-category="all">
+      <article class="poem-card" data-category="da-dang">
         <div class="card-deco"></div>
-        <div class="card-category">thơ</div>
-        <a href="../tho/vo/index.html" class="card-title">Vỡ</a>
+        <div class="card-category">đa dạng :o</div>
+        <a href="/tho/vo/" class="card-title" style="view-transition-name: poem-vo;">Vỡ</a>
         <p class="card-excerpt">
           Mở tưởng cao xa Những điều quý giá Hoài bão ngọc ngà Ước nguyện ra quả Khép lại giấc mơ …
         </p>
         <div class="card-date">24 tháng 06, 2026</div>
       </article>
     
-      <article class="poem-card" data-category="all">
+      <article class="poem-card" data-category="da-dang">
         <div class="card-deco"></div>
-        <div class="card-category">thơ</div>
-        <a href="../tho/hoa/index.html" class="card-title">Hoa</a>
+        <div class="card-category">đa dạng :o</div>
+        <a href="/tho/hoa/" class="card-title" style="view-transition-name: poem-hoa;">Hoa</a>
         <p class="card-excerpt">
           Con ong đi theo mùi hương Như anh lặng lẽ vấn vương bóng người Người ơi người là hoa tươi …
         </p>
         <div class="card-date">16 tháng 06, 2026</div>
       </article>
     
-      <article class="poem-card" data-category="all">
+      <article class="poem-card" data-category="da-dang">
         <div class="card-deco"></div>
-        <div class="card-category">thơ</div>
-        <a href="../tho/lay/index.html" class="card-title">Lấy</a>
+        <div class="card-category">đa dạng :o</div>
+        <a href="/tho/lay/" class="card-title" style="view-transition-name: poem-lay;">Lấy</a>
         <p class="card-excerpt">
           Lấy đi một nối đi riêng Loay hoay sóng sánh con thuyền về đâu Hải trình đang tiến bấy lâu …
         </p>
         <div class="card-date">10 tháng 06, 2026</div>
       </article>
     
-      <article class="poem-card" data-category="all">
+      <article class="poem-card" data-category="da-dang">
         <div class="card-deco"></div>
-        <div class="card-category">thơ</div>
-        <a href="../tho/say/index.html" class="card-title">Say</a>
+        <div class="card-category">đa dạng :o</div>
+        <a href="/tho/say/" class="card-title" style="view-transition-name: poem-say;">Say</a>
         <p class="card-excerpt">
           Chỉ vì một lần say Không quên được người ấy Nhớ đến ngày qua ngày Giấc mộng người trao tay …
         </p>
         <div class="card-date">03 tháng 06, 2026</div>
       </article>
     
-      <article class="poem-card" data-category="all">
+      <article class="poem-card" data-category="da-dang">
         <div class="card-deco"></div>
-        <div class="card-category">thơ</div>
-        <a href="../tho/o-ay/index.html" class="card-title">Ở đây</a>
+        <div class="card-category">đa dạng :o</div>
+        <a href="/tho/o-ay/" class="card-title" style="view-transition-name: poem-o-ay;">Ở đây</a>
         <p class="card-excerpt">
           Từng con ngõ nhỏ Đôi mình gắn bó Vài ly trà sữa Nói chuyện đong đưa Viên chiên xiên que …
         </p>
         <div class="card-date">24 tháng 05, 2026</div>
       </article>
     
-      <article class="poem-card" data-category="all">
+      <article class="poem-card" data-category="da-dang">
         <div class="card-deco"></div>
-        <div class="card-category">thơ</div>
-        <a href="../tho/nuoi-tiec/index.html" class="card-title">Nuối tiếc</a>
+        <div class="card-category">đa dạng :o</div>
+        <a href="/tho/nuoi-tiec/" class="card-title" style="view-transition-name: poem-nuoi-tiec;">Nuối tiếc</a>
         <p class="card-excerpt">
           Có điều gì nuối tiếc Những thứ chẳng vẹn nguyên Hay vì chẳng nên truyện Cũng chẳng phải điều tốt …
         </p>
@@ -1199,31 +1422,23 @@ main { position: relative; z-index: 1; }
     <span class="step-links">
       
         
-          <a href="../index.html"><< trang đầu</a>
-          <a href="../trang-2/index.html">< trước</a>
+          <a href="/"><< trang đầu</a>
+          <a href="/trang-2/">< trước</a>
         
       
 
       <span class="current">trang 3 / 9</span>
 
       
-        <a href="../trang-4/index.html">tiếp ></a>
-        <a href="../trang-9/index.html">trang cuối >></a>
+        <a href="/trang-4/">tiếp ></a>
+        <a href="/trang-9/">trang cuối >></a>
       
     </span>
   </div>
   
 </section>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "name": "Thơ của Cỏ Xanh",
-  "description": "Kho thơ ngắn nhẹ nhàng, vui vẻ về tình yêu, cuộc sống và những điều nhỏ nhặt trong đời",
-  "url": "https://thocuacoxanh.vn/trang-3/"
-}
-</script>
+
 
 
   <footer class="footer">

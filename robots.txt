@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
 
+# Chặn URL rác sinh ra từ crawl trap trước đây (soft-404 + link tương đối
+# cũ khiến Googlebot lồng ghép lặp lại các segment path). Không trang thật
+# nào có cùng loại segment xuất hiện 2 lần trong URL.
+Disallow: */the-loai/*/the-loai/*
+Disallow: */tho/*/tho/*
+Disallow: */trang-*/trang-*
+Disallow: */about/*/about/*
+Disallow: */tim-kiem/*/tim-kiem/*
+
 Sitemap: https://thocuacoxanh.vn/sitemap.xml

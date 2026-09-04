@@ -4,11 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('od-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+    </script>
     <meta name="description" content="Khám phá bài thơ thông báo đóng quỹ tháng 7/2025: Mưa thuận gió hòa, nắng dịu, cây đung đưa. Đóng tiền quỹ để quỹ đầy như cây ra quả. Xem danh sách ngay!">
     <meta name="keywords" content="đóng quỹ tháng 7, bài thơ đóng quỹ, thông báo đóng quỹ, thơ vui, quỹ tháng 7, danh sách đóng quỹ, mưa thuận gió hòa, 2025">
     <title>Bài thơ: Thông báo đóng quỹ tháng 7 năm 2025 - không đăng</title>
-    <link rel="icon" href="../../static/poems/images/favicon.088bf193f6e4.ico" type="image/x-icon">
+    <link rel="icon" href="/static/poems/images/favicon.088bf193f6e4.ico" type="image/x-icon">
     <link rel="canonical" href="https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/">
+    
     
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Thơ của Cỏ Xanh">
@@ -32,9 +41,31 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Roboto:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script type="speculationrules">
+    {
+      "prerender": [{
+        "where": {
+          "and": [
+            { "href_matches": "/tho/*" },
+            { "not": { "href_matches": "/ngau-nhien/*" } }
+          ]
+        },
+        "eagerness": "moderate"
+      }],
+      "prefetch": [{
+        "where": { "href_matches": "/*" },
+        "eagerness": "conservative"
+      }]
+    }
+    </script>
     <style>/* ── Design System ── */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
 :root {
+  color-scheme: light dark;
   --bg:            #f7f7f5;
   --bg:            oklch(97% 0.012 98);
   --surface:       #fcfcfb;
@@ -54,8 +85,8 @@
   --sunlight-soft: #f7f5f0;
   --sunlight-soft: oklch(97% 0.025 95);
 
-  --font-display: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
-  --font-body:    'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Playfair Display', 'Noto Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-body:    'Roboto', 'Inter', 'Noto Sans', 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 [data-theme='dark'] {
@@ -624,7 +655,7 @@ main { position: relative; z-index: 1; }
 .reading-main {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center;
-  padding: 150px 24px 100px;
+  padding: 66px 24px 100px;
 }
 .back-link {
   align-self: flex-start;
@@ -663,6 +694,24 @@ main { position: relative; z-index: 1; }
   border-radius: 9999px;
   padding: 4px 14px;
 }
+.poem-meta__share {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 4px 14px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.poem-meta__share:hover {
+  color: var(--accent);
+  border-color: var(--accent-soft);
+}
 .poem-meta .poem-date {
   font-size: 13px;
   color: var(--muted);
@@ -695,8 +744,16 @@ main { position: relative; z-index: 1; }
   opacity: 0.6;
 }
 .poem-stanzas { display: flex; flex-direction: column; gap: 24px; }
-.stanza { opacity: 0; transform: translateY(20px); transition: opacity 0.8s, transform 0.8s; }
-.stanza.visible { opacity: 1; transform: translateY(0); }
+.stanza { opacity: 1; transform: none; }
+.js-anim .stanza {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.js-anim .stanza.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .js-anim .stanza { opacity: 1; transform: none; transition: none; }
+}
 .stanza p {
   font-family: var(--font-display);
   font-size: clamp(17px, 2.5vw, 20px);
@@ -736,6 +793,172 @@ main { position: relative; z-index: 1; }
 .reading-nav a:hover {
   border-color: var(--accent-soft);
   color: var(--accent);
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto 20px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb [aria-current="page"] { color: var(--fg); }
+
+/* ── Poem prev/next nav ── */
+.poem-nav {
+  max-width: 640px;
+  width: 100%;
+  margin: 36px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.poem-nav__prev, .poem-nav__next {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 4px 0;
+  text-decoration: none;
+}
+.poem-nav__next { justify-content: flex-end; text-align: right; grid-column: 2; }
+.poem-nav__arrow {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 1;
+  color: var(--accent-soft);
+  transition: transform 0.3s, color 0.3s;
+}
+.poem-nav__prev:hover .poem-nav__arrow { transform: translateX(-4px); color: var(--accent); }
+.poem-nav__next:hover .poem-nav__arrow { transform: translateX(4px); color: var(--accent); }
+.poem-nav__text {
+  display: flex; flex-direction: column; gap: 3px;
+  min-width: 0;
+}
+.poem-nav__label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.poem-nav__title {
+  font-family: var(--font-display);
+  font-size: 14px; font-style: italic;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s;
+}
+.poem-nav__prev:hover .poem-nav__title,
+.poem-nav__next:hover .poem-nav__title {
+  color: var(--accent);
+}
+
+/* ── Related / discover ── */
+.related, .discover {
+  max-width: 640px;
+  width: 100%;
+  margin: 32px auto 0;
+}
+.related h2, .discover h2 {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.related__list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.related__list a {
+  display: block;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  text-decoration: none;
+  transition: border-color 0.3s;
+}
+.related__list a:hover { border-color: var(--accent-soft); }
+.related__title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 15px; color: var(--fg);
+  margin-bottom: 4px;
+}
+.related__excerpt {
+  display: block;
+  font-size: 13px; color: var(--muted); font-style: italic;
+}
+.related__more {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 13px; color: var(--accent);
+  text-decoration: none;
+}
+.related__more:hover { opacity: 0.8; }
+.discover ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.discover li {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.discover a { color: var(--fg); text-decoration: none; }
+.discover a:hover { color: var(--accent); }
+.discover em { color: var(--muted); font-style: italic; font-size: 12px; }
+
+/* ── Poem footer nav (tất cả bài thơ / ngẫu nhiên) ── */
+.poem-footer-nav {
+  max-width: 640px;
+  width: 100%;
+  margin: 32px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.poem-footer-nav a {
+  font-size: 13px; font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  padding: 8px 20px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  transition: all 0.3s;
+}
+.poem-footer-nav a:hover {
+  border-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .poem-nav { gap: 10px; }
+  .poem-nav__prev, .poem-nav__next { gap: 8px; }
+  .poem-nav__arrow { font-size: 22px; }
+  .poem-nav__label { font-size: 9px; letter-spacing: 0.06em; }
+  .poem-nav__title { font-size: 12px; }
+
+  .poem-meta { gap: 8px; }
+  .poem-meta .category-tag,
+  .poem-meta__share {
+    font-size: 9px;
+    padding: 3px 10px;
+    letter-spacing: 0.05em;
+  }
+  .poem-meta .poem-date { font-size: 11px; }
+
+  .poem-footer-nav { gap: 8px; }
+  .poem-footer-nav a { font-size: 12px; padding: 7px 14px; }
 }
 
 /* ── About page ── */
@@ -967,7 +1190,7 @@ main { position: relative; z-index: 1; }
   .watercolor-blob:nth-child(2) { width: 250px; height: 250px; }
   .watercolor-blob:nth-child(3) { display: none; }
   .footer { padding: 64px 24px 56px; }
-  .reading-main { padding: 110px 16px 72px; }
+  .reading-main { padding: 66px 16px 72px; }
   .reading-frame { padding: 32px 28px 28px; }
   .back-link { margin-bottom: 28px; }
   .poem-meta { margin-bottom: 24px; }
@@ -1009,10 +1232,10 @@ main { position: relative; z-index: 1; }
   .theme-toggle { width: 40px; height: 40px; font-size: 17px; }
   .ambient-toggle { width: 40px; height: 40px; font-size: 17px; }
   .footer { padding: 56px 20px 52px; }
-  .reading-main { padding: 100px 12px 56px; }
+  .reading-main { padding: 60px 12px 56px; }
   .reading-frame { padding: 28px 18px 24px; border-radius: 20px; }
   .back-link { margin-bottom: 22px; font-size: 12px; }
-  .poem-meta { margin-bottom: 20px; gap: 10px; }
+  .poem-meta { margin-bottom: 20px; }
   .poem-subtitle { margin-bottom: 20px; font-size: 14px; }
   .decorative-line { margin: 0 auto 20px; }
   .poem-stanzas { gap: 14px; }
@@ -1038,11 +1261,11 @@ main { position: relative; z-index: 1; }
 
 <main>
   <header class="masthead" id="masthead">
-    <a href="../../index.html" class="wordmark">Thơ của Cỏ Xanh</a>
+    <a href="/" class="wordmark">Thơ của Cỏ Xanh</a>
     <nav>
-      <a href="../../index.html">Trang chủ</a>
-      <a href="../../about/index.html">Về tôi</a>
-      <a href="../../tim-kiem/index.html">Tìm kiếm</a>
+      <a href="/">Trang chủ</a>
+      <a href="/about/">Về tôi</a>
+      <a href="/tim-kiem/">Tìm kiếm</a>
     </nav>
   </header>
 
@@ -1056,52 +1279,177 @@ main { position: relative; z-index: 1; }
 </div>
 
 <main class="reading-main">
-  <a href="../../index.html" class="back-link">← Về vườn thơ</a>
+  <a href="/" class="back-link">← Về vườn thơ</a>
+
+  
+  <nav class="breadcrumb" aria-label="Đường dẫn">
+    <a href="/">Trang chủ</a> ›
+    <a href="/the-loai/da-dang/">đa dạng :o</a> ›
+    <span aria-current="page">Thông báo đóng quỹ tháng 7 năm 2025 - không đăng</span>
+  </nav>
 
   <article class="reading-frame">
     <div class="poem-meta">
-      <span class="category-tag">thơ</span>
+      <span class="category-tag">đa dạng :o</span>
       <span class="poem-date">14 tháng 09, 2025</span>
+      <button class="poem-meta__share" type="button" id="shareBtn"
+              data-title="Thông báo đóng quỹ tháng 7 năm 2025 - không đăng"
+              data-url="https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/">Chia sẻ</button>
     </div>
 
-    <h1 class="poem-title-detail">Thông báo đóng quỹ tháng 7 năm 2025 - không đăng</h1>
+    <h1 class="poem-title-detail" style="view-transition-name: poem-thong-bao-ong-quy-thang-7-nam-2025-khong-ang;">Thông báo đóng quỹ tháng 7 năm 2025 - không đăng</h1>
     
       <p class="poem-subtitle">Tháng 7 mình đã viết 1 bài thơ lúc đầu tháng để sẵn để cuối tháng đăng, nhưng đến lúc cuối tháng mưa to quá, nó lại không giống nội dung bài thơ nên đành viết 1 bài khác.</p>
     
 
     <div class="decorative-line" aria-hidden="true"></div>
 
-    <div class="poem-stanzas" id="poem-stanzas"></div>
+    <div class="poem-stanzas" id="poem-stanzas">
+      
+        <div class="stanza">
+          <p>Tháng Bảy mưa thuận gió hòa 🌞</p><p>Nắng dịu nhẹ làn gió thổi qua ✨</p><p>Làm tán cây đung đưa cành lá 🌳</p><p>Đóng tiền quỹ ăn hương ăn hoa 💐</p><p>Để tiền quỹ đầy như cây ra quả 🌴</p><p>[Link danh sách đóng quỹ]</p>
+        </div>
+      
+    </div>
 
     <div class="poem-footer-detail">
       <p class="signature">— Cỏ Xanh</p>
     </div>
   </article>
 
-  <nav class="reading-nav">
-    <a href="../../index.html">← Tất cả bài thơ</a>
+  <nav class="poem-nav" aria-label="Chuyển bài thơ">
+    
+      <a class="poem-nav__prev" href="/tho/thong-bao-ong-quy-thang-7-nam-2025/" rel="prev">
+        <span class="poem-nav__arrow" aria-hidden="true">&laquo;</span>
+        <span class="poem-nav__text">
+          <span class="poem-nav__label">Bài trước</span>
+          <span class="poem-nav__title">Thông báo đóng quỹ tháng 7 năm 2025</span>
+        </span>
+      </a>
+    
+    
+      <a class="poem-nav__next" href="/tho/thong-bao-ong-quy-thang-8-nam-2025/" rel="next">
+        <span class="poem-nav__text">
+          <span class="poem-nav__label">Bài sau</span>
+          <span class="poem-nav__title">Thông báo đóng quỹ tháng 8 năm 2025</span>
+        </span>
+        <span class="poem-nav__arrow" aria-hidden="true">&raquo;</span>
+      </a>
+    
+  </nav>
+
+  
+  <section class="related" aria-labelledby="related-h">
+    <h2 id="related-h">Cùng mạch cảm xúc</h2>
+    <ul class="related__list">
+      
+        <li>
+          <a href="/tho/thuong/">
+            <span class="related__title">Thương</span>
+            <span class="related__excerpt">Tôi vẫn còn vấn vương
+Vẫn không sao quên được
+Những tình …</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tho/tim/">
+            <span class="related__title">Tìm</span>
+            <span class="related__excerpt">Tôi đi tìm, đi tìm 
+Tìm con mắt lim dim
+Tìm tâm trí lặng im…</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tho/uoc/">
+            <span class="related__title">Ước</span>
+            <span class="related__excerpt">Tôi ước mình là đám mây
+Cứ lẳng lặng trôi ngày ngày
+Mặc kệ …</span>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tho/neu/">
+            <span class="related__title">Nếu</span>
+            <span class="related__excerpt">Nếu là một bông hoa
+Anh sẽ là chiếc lá
+Che chở từng cơn gió…</span>
+          </a>
+        </li>
+      
+    </ul>
+    
+      <a class="related__more" href="/the-loai/da-dang/">Xem tất cả thơ đa dạng :o →</a>
+    
+  </section>
+  
+
+  
+  <section class="discover" aria-labelledby="discover-h">
+    <h2 id="discover-h">Có thể bạn muốn đọc</h2>
+    <ul>
+      
+        <li><a href="/tho/uoc-gi-tinh-en/">Ước gì tình đến</a>
+            <em>tình yêu &lt;3</em></li>
+      
+        <li><a href="/tho/moi-gap/">Mới gặp</a>
+            <em>tình yêu &lt;3</em></li>
+      
+        <li><a href="/tho/nam-tay/">Nắm tay</a>
+            <em>tình yêu &lt;3</em></li>
+      
+    </ul>
+  </section>
+  
+
+  <nav class="poem-footer-nav">
+    <a href="/">← Tất cả bài thơ</a>
+    <a class="poem-footer-nav__random" href="/ngau-nhien/">🍀 Một bài thơ ngẫu nhiên</a>
   </nav>
 </main>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Thông báo đóng quỹ tháng 7 năm 2025 \u002D không đăng",
+  "@type": "Poem",
+  "name": "Thông báo đóng quỹ tháng 7 năm 2025 - không đăng",
+  "headline": "Thông báo đóng quỹ tháng 7 năm 2025 - không đăng",
+  "inLanguage": "vi-VN",
+  "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/",
   "datePublished": "2025-09-14T05:12:44+00:00",
   "dateModified": "2026-04-28T14:57:38.184679+00:00",
   "author": {
     "@type": "Person",
-    "name": "Cỏ Xanh"
+    "name": "Cỏ Xanh",
+    "url": "https://thocuacoxanh.vn/about/"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Thơ của Cỏ Xanh"
+    "name": "Thơ của Cỏ Xanh",
+    "url": "https://thocuacoxanh.vn/"
   },
-  "description": "Khám phá bài thơ thông báo đóng quỹ tháng 7/2025: Mưa thuận gió hòa, nắng dịu, cây đung đưa. Đóng tiền quỹ để quỹ đầy như cây ra quả. Xem danh sách ngay!",
-  "mainEntityOfPage": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/"
+  "genre": "đa dạng :o",
+  "keywords": "đóng quỹ tháng 7, bài thơ đóng quỹ, thông báo đóng quỹ, thơ vui, quỹ tháng 7, danh sách đóng quỹ, mưa thuận gió hòa, 2025",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/"
+  }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://thocuacoxanh.vn/"}
+    ,{"@type": "ListItem", "position": 2, "name": "đa dạng :o", "item": "https://thocuacoxanh.vn/the-loai/da-dang/"}
+    ,{"@type": "ListItem", "position": 3, "name": "Thông báo đóng quỹ tháng 7 năm 2025 - không đăng"}
+  ]
+}
+</script>
+
 
 
   <footer class="footer">
@@ -1493,23 +1841,6 @@ setInterval(() => {
 </script>
 
 <script>
-// Build stanzas from raw poem text
-const container = document.getElementById('poem-stanzas');
-const raw = `Tháng Bảy mưa thuận gió hòa 🌞\u000D\u000ANắng dịu nhẹ làn gió thổi qua ✨\u000D\u000ALàm tán cây đung đưa cành lá 🌳\u000D\u000AĐóng tiền quỹ ăn hương ăn hoa 💐\u000D\u000AĐể tiền quỹ đầy như cây ra quả 🌴\u000D\u000A[Link danh sách đóng quỹ]`;
-const blocks = raw.split(/\n\s*\n/);
-blocks.forEach(block => {
-  const lines = block.trim().split('\n');
-  if (lines.length === 0 || (lines.length === 1 && lines[0] === '')) return;
-  const stanza = document.createElement('div');
-  stanza.className = 'stanza';
-  lines.forEach(line => {
-    const p = document.createElement('p');
-    p.textContent = line;
-    stanza.appendChild(p);
-  });
-  container.appendChild(stanza);
-});
-
 // ── Reading progress bar ──
 const progressBar = document.getElementById('readingProgress');
 window.addEventListener('scroll', () => {
@@ -1519,20 +1850,84 @@ window.addEventListener('scroll', () => {
   progressBar.style.width = `${Math.min(progress, 100)}%`;
 }, { passive: true });
 
-// ── Fade-in stanzas ──
-const stanzaObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      const stanza = entry.target;
-      const idx = Array.from(stanza.parentNode.children).indexOf(stanza);
-      stanza.style.transitionDelay = `${idx * 0.1}s`;
-      stanza.classList.add('visible');
-      stanzaObserver.unobserve(stanza);
-    }
-  });
-}, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+// ── Fade-in stanzas (progressive enhancement, poem already renders without JS) ──
+(() => {
+  const stanzas = document.querySelectorAll('.stanza');
+  if (!stanzas.length || !('IntersectionObserver' in window)) return;
 
-document.querySelectorAll('.stanza').forEach(s => stanzaObserver.observe(s));
+  document.documentElement.classList.add('js-anim');
+
+  const reveal = el => el.classList.add('visible');
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const i = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.style.transitionDelay = `${Math.min(i, 6) * 0.09}s`;
+      reveal(el);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+  stanzas.forEach(s => io.observe(s));
+
+  setTimeout(() => stanzas.forEach(reveal), 2000);
+})();
+
+// ── Điều hướng bằng phím mũi tên ──
+(() => {
+  const prev = document.querySelector('.poem-nav__prev')?.href;
+  const next = document.querySelector('.poem-nav__next')?.href;
+  document.addEventListener('keydown', e => {
+    if (e.target.matches('input, textarea')) return;
+    if (e.key === 'ArrowLeft' && prev) location.href = prev;
+    if (e.key === 'ArrowRight' && next) location.href = next;
+  });
+})();
+
+// ── Chia sẻ (Web Share API, fallback copy link) ──
+document.getElementById('shareBtn')?.addEventListener('click', async function () {
+  const data = { title: this.dataset.title, url: this.dataset.url };
+  if (navigator.share) {
+    try { await navigator.share(data); } catch (e) {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(data.url);
+      this.textContent = 'Đã sao chép link';
+      setTimeout(() => { this.textContent = 'Chia sẻ'; }, 2000);
+    } catch (e) {}
+  }
+});
+
+// ── Đo mức độ giữ chân (đã có gtag.js sẵn trong base.html) ──
+(() => {
+  const body = document.querySelector('.poem-stanzas');
+  if (body && 'IntersectionObserver' in window && typeof gtag === 'function') {
+    new IntersectionObserver(([entry], obs) => {
+      if (entry.isIntersecting) {
+        gtag('event', 'poem_read_complete', { poem: document.title });
+        obs.disconnect();
+      }
+    }, { threshold: 1.0 }).observe(body);
+  }
+
+  document.querySelectorAll('.related a, .poem-nav a, .discover a, .poem-footer-nav__random').forEach(a => {
+    a.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'poem_to_poem', { from: location.pathname, to: a.pathname });
+      }
+    });
+  });
+
+  try {
+    const n = (+sessionStorage.getItem('tcx:count') || 0) + 1;
+    sessionStorage.setItem('tcx:count', n);
+    if (typeof gtag === 'function' && (n === 3 || n === 5)) {
+      gtag('event', `engaged_reader_${n}`);
+    }
+  } catch (e) {}
+})();
 </script>
 
 
