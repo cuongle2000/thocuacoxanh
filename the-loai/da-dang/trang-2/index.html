@@ -402,6 +402,78 @@ main { position: relative; z-index: 1; }
 .poem-card:hover .card-deco {
   transform: scale(1.5);
 }
+/* ── Điểm nhấn riêng cho từng thẻ thơ ──
+   Dùng lại chính poem.decor của bài (bảng màu + hoa văn + kiểu gạch), nên thẻ
+   ở danh sách mang đúng sắc thái của trang đọc bài đó. */
+.poem-card {
+  --poem-h: 145; --poem-c: 0.105;   /* mặc định, bị [data-palette] ghi đè */
+  isolation: isolate;               /* để hoạ tiết nằm dưới chữ mà vẫn trên nền thẻ */
+}
+.poem-card .card-deco,
+.poem-card .card-orn { z-index: -1; }
+
+/* thanh gradient trên đỉnh thẻ, nhuộm theo tông bài */
+.poem-card::before {
+  background: linear-gradient(90deg,
+    oklch(62% var(--poem-c) calc(var(--poem-h) + var(--ch, 0))),
+    oklch(78% calc(var(--poem-c) * 0.7) var(--poem-h)),
+    transparent);
+}
+.poem-card:hover {
+  border-color: oklch(74% var(--poem-c) var(--poem-h) / 0.55);
+  box-shadow: 0 10px 40px oklch(55% 0.05 var(--poem-h) / 0.1);
+}
+.poem-card .card-category { color: var(--poem-line); }
+.poem-card .card-title:hover { color: var(--poem-line); }
+.poem-card .card-deco {
+  background: radial-gradient(circle,
+    oklch(74% var(--poem-c) calc(var(--poem-h) + var(--ch, 0)) / 0.11) 0%,
+    oklch(74% var(--poem-c) calc(var(--poem-h) + var(--ch, 0)) / 0.05) 42%,
+    transparent 78%);
+  filter: blur(6px);
+}
+
+/* hoa văn mờ ở góc trên phải, như dấu triện chìm */
+.card-orn {
+  position: absolute;
+  top: 10px; right: 12px;
+  width: 50px; height: 50px;   /* màn nhỏ giữ 62px, xem @media bên dưới */
+  opacity: 0.16;
+  pointer-events: none;
+  transform: scaleX(-1);           /* motif vẽ cho góc trái, lật sang phải */
+  transition: opacity 0.5s;
+}
+.card-orn svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.card-orn path, .card-orn circle {
+  fill: none;
+  stroke: oklch(58% var(--poem-c) calc(var(--poem-h) + var(--ch, 0)));
+  stroke-width: 1.4; stroke-linecap: round;
+}
+.card-orn .dot { fill: oklch(58% var(--poem-c) calc(var(--poem-h) + var(--ch, 0))); stroke: none; }
+[data-theme='dark'] .card-orn { opacity: 0.22; }
+[data-theme='dark'] .card-orn path,
+[data-theme='dark'] .card-orn circle {
+  stroke: oklch(78% var(--poem-c) calc(var(--poem-h) + var(--ch, 0)));
+}
+[data-theme='dark'] .card-orn .dot { fill: oklch(78% var(--poem-c) calc(var(--poem-h) + var(--ch, 0))); }
+.poem-card:hover .card-orn { opacity: 0.3; }
+[data-theme='dark'] .poem-card:hover .card-orn { opacity: 0.4; }
+
+/* gạch nhỏ dưới tiêu đề, cùng kiểu với gạch trong bài thơ */
+.card-rule {
+  display: block;
+  margin: 2px 0 12px;
+  opacity: 0.55;
+  transition: opacity 0.4s;
+}
+.card-rule svg { display: block; width: 56px; height: 9px; overflow: visible; }
+.card-rule path, .card-rule circle {
+  fill: none; stroke: var(--poem-line);
+  stroke-width: 2.8; stroke-linecap: round;   /* svg thu nhỏ ~0.47 lần nên nét phải dày hơn */
+}
+.card-rule .dot { fill: var(--poem-line); stroke: none; }
+.poem-card:hover .card-rule { opacity: 0.9; }
+
 
 /* ── Footer ── */
 .footer {
@@ -521,6 +593,371 @@ main { position: relative; z-index: 1; }
 }
 .theme-toggle:hover .theme-label { opacity: 1; }
 
+/* ── Bầu trời hero: mặt trời/mây (ngày) · trăng/sao (đêm) ── */
+.sky {
+  position: absolute; inset: 0; z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* Đổi theme: nhóm ngày ẩn, nhóm đêm hiện (và ngược lại) */
+.sky .sun-wrap,
+.sky .birds,
+.sky .clouds { opacity: 1; visibility: visible; }
+.sky .moon-wrap,
+.sky .stars { opacity: 0; visibility: hidden; }
+[data-theme='dark'] .sky .sun-wrap,
+[data-theme='dark'] .sky .birds,
+[data-theme='dark'] .sky .clouds { opacity: 0; visibility: hidden; }
+[data-theme='dark'] .sky .moon-wrap,
+[data-theme='dark'] .sky .stars { opacity: 1; visibility: visible; }
+.sky .sun-wrap, .sky .birds, .sky .clouds, .sky .moon-wrap, .sky .stars {
+  position: absolute; inset: 0;
+  transition: opacity 0.7s ease, visibility 0.7s;
+}
+
+/* ── Mặt trời: đĩa sáng phẳng, viền tan dần, không có đường bo cứng ── */
+.sun {
+  position: absolute; top: 15%; right: 13%;
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    oklch(99% 0.045 96)      0%,
+    oklch(97% 0.085 94)     34%,
+    oklch(93% 0.135 89)     64%,
+    oklch(90% 0.150 84)     82%,
+    oklch(90% 0.150 84 / 0.55) 92%,
+    oklch(90% 0.150 84 / 0)   100%);
+}
+/* vầng nắng vàng: hai lớp tia mảnh quay ngược chiều, rất chậm */
+.sun-rays {
+  position: absolute; inset: -66px;
+  z-index: -1;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg,
+      oklch(88% 0.18 86 / 0.06) 0deg 2deg,
+      transparent 2deg 10deg),
+    radial-gradient(circle,
+      transparent 38%,
+      oklch(88% 0.18 86 / 0.06) 54%,
+      oklch(90% 0.15 86 / 0.036) 73%,
+      transparent 88%);
+  -webkit-mask: radial-gradient(circle, transparent 30%, oklch(0% 0 0 / 0.92) 48%, oklch(0% 0 0 / 0.45) 72%, transparent 94%);
+          mask: radial-gradient(circle, transparent 30%, oklch(0% 0 0 / 0.92) 48%, oklch(0% 0 0 / 0.45) 72%, transparent 94%);
+  filter: blur(5.5px);
+  animation: sunSpin 90s linear infinite;
+}
+.sun-rays::before {
+  content: ''; position: absolute; inset: 6%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 9deg,
+    oklch(90% 0.16 90 / 0.045) 0deg 1.3deg,
+    transparent 1.3deg 15deg);
+  -webkit-mask: radial-gradient(circle, transparent 34%, oklch(0% 0 0 / 0.85) 54%, transparent 92%);
+          mask: radial-gradient(circle, transparent 34%, oklch(0% 0 0 / 0.85) 54%, transparent 92%);
+  filter: blur(4px);
+  animation: sunSpin 140s linear infinite reverse;
+}
+@keyframes sunSpin { to { transform: rotate(360deg); } }
+
+/* quầng gần: giữ hơi ấm quanh đĩa */
+.sun::after {
+  content: ''; position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    oklch(93% 0.13 90 / 0.30) 0%,
+    oklch(93% 0.13 90 / 0.16) 38%,
+    oklch(93% 0.13 90 / 0.05) 66%,
+    transparent 84%);
+  filter: blur(10px);
+  z-index: -1;
+}
+/* quầng xa: thở rất chậm */
+.sun::before {
+  content: ''; position: absolute;
+  inset: -140px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    oklch(94% 0.11 92 / 0.16) 0%,
+    oklch(94% 0.11 92 / 0.09) 26%,
+    oklch(94% 0.11 92 / 0.04) 46%,
+    oklch(94% 0.11 92 / 0.015) 64%,
+    transparent 80%);
+  filter: blur(24px);
+  z-index: -2;
+  animation: sunHalo 9s ease-in-out infinite;
+}
+@keyframes sunHalo {
+  0%, 100% { opacity: 0.72; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.05); }
+}
+
+/* ── Đàn chim ban ngày: chỉ là bóng, mỗi bầy một quỹ đạo lượn riêng ── */
+.birds { position: absolute; inset: 0; overflow: hidden; }
+.flock {
+  position: absolute; left: -190px;
+  width: 190px; height: 66px;
+  animation: var(--fly, flyA) var(--speed, 82s) linear infinite;
+  animation-delay: var(--fdelay, 0s);
+  will-change: transform;
+}
+.flock--near { top: 19%; --fly: flyA; --speed: 82s;  --fdelay: -22s; }
+.flock--mid  { top: 12%; --fly: flyB; --speed: 106s; --fdelay: -64s;
+               width: 132px; height: 48px; opacity: 0.7; }
+.flock--far  { top: 5%;  --fly: flyC; --speed: 142s; --fdelay: -98s;
+               width: 100px; height: 38px; opacity: 0.44; }
+
+.bird {
+  position: absolute;
+  left: var(--x); top: var(--y); width: var(--w);
+  overflow: visible;
+  /* vỗ cánh dùng transform, nhấp nhô dùng translate — hai thuộc tính
+     riêng biệt nên chạy song song được trên cùng một phần tử */
+  animation: flap var(--fd, 1.2s) ease-in-out infinite,
+             bob  var(--bd, 6s)   ease-in-out infinite;
+  animation-delay: var(--fdl, 0s), var(--bdl, 0s);
+}
+.bird path {
+  fill: none;
+  stroke: oklch(42% 0.035 152 / 0.40);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+.flock--mid .bird path { stroke-width: 2.2; stroke: oklch(44% 0.032 152 / 0.36); }
+.flock--far .bird path { stroke-width: 2.7; stroke: oklch(46% 0.03 152 / 0.32); }
+
+/* vỗ cánh: gập chiều cao chữ V */
+@keyframes flap {
+  0%, 100% { transform: scaleY(1); }
+  50%      { transform: scaleY(0.42); }
+}
+/* từng con nhấp nhô lệch nhịp nhau trong bầy */
+@keyframes bob {
+  0%, 100% { translate: 0 0; }
+  32%      { translate: 0 calc(var(--bob, 5px) * -1); }
+  68%      { translate: 0 calc(var(--bob, 5px) * 0.65); }
+}
+
+/* Ba quỹ đạo lượn khác nhau. Hoành độ tăng đúng tỉ lệ với thời gian
+   nên tốc độ bay ngang đều, chỉ có độ cao là lên xuống thất thường. */
+@keyframes flyA {
+  0%   { transform: translate(0,        0);     }
+  14%  { transform: translate(18.76vw, -26px);  }
+  31%  { transform: translate(41.54vw,  8px);   }
+  48%  { transform: translate(64.32vw, -14px);  }
+  67%  { transform: translate(89.78vw,  22px);  }
+  84%  { transform: translate(112.56vw, -6px);  }
+  100% { transform: translate(134vw,   -30px);  }
+}
+@keyframes flyB {
+  0%   { transform: translate(0,        0);     }
+  17%  { transform: translate(22.78vw,  18px);  }
+  35%  { transform: translate(46.9vw,  -22px);  }
+  52%  { transform: translate(69.68vw,  6px);   }
+  71%  { transform: translate(95.14vw,  30px);  }
+  100% { transform: translate(134vw,   -12px);  }
+}
+@keyframes flyC {
+  0%   { transform: translate(0,        0);     }
+  21%  { transform: translate(28.14vw, -16px);  }
+  44%  { transform: translate(58.96vw,  24px);  }
+  63%  { transform: translate(84.42vw, -10px);  }
+  82%  { transform: translate(109.88vw, 14px);  }
+  100% { transform: translate(134vw,    4px);   }
+}
+
+/* ── Mây: mỗi đám một cấu trúc cụm riêng, không đám nào giống đám nào ── */
+.cloud {
+  --c:   oklch(100% 0 0);
+  --c-r: oklch(100% 0 0 / 0.45);
+  --shade: drop-shadow(0 5px 5px oklch(72% 0.055 95 / 0.24));
+  position: absolute;
+  background-repeat: no-repeat;
+  animation: cloudDrift linear infinite;
+  will-change: transform;
+}
+
+/* 1 — vòm cao lệch trái, đuôi thoải dần sang phải */
+.cloud--1 {
+  --puff: radial-gradient(closest-side, var(--c) 0 72%, var(--c-r) 88%, transparent 100%);
+  top: 9%; left: -26%;
+  width: 236px; height: 80px;
+  opacity: 0.95; filter: blur(1px) var(--shade);
+  background-image: var(--puff), var(--puff), var(--puff), var(--puff), var(--puff), var(--puff);
+  background-size:     40% 100%, 46% 74%, 34% 62%, 26% 44%, 18% 30%, 22% 36%;
+  background-position: 24% 0%,   6% 100%, 62% 100%, 88% 100%, 100% 92%, 0% 96%;
+  animation-duration: 78s; animation-delay: -12s;
+}
+
+/* 2 — dải dài hai đỉnh, hõm ở giữa */
+.cloud--2 {
+  --puff: radial-gradient(closest-side, var(--c) 0 66%, var(--c-r) 84%, transparent 100%);
+  top: 19%; left: -30%;
+  width: 300px; height: 94px;
+  opacity: 0.8; filter: blur(2px) var(--shade);
+  background-image: var(--puff), var(--puff), var(--puff), var(--puff), var(--puff), var(--puff);
+  background-size:     30% 92%, 26% 100%, 38% 66%, 34% 60%, 28% 52%, 20% 34%;
+  background-position: 22% 4%,  58% 0%,   4% 100%, 48% 100%, 86% 100%, 100% 96%;
+  animation-duration: 112s; animation-delay: -55s;
+}
+
+/* 3 — cụm nhỏ, tròn và dày, chân so le */
+.cloud--3 {
+  --puff: radial-gradient(closest-side, var(--c) 0 76%, var(--c-r) 90%, transparent 100%);
+  top: 3%; left: -20%;
+  width: 150px; height: 72px;
+  opacity: 0.7; filter: blur(1.5px) var(--shade);
+  background-image: var(--puff), var(--puff), var(--puff), var(--puff), var(--puff);
+  background-size:     56% 88%, 44% 70%, 42% 62%, 34% 48%, 24% 34%;
+  background-position: 28% 0%,  88% 18%, 2% 100%, 58% 92%, 100% 78%;
+  animation-duration: 64s; animation-delay: -38s;
+}
+
+/* 4 — rất rộng và mỏng, 7 bông so le cao thấp, kiểu mây tơi */
+.cloud--4 {
+  --puff: radial-gradient(closest-side, var(--c) 0 64%, var(--c-r) 82%, transparent 100%);
+  top: 25%; left: -34%;
+  width: 380px; height: 100px;
+  opacity: 0.5;
+  filter: blur(3.5px) drop-shadow(0 6px 7px oklch(72% 0.055 95 / 0.16));
+  background-image: var(--puff), var(--puff), var(--puff), var(--puff), var(--puff), var(--puff), var(--puff);
+  background-size:     30% 60%, 26% 88%, 32% 76%, 24% 56%, 28% 48%, 22% 36%, 20% 30%;
+  background-position: 8% 100%, 28% 10%, 50% 100%, 68% 6%,  86% 100%, 100% 84%, 0% 92%;
+  animation-duration: 145s; animation-delay: -90s;
+}
+
+/* 5 — hai bướu rõ, lõm hẳn ở giữa */
+.cloud--5 {
+  --puff: radial-gradient(closest-side, var(--c) 0 70%, var(--c-r) 86%, transparent 100%);
+  top: 14%; left: -22%;
+  width: 192px; height: 66px;
+  opacity: 0.78; filter: blur(1.25px) var(--shade);
+  background-image: var(--puff), var(--puff), var(--puff), var(--puff), var(--puff);
+  background-size:     40% 98%, 36% 84%, 30% 56%, 26% 48%, 24% 44%;
+  background-position: 12% 2%,  82% 8%,  48% 100%, 0% 100%, 100% 100%;
+  animation-duration: 96s; animation-delay: -70s;
+}
+
+/* trôi ngang, kèm bồng bềnh lên xuống rất nhẹ cho đỡ cứng */
+@keyframes cloudDrift {
+  0%   { transform: translate(0, 0)            scale(1);    }
+  25%  { transform: translate(39vw, -7px)      scale(1.03); }
+  50%  { transform: translate(78vw, 5px)       scale(0.98); }
+  75%  { transform: translate(117vw, -4px)     scale(1.02); }
+  100% { transform: translate(156vw, 0)        scale(1);    }
+}
+
+/* ── Mặt trăng: đứng yên, quầng sáng dịu ── */
+.moon {
+  position: absolute; top: 15%; right: 13%;
+  width: 94px; height: 94px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 22% 26%, oklch(38% 0.012 250 / 0.30) 0 6%, transparent 7%),
+    radial-gradient(circle at 62% 66%, oklch(38% 0.012 250 / 0.26) 0 9%, transparent 10%),
+    radial-gradient(circle at 74% 30%, oklch(38% 0.012 250 / 0.20) 0 5%, transparent 6%),
+    radial-gradient(circle at 40% 74%, oklch(38% 0.012 250 / 0.16) 0 4%, transparent 5%),
+    radial-gradient(circle at 62% 36%,
+      oklch(98% 0.02 95) 0%,
+      oklch(93% 0.03 92) 55%,
+      oklch(84% 0.035 88) 100%);
+  box-shadow:
+    0 0 40px oklch(94% 0.04 95 / 0.40),
+    0 0 100px oklch(92% 0.05 95 / 0.22);
+}
+.moon::before {
+  content: ''; position: absolute;
+  inset: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, oklch(92% 0.05 95 / 0.16) 0%, oklch(92% 0.05 95 / 0.05) 50%, transparent 72%);
+  animation: moonHalo 11s ease-in-out infinite;
+}
+@keyframes moonHalo {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.05); }
+}
+
+/* ── Sao lấp lánh ── */
+.star {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: var(--s); height: var(--s);
+  border-radius: 50%;
+  background: oklch(99% 0.01 95);
+  box-shadow: 0 0 6px oklch(97% 0.03 95 / 0.85);
+  animation: twinkle var(--dur, 3.5s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+/* Sao lớn có thêm ánh sáng chữ thập */
+.star--big::before,
+.star--big::after {
+  content: ''; position: absolute; left: 50%; top: 50%;
+  background: linear-gradient(to right, transparent, oklch(99% 0.01 95 / 0.75), transparent);
+  transform: translate(-50%, -50%);
+}
+.star--big::before { width: 16px; height: 1px; }
+.star--big::after  { width: 1px; height: 16px; background: linear-gradient(to bottom, transparent, oklch(99% 0.01 95 / 0.75), transparent); }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.18; transform: scale(0.72); }
+  50%      { opacity: 1;    transform: scale(1.15); }
+}
+
+/* ── Sao băng ── */
+.shooting-star {
+  position: absolute;
+  width: 2px; height: 2px;
+  opacity: 0;
+  animation: shoot 16s ease-in infinite;
+}
+.shooting-star i {
+  display: block;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: oklch(99% 0.01 95);
+  box-shadow: 0 0 8px 2px oklch(97% 0.03 95 / 0.8);
+}
+.shooting-star i::after {
+  content: ''; position: absolute; left: 1px; top: 0;
+  width: 130px; height: 1.5px;
+  background: linear-gradient(to right, oklch(99% 0.01 95 / 0.85), transparent);
+  transform-origin: left center;
+  transform: rotate(201deg);
+}
+.shooting-star--1 { top: 12%; left: 62%; animation-delay: 4s; }
+.shooting-star--2 { top: 26%; left: 34%; animation-delay: 11s; animation-duration: 21s; }
+
+@keyframes shoot {
+  0%      { transform: translate(0, 0);       opacity: 0; }
+  1%      { opacity: 1; }
+  7%      { transform: translate(340px, 132px); opacity: 0; }
+  100%    { transform: translate(340px, 132px); opacity: 0; }
+}
+
+/* ── Bầu trời hero: tôn trọng prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .grass-clump,
+  .flock,
+  .bird,
+  .sun::before,
+  .moon::before,
+  .sun-rays,
+  .sun-rays::before,
+  .star { animation: none; }
+  .star { opacity: 0.8; transform: none; }
+  .cloud { animation: none; }
+  .cloud--1 { left: 4%; }
+  .cloud--2 { left: 30%; }
+  .cloud--3 { left: 58%; }
+  .cloud--4 { left: 14%; }
+  .cloud--5 { left: 44%; }
+  .shooting-star { display: none; }
+  .flock--near { left: 18%; }
+  .flock--mid { left: 47%; }
+  .flock--far { left: 73%; }
+}
+
 /* ── Grass blades at hero bottom ── */
 .grass-field {
   position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;
@@ -528,18 +965,26 @@ main { position: relative; z-index: 1; }
   overflow: hidden;
   pointer-events: none;
 }
-.grass-field svg { width: 100%; height: 100%; }
-.grass-blade {
-  transform-origin: bottom center;
-  animation: sway 3.5s ease-in-out infinite;
+/* Rộng cố định theo px (không kéo giãn theo màn) => mật độ cỏ như nhau
+   ở mọi khổ màn hình; phần thừa bị .grass-field cắt bớt. */
+.grass-field svg {
+  display: block;
+  width: 2880px; min-width: 100%; height: 100%;
 }
-.grass-blade:nth-child(odd) { animation-delay: -1.2s; animation-duration: 4s; }
-.grass-blade:nth-child(3n) { animation-delay: -2.4s; animation-duration: 3.2s; }
-.grass-blade:nth-child(5n+2) { animation-delay: -0.6s; animation-duration: 4.5s; }
+.grass-clump {
+  /* fill-box: tâm xoay là gốc của CHÍNH khóm cỏ.
+     Mặc định là view-box (đáy giữa cả SVG) nên ngọn ở rìa bị nhấc bổng lên. */
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: sway var(--dur, 4.2s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
 
+/* đung đưa quanh gốc, biên độ nhỏ và lệch nhịp cho tự nhiên */
 @keyframes sway {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(3deg); }
+  0%, 100% { transform: rotate(calc(var(--amp, 2.4deg) * -1)); }
+  38%      { transform: rotate(calc(var(--amp, 2.4deg) * 0.5)); }
+  70%      { transform: rotate(var(--amp, 2.4deg)); }
 }
 
 /* ── Random quote section ── */
@@ -614,20 +1059,20 @@ main { position: relative; z-index: 1; }
   pointer-events: none;
   animation: blobMorph 10s ease-in-out infinite;
 }
-.watercolor-blob:nth-child(1) {
+.watercolor-blob.blob--1 {
   top: 15%; left: 8%;
   width: 280px; height: 280px;
   background: radial-gradient(circle, oklch(72% 0.12 145), oklch(80% 0.08 135));
   animation-delay: 0s;
 }
-.watercolor-blob:nth-child(2) {
+.watercolor-blob.blob--2 {
   top: 55%; right: 5%;
   width: 340px; height: 340px;
   background: radial-gradient(circle, oklch(78% 0.1 130), oklch(85% 0.05 120));
   animation-delay: -4s;
   animation-duration: 12s;
 }
-.watercolor-blob:nth-child(3) {
+.watercolor-blob.blob--3 {
   bottom: 10%; left: 30%;
   width: 220px; height: 220px;
   background: radial-gradient(circle, oklch(74% 0.11 148), oklch(82% 0.07 142));
@@ -658,7 +1103,7 @@ main { position: relative; z-index: 1; }
   background: radial-gradient(ellipse 50% 30% at 50% 25%, oklch(94% 0.05 95 / 0.4), transparent 70%);
 }
 .reading-main {
-  position: relative; z-index: 1;
+  position: relative; z-index: 2;
   display: flex; flex-direction: column; align-items: center;
   padding: 66px 24px 100px;
 }
@@ -814,35 +1259,47 @@ main { position: relative; z-index: 1; }
 .breadcrumb [aria-current="page"] { color: var(--fg); }
 
 /* ── Poem prev/next nav ── */
+/* ── Điều hướng bài trước/bài sau: hai thẻ bấm được thay vì hai dòng chữ ── */
 .poem-nav {
   max-width: 640px;
   width: 100%;
-  margin: 36px auto 0;
-  padding-top: 24px;
+  margin: 40px auto 0;
+  padding-top: 26px;
   border-top: 1px solid var(--border);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 14px;
 }
 .poem-nav__prev, .poem-nav__next {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
-  padding: 4px 0;
+  padding: 14px 16px;
+  /* nền trong suốt để chìm vào trang - khung chỉ hiện ra khi rê chuột,
+     tránh việc hai thẻ này nổi hơn cả bài thơ */
+  border: 1px solid transparent;
+  border-radius: 15px;
+  background: transparent;
   text-decoration: none;
+  transition: transform 0.3s, border-color 0.3s, background 0.3s;
+}
+.poem-nav__prev:hover, .poem-nav__next:hover {
+  transform: translateY(-2px);
+  border-color: var(--poem-edge, var(--accent-soft));
+  background: oklch(74% var(--poem-c, 0.1) var(--poem-h, 145) / 0.09);
 }
 .poem-nav__next { justify-content: flex-end; text-align: right; grid-column: 2; }
 .poem-nav__arrow {
   flex-shrink: 0;
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 26px;
   line-height: 1;
-  color: var(--accent-soft);
+  color: var(--poem-soft, var(--accent-soft));
   transition: transform 0.3s, color 0.3s;
 }
-.poem-nav__prev:hover .poem-nav__arrow { transform: translateX(-4px); color: var(--accent); }
-.poem-nav__next:hover .poem-nav__arrow { transform: translateX(4px); color: var(--accent); }
+.poem-nav__prev:hover .poem-nav__arrow { transform: translateX(-4px); color: var(--poem-line, var(--accent)); }
+.poem-nav__next:hover .poem-nav__arrow { transform: translateX(4px);  color: var(--poem-line, var(--accent)); }
 .poem-nav__text {
   display: flex; flex-direction: column; gap: 3px;
   min-width: 0;
@@ -853,7 +1310,7 @@ main { position: relative; z-index: 1; }
 }
 .poem-nav__title {
   font-family: var(--font-display);
-  font-size: 14px; font-style: italic;
+  font-size: 15px; font-style: italic;
   color: var(--fg);
   white-space: nowrap;
   overflow: hidden;
@@ -862,69 +1319,169 @@ main { position: relative; z-index: 1; }
 }
 .poem-nav__prev:hover .poem-nav__title,
 .poem-nav__next:hover .poem-nav__title {
-  color: var(--accent);
+  color: var(--poem-line, var(--accent));
 }
 
 /* ── Related / discover ── */
 .related, .discover {
   max-width: 640px;
   width: 100%;
-  margin: 32px auto 0;
+  margin: 48px auto 0;
 }
 .related h2, .discover h2 {
   font-family: var(--font-display);
-  font-size: 18px; font-weight: 600;
+  font-size: 20px; font-weight: 600;
   color: var(--fg);
-  margin-bottom: 16px;
+  margin-bottom: 6px;
   text-align: center;
 }
+/* gạch trang trí dưới tiêu đề mục, cùng kiểu với gạch trong khung thơ */
+.section-orn {
+  display: flex; justify-content: center;
+  margin-bottom: 20px;
+  opacity: 0.6;
+}
+.section-orn svg { display: block; width: 92px; height: 14px; overflow: visible; }
+.section-orn path, .section-orn circle {
+  fill: none; stroke: var(--poem-line, var(--accent));
+  stroke-width: 1.3; stroke-linecap: round;
+}
+.section-orn .dot { fill: var(--poem-line, var(--accent)); stroke: none; }
+
+/* thẻ bài liên quan: lưới 2 cột cho bớt đơn điệu */
 .related__list {
   list-style: none;
-  display: flex; flex-direction: column; gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 .related__list a {
+  position: relative;
   display: block;
-  padding: 14px 18px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  height: 100%;
+  padding: 15px 18px 14px;
+  /* viền nhuộm theo tông riêng của từng thẻ, bao trọn cả bo góc
+     (vạch dọc bên trái trước đây bị border-radius cắt cụt ở hai đầu) */
+  border: 1px solid oklch(84% calc(var(--poem-c, 0.1) * 0.55)
+                          calc(var(--poem-h, 145) + var(--ch, 0)) / 0.7);
+  border-radius: 16px;
   background: var(--surface);
   text-decoration: none;
-  transition: border-color 0.3s;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
-.related__list a:hover { border-color: var(--accent-soft); }
+[data-theme='dark'] .related__list a {
+  border-color: oklch(44% calc(var(--poem-c, 0.1) * 0.6)
+                       calc(var(--poem-h, 145) + var(--ch, 0)) / 0.75);
+}
+/* vệt sáng loang ở góc, chỉ hiện khi rê chuột */
+.related__list a::after {
+  content: ''; position: absolute;
+  right: -34px; top: -34px; width: 118px; height: 118px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    oklch(72% var(--poem-c, 0.1) calc(var(--poem-h, 145) + var(--ch, 0)) / 0.2), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.related__list li:nth-child(1) a { --ch: -18; }
+.related__list li:nth-child(2) a { --ch: 8;   }
+.related__list li:nth-child(3) a { --ch: -6;  }
+.related__list li:nth-child(4) a { --ch: 20;  }
+.related__list a:hover {
+  transform: translateY(-3px);
+  border-color: oklch(68% var(--poem-c, 0.1) calc(var(--poem-h, 145) + var(--ch, 0)) / 0.85);
+  box-shadow: 0 12px 26px oklch(60% 0.04 var(--poem-h, 145) / 0.13);
+}
+.related__list a:hover::after { opacity: 1; }
+
 .related__title {
   display: block;
   font-family: var(--font-display);
-  font-size: 15px; color: var(--fg);
-  margin-bottom: 4px;
+  font-size: 17px; color: var(--fg);
+  margin-bottom: 5px;
+  transition: color 0.3s;
 }
+.related__list a:hover .related__title { color: var(--poem-line, var(--accent)); }
 .related__excerpt {
   display: block;
-  font-size: 13px; color: var(--muted); font-style: italic;
+  font-size: 13px; line-height: 1.55;
+  color: var(--muted); font-style: italic;
 }
+.related__go {
+  display: block;
+  margin-top: 10px;
+  font-size: 11.5px; font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--poem-line, var(--accent));
+  opacity: 0.55;
+  transition: opacity 0.3s;
+}
+.related__list a:hover .related__go { opacity: 1; }
+.related__go span { display: inline-block; transition: transform 0.3s; }
+.related__list a:hover .related__go span { transform: translateX(3px); }
+
 .related__more {
-  display: inline-block;
-  margin-top: 14px;
-  font-size: 13px; color: var(--accent);
+  display: block;
+  width: fit-content;
+  margin: 18px auto 0;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: var(--poem-line, var(--accent));
   text-decoration: none;
+  border: 1px dashed var(--poem-edge, var(--border));
+  border-radius: 9999px;
+  transition: background 0.3s, border-color 0.3s;
 }
-.related__more:hover { opacity: 0.8; }
-.discover ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.discover li {
-  display: flex; justify-content: space-between; gap: 12px;
-  padding: 10px 4px;
-  border-bottom: 1px solid var(--border);
+.related__more:hover {
+  background: oklch(72% var(--poem-c, 0.1) var(--poem-h, 145) / 0.1);
+  border-style: solid;
+}
+
+/* gợi ý khác chuyên mục: chip nằm ngang cho khác nhịp với lưới bên trên */
+.discover ul {
+  list-style: none;
+  display: flex; flex-wrap: wrap; gap: 10px;
+  justify-content: center;
+}
+.discover li { display: block; }
+.discover a {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 9px 18px 9px 13px;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: var(--surface);
+  color: var(--fg);
+  text-decoration: none;
   font-size: 14px;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
-.discover a { color: var(--fg); text-decoration: none; }
-.discover a:hover { color: var(--accent); }
-.discover em { color: var(--muted); font-style: italic; font-size: 12px; }
+.discover a:hover {
+  transform: translateY(-2px);
+  border-color: var(--poem-edge, var(--accent-soft));
+  box-shadow: 0 8px 18px oklch(60% 0.04 var(--poem-h, 145) / 0.12);
+  color: var(--poem-line, var(--accent));
+}
+.discover__leaf { display: flex; flex-shrink: 0; }
+.discover__leaf svg { width: 15px; height: 15px; overflow: visible; }
+.discover__leaf path {
+  fill: none;
+  stroke: var(--poem-soft, var(--accent-soft));
+  stroke-width: 1.2; stroke-linecap: round;
+  transition: stroke 0.3s;
+}
+.discover a:hover .discover__leaf path { stroke: var(--poem-line, var(--accent)); }
+.discover__name { font-family: var(--font-display); }
+.discover em { color: var(--muted); font-style: italic; font-size: 11.5px; }
 
 /* ── Poem footer nav (tất cả bài thơ / ngẫu nhiên) ── */
 .poem-footer-nav {
   max-width: 640px;
   width: 100%;
-  margin: 32px auto 0;
+  margin: 44px auto 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -936,22 +1493,51 @@ main { position: relative; z-index: 1; }
   color: var(--muted);
   text-decoration: none;
   letter-spacing: 0.03em;
-  padding: 8px 20px;
+  padding: 10px 22px;
   border: 1px solid var(--border);
   border-radius: 9999px;
-  transition: all 0.3s;
+  transition: transform 0.3s, border-color 0.3s, color 0.3s, background 0.3s, box-shadow 0.3s;
 }
 .poem-footer-nav a:hover {
-  border-color: var(--accent-soft);
-  color: var(--accent);
+  transform: translateY(-2px);
+  border-color: var(--poem-edge, var(--accent-soft));
+  color: var(--poem-line, var(--accent));
+}
+/* nút "một bài thơ ngẫu nhiên" là lời mời chính - nhấn mạnh hơn */
+.poem-footer-nav__random {
+  color: var(--poem-line, var(--accent));
+  border-color: var(--poem-edge, var(--accent-soft));
+  background: oklch(74% var(--poem-c, 0.1) var(--poem-h, 145) / 0.1);
+}
+[data-theme='dark'] .poem-footer-nav__random {
+  background: oklch(50% var(--poem-c, 0.1) var(--poem-h, 145) / 0.14);
+}
+.poem-footer-nav__random:hover {
+  background: oklch(74% var(--poem-c, 0.1) var(--poem-h, 145) / 0.2);
+  box-shadow: 0 8px 18px oklch(60% 0.04 var(--poem-h, 145) / 0.14);
+}
+
+@media (max-width: 600px) {
+  .related__list { grid-template-columns: 1fr; }
+  .related, .discover { margin-top: 36px; }
+  .related h2, .discover h2 { font-size: 18px; }
+  .related__title { font-size: 16px; }
+  .related__go { opacity: 0.8; }
+  .poem-footer-nav { margin-top: 36px; }
+  .poem-footer-nav a { flex: 1; text-align: center; padding: 10px 14px; }
+}
+/* dưới 480px hai nút xếp dọc cho khỏi vỡ chữ và dễ bấm bằng ngón cái */
+@media (max-width: 480px) {
+  .poem-footer-nav { flex-direction: column-reverse; gap: 10px; }
+  .poem-footer-nav a { width: 100%; flex: none; padding: 12px 14px; }
 }
 
 @media (max-width: 480px) {
   .poem-nav { gap: 10px; }
-  .poem-nav__prev, .poem-nav__next { gap: 8px; }
+  .poem-nav__prev, .poem-nav__next { gap: 8px; padding: 11px 12px; border-radius: 13px; }
   .poem-nav__arrow { font-size: 22px; }
   .poem-nav__label { font-size: 9px; letter-spacing: 0.06em; }
-  .poem-nav__title { font-size: 12px; }
+  .poem-nav__title { font-size: 13px; }
 
   .poem-meta { gap: 8px; }
   .poem-meta .category-tag,
@@ -1149,25 +1735,180 @@ main { position: relative; z-index: 1; }
 }
 
 /* ── Watercolor dots ── */
-.watercolor-dot {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.09;
-  pointer-events: none;
+/* ══ Trang trí trang đọc thơ ══
+   Mỗi bài một bảng màu + hoa văn riêng, sinh tất định theo pk ở poems/decor.py
+   nên build tĩnh lại không đổi. Mọi chi tiết đều nằm DƯỚI chữ và không đổi
+   màu chữ thơ — đây là trang để đọc. */
+.reading-page { --poem-h: 145; --poem-c: 0.105; }
+[data-palette='mint']      { --poem-h: 178; --poem-c: 0.085; }
+[data-palette='nang']      { --poem-h: 85;  --poem-c: 0.115; }
+[data-palette='hong-phan'] { --poem-h: 20;  --poem-c: 0.09;  }
+[data-palette='oai-huong'] { --poem-h: 300; --poem-c: 0.08;  }
+[data-palette='bien']      { --poem-h: 240; --poem-c: 0.09;  }
+.reading-page, .poem-card {
+  --poem-line: oklch(56% var(--poem-c) var(--poem-h));
+  --poem-soft: oklch(74% calc(var(--poem-c) * 0.8) var(--poem-h));
+  --poem-edge: oklch(84% calc(var(--poem-c) * 0.45) var(--poem-h) / 0.6);
 }
-.watercolor-dot:nth-child(1) {
-  top: 20%; left: -60px;
-  width: 240px; height: 240px;
-  background: oklch(72% 0.12 145);
-}
-.watercolor-dot:nth-child(2) {
-  bottom: 15%; right: -40px;
-  width: 200px; height: 200px;
-  background: oklch(78% 0.1 130);
+[data-theme='dark'] .reading-page,
+[data-theme='dark'] .poem-card {
+  --poem-line: oklch(76% calc(var(--poem-c) * 0.85) var(--poem-h));
+  --poem-soft: oklch(60% calc(var(--poem-c) * 0.8) var(--poem-h));
+  --poem-edge: oklch(42% calc(var(--poem-c) * 0.5) var(--poem-h) / 0.55);
 }
 
-/* ── Responsive ── */
+/* thanh tiến trình + viền khung + chữ ký nhuộm theo tông của bài */
+.reading-page .reading-progress {
+  background: linear-gradient(90deg, var(--poem-line), var(--poem-soft));
+}
+.reading-page .reading-frame { border-color: var(--poem-edge); }
+.reading-page .poem-footer-detail .signature { color: var(--poem-line); opacity: 0.85; }
+.reading-page .poem-meta .category-tag { border-color: var(--poem-edge); color: var(--poem-line); }
+.reading-page .back-link { color: var(--poem-line); }
+
+/* ── Đốm màu nước nền ── */
+.watercolor-dot {
+  position: absolute;
+  top: var(--top, 30%);
+  width: var(--size, 240px); height: var(--size, 240px);
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: var(--op, 0.09);
+  background: oklch(72% var(--poem-c, 0.1) calc(var(--poem-h, 145) + var(--dh, 0)));
+  animation: dotDrift var(--dur, 20s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+  pointer-events: none;
+}
+.watercolor-dot[data-side='left']  { left: var(--off, -60px); }
+.watercolor-dot[data-side='right'] { right: var(--off, -60px); }
+@keyframes dotDrift {
+  0%, 100% { transform: translate(0, 0)      scale(1);    }
+  34%      { transform: translate(4%, -5%)   scale(1.09); }
+  67%      { transform: translate(-3%, 4%)   scale(0.94); }
+}
+
+/* ── Hoa văn hai góc khung ── */
+.corner-orn {
+  position: absolute;
+  width: 60px; height: 60px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+.corner-orn svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.corner-orn path, .corner-orn circle {
+  fill: none;
+  stroke: var(--poem-line);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+}
+.corner-orn .dot { fill: var(--poem-line); stroke: none; }
+.corner-orn--tl { top: -16px; left: -16px; }
+.corner-orn--br { bottom: -16px; right: -16px; rotate: 180deg; }
+
+/* ── Gạch phân cách biến thể ── */
+.decorative-line {
+  width: auto; height: auto; background: none; border-radius: 0;
+  display: flex; justify-content: center;
+  margin: 0 auto 30px;
+  opacity: 0.72;
+}
+.decorative-line svg { display: block; overflow: visible; }
+.decorative-line path, .decorative-line circle {
+  fill: none;
+  stroke: var(--poem-line);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+.decorative-line .dot { fill: var(--poem-line); stroke: none; }
+.decorative-line--end { margin: 0 auto 16px; opacity: 0.6; }
+.reading-page .poem-footer-detail { border-top: none; padding-top: 30px; }
+
+/* ── Chữ cái đầu (chỉ ~40% số bài, và bài phải đủ dài) ── */
+.poem-stanzas.has-dropcap .stanza:first-child p:first-child::first-letter {
+  font-family: var(--font-display);
+  font-size: 1.75em;
+  font-style: normal;
+  color: var(--poem-line);
+  letter-spacing: 0.01em;
+}
+
+/* ── Trang trí hai lề (chỉ màn rộng) ── */
+.side-deco {
+  display: none;
+  position: fixed; top: 0; bottom: 0;
+  width: 190px; z-index: 1;
+  overflow: hidden; pointer-events: none;
+}
+.side-deco--left  { left: 0; }
+.side-deco--right { right: 0; transform: scaleX(-1); }
+.side-day, .side-night {
+  position: absolute; inset: 0;
+  transition: opacity 0.7s ease, visibility 0.7s;
+}
+.side-day   { opacity: 1; visibility: visible; }
+.side-night { opacity: 0; visibility: hidden; }
+[data-theme='dark'] .side-day   { opacity: 0; visibility: hidden; }
+[data-theme='dark'] .side-night { opacity: 1; visibility: visible; }
+
+.sprig {
+  position: absolute; bottom: 0; left: var(--x, 20px);
+  width: 34px; height: var(--h, 90px);
+  opacity: var(--op, 0.45);
+  transform-origin: 50% 100%;
+  animation: sway var(--dur, 4.4s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.sprig path { fill: var(--poem-line); }
+
+.petal {
+  position: absolute; top: 0; left: var(--x, 40px);
+  width: var(--size, 10px); height: calc(var(--size, 10px) * 0.68);
+  border-radius: 60% 40% 55% 45% / 55% 60% 40% 45%;
+  background: oklch(80% calc(var(--poem-c, 0.1) * 0.95) var(--poem-h, 145));
+  opacity: 0;
+  animation: petalFall var(--dur, 26s) linear infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes petalFall {
+  0%   { transform: translate(0, -8vh) rotate(0deg); opacity: 0; }
+  9%   { opacity: 0.5; }
+  86%  { opacity: 0.38; }
+  100% { transform: translate(var(--drift, 0px), 106vh) rotate(var(--spin, 300deg)); opacity: 0; }
+}
+
+.spark {
+  position: absolute; left: var(--x, 40px); top: var(--y, 40%);
+  width: var(--s, 2.4px); height: var(--s, 2.4px);
+  border-radius: 50%;
+  background: oklch(97% 0.015 95);
+  box-shadow: 0 0 6px oklch(95% 0.025 95 / 0.8);
+  animation: twinkle var(--dur, 4s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+@media (min-width: 1100px) { .side-deco { display: block; } }
+/* Màn hẹp vẫn giữ lá rơi (và sao lấp lánh ban đêm) cho có sinh khí, nhưng bỏ
+   nhành cỏ vì lề quá hẹp. Lớp này nằm dưới khung đọc nên không cản mắt đọc. */
+@media (max-width: 1099px) {
+  .side-deco { display: block; opacity: 0.85; }
+  .side-deco .sprig { display: none; }
+  .side-deco .petal { width: calc(var(--size, 10px) * 0.85); height: calc(var(--size, 10px) * 0.58); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watercolor-dot, .sprig, .petal, .spark { animation: none; }
+  /* bỏ hiệu ứng nhấc thẻ khi rê chuột, chỉ giữ đổi màu */
+  .related__list a:hover,
+  .discover a:hover,
+  .poem-nav__prev:hover, .poem-nav__next:hover,
+  .poem-footer-nav a:hover { transform: none; }
+  .related__go { opacity: 0.8; }
+  /* cánh hoa đậu rải rác thay vì xếp thành hàng */
+  .petal { opacity: 0.34;
+           transform: translate(var(--drift, 0px), calc(32vh + var(--size, 10px) * 6))
+                      rotate(var(--spin, 300deg)); }
+}
+
 @media (max-width: 768px) {
   .masthead { padding: 16px 24px; }
   .masthead nav { gap: 20px; }
@@ -1190,12 +1931,24 @@ main { position: relative; z-index: 1; }
   .categories { top: 64px; padding: 16px 0; }
   .categories .pill { padding: 10px 22px; font-size: 13px; }
   .floating-controls { bottom: 24px; right: 24px; }
-  .grass-field { height: 100px; }
-  .watercolor-blob:nth-child(1) { width: 200px; height: 200px; }
-  .watercolor-blob:nth-child(2) { width: 250px; height: 250px; }
-  .watercolor-blob:nth-child(3) { display: none; }
+  .grass-field { height: 118px; }
+  /* co tỉ lệ ngang => cỏ mau hơn và sợi mảnh hơn cho màn nhỏ */
+  .grass-field svg { width: 2200px; }
+  .flock--near { top: 16%; }
+  .flock--mid { top: 9%; }
+  .flock--far { top: 3%; }
+  .grass-clump:nth-child(n+17) { display: none; }
+  .watercolor-blob.blob--1 { width: 200px; height: 200px; }
+  .watercolor-blob.blob--2 { width: 250px; height: 250px; }
+  .watercolor-blob.blob--3 { display: none; }
   .footer { padding: 64px 24px 56px; }
+  .card-orn { width: 62px; height: 62px; }
   .reading-main { padding: 66px 16px 72px; }
+  /* màn nhỏ: giữ cả hai hoa văn, chỉ thu nhỏ và kéo sát lại cho khỏi tràn ngang */
+  .corner-orn { width: 46px; height: 46px; opacity: 0.34; }
+  .corner-orn--tl { top: -10px; left: -10px; }
+  .corner-orn--br { bottom: -10px; right: -10px; }
+  .decorative-line svg { width: 100px; }
   .reading-frame { padding: 32px 28px 28px; }
   .back-link { margin-bottom: 28px; }
   .poem-meta { margin-bottom: 24px; }
@@ -1210,6 +1963,23 @@ main { position: relative; z-index: 1; }
   .content-section { padding: 0 16px 64px; gap: 20px; }
   .bio-card, .story-card { padding: 28px 24px; }
   .about-quote { padding: 0 16px 36px; }
+  /* ── Bầu trời hero — tablet ── */
+  .sun { top: 13%; right: 10%; width: 68px; height: 68px; }
+  .sun::before { inset: -104px; }
+  .sun::after { inset: -24px; filter: blur(12px); }
+  .sun-rays { inset: -60px; }
+  .moon { top: 13%; right: 10%; width: 72px; height: 72px; }
+  .moon::before { inset: -58px; }
+  .sky .stars { top: 64px; }
+  .cloud--1 { top: 8%; width: 196px; height: 72px; }
+  .cloud--2 { top: 14%; width: 232px; height: 78px; }
+  .cloud--3 { top: 2%; width: 140px; height: 52px; }
+  .cloud--4 { display: none; }
+  .cloud--5 { display: none; }
+  .star:nth-child(n+29) { display: none; }
+  .star--big::before { width: 13px; }
+  .star--big::after { height: 13px; }
+  .shooting-star--2 { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -1238,6 +2008,11 @@ main { position: relative; z-index: 1; }
   .ambient-toggle { width: 40px; height: 40px; font-size: 17px; }
   .footer { padding: 56px 20px 52px; }
   .reading-main { padding: 60px 12px 56px; }
+  .corner-orn { width: 40px; height: 40px; }
+  .corner-orn--tl { top: -8px; left: -8px; }
+  .corner-orn--br { bottom: -8px; right: -8px; }
+  .decorative-line svg { width: 88px; }
+  .poem-stanzas.has-dropcap .stanza:first-child p:first-child::first-letter { font-size: 1.6em; }
   .reading-frame { padding: 28px 18px 24px; border-radius: 20px; }
   .back-link { margin-bottom: 22px; font-size: 12px; }
   .poem-meta { margin-bottom: 20px; }
@@ -1255,6 +2030,34 @@ main { position: relative; z-index: 1; }
   .bio-card, .story-card { padding: 24px 18px; border-radius: 16px; }
   .bio-card p, .story-card p { font-size: 14px; }
   .about-quote { padding: 0 12px 28px; }
+  .grass-field svg { width: 1750px; }
+  /* màn nhỏ: chỉ giữ một đàn cho đỡ rối */
+  .flock--near { top: 14%; width: 132px; height: 48px; left: -132px; }
+  .flock--mid,
+  .flock--far  { display: none; }
+  .grass-clump:nth-child(n+13) { display: none; }
+
+  /* ── Bầu trời hero — mobile ── */
+  .sun { top: 11%; right: 9%; width: 54px; height: 54px; }
+  .sun::before { inset: -78px; }
+  .sun::after { inset: -19px; filter: blur(10px); }
+  .sun-rays { inset: -48px; }
+  .moon { top: 11%; right: 9%; width: 54px; height: 54px; }
+  .moon::before { inset: -40px; }
+  .sky .stars { top: 56px; }
+  .cloud--1 { width: 148px; height: 54px; top: 13%; }
+  .cloud--2 { width: 172px; height: 58px; top: 21%; }
+  .cloud--3 { display: none; }
+  .star:nth-child(n+21) { display: none; }
+  .star--big::before,
+  .star--big::after { display: none; }
+  .shooting-star i::after { width: 90px; }
+  @keyframes shoot {
+    0%   { transform: translate(0, 0);          opacity: 0; }
+    1%   { opacity: 1; }
+    7%   { transform: translate(200px, 78px);   opacity: 0; }
+    100% { transform: translate(200px, 78px);   opacity: 0; }
+  }
 }
 </style>
     
@@ -1278,8 +2081,94 @@ main { position: relative; z-index: 1; }
 
 <section class="hero" data-od-id="hero">
   <div class="hero-bg"></div>
+  <div class="sky" aria-hidden="true">
+    <!-- ── Ban ngày: mặt trời đứng yên + mây trôi nhẹ ── -->
+    <div class="sun-wrap">
+      <div class="sun"><span class="sun-rays"></span></div>
+    </div>
+    <div class="clouds">
+      <div class="cloud cloud--1"></div>
+      <div class="cloud cloud--2"></div>
+      <div class="cloud cloud--3"></div>
+      <div class="cloud cloud--4"></div>
+      <div class="cloud cloud--5"></div>
+    </div>
+    <div class="birds">
+      <div class="flock flock--near">
+        <svg class="bird" style="--x:0px;--y:32%;--w:26px;--fd:1.43s;--fdl:-0.52s;--bd:5.45s;--bdl:-7.4s;--bob:3.7px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:42px;--y:6%;--w:21px;--fd:1.24s;--fdl:-0.89s;--bd:7.38s;--bdl:-1.31s;--bob:6.8px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:74px;--y:52%;--w:18px;--fd:1.25s;--fdl:-1.36s;--bd:4.35s;--bdl:-8.61s;--bob:4.0px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:112px;--y:20%;--w:23px;--fd:1.44s;--fdl:-0.81s;--bd:8.55s;--bdl:-1.65s;--bob:4.9px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:150px;--y:62%;--w:16px;--fd:1.0s;--fdl:-1.25s;--bd:6.98s;--bdl:-1.84s;--bob:4.2px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+      </div>
+      <div class="flock flock--mid">
+        <svg class="bird" style="--x:0px;--y:24%;--w:18px;--fd:1.0s;--fdl:-0.32s;--bd:7.11s;--bdl:-3.94s;--bob:7.2px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:34px;--y:0%;--w:15px;--fd:1.0s;--fdl:-1.34s;--bd:9.31s;--bdl:-6.66s;--bob:7.5px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:62px;--y:46%;--w:16px;--fd:1.46s;--fdl:-0.15s;--bd:6.6s;--bdl:-0.71s;--bob:7.7px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:96px;--y:18%;--w:13px;--fd:1.27s;--fdl:-0.17s;--bd:6.51s;--bdl:-6.99s;--bob:6.3px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+      </div>
+      <div class="flock flock--far">
+        <svg class="bird" style="--x:0px;--y:30%;--w:13px;--fd:1.02s;--fdl:-1.5s;--bd:4.49s;--bdl:-7.59s;--bob:8.8px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:26px;--y:4%;--w:11px;--fd:1.4s;--fdl:-1.51s;--bd:6.96s;--bdl:-1.97s;--bob:5.8px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:50px;--y:44%;--w:12px;--fd:1.39s;--fdl:-1.23s;--bd:6.2s;--bdl:-8.53s;--bob:3.2px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+        <svg class="bird" style="--x:78px;--y:20%;--w:10px;--fd:1.25s;--fdl:-0.06s;--bd:6.06s;--bdl:-8.9s;--bob:3.7px" viewBox="0 0 24 12"><path d="M1 8.4 Q6 1.2 12 6.4 Q18 1.2 23 8.4"/></svg>
+      </div>
+    </div>
+    <!-- ── Ban đêm: mặt trăng + sao lấp lánh ── -->
+    <div class="moon-wrap">
+      <div class="moon"></div>
+    </div>
+    <div class="stars">
+      <i class="star" style="--x:43.79%;--y:7.57%;--s:2.6px;--d:1.35s;--dur:3.4s"></i>
+      <i class="star" style="--x:73.31%;--y:25.75%;--s:2.2px;--d:4.66s;--dur:3.09s"></i>
+      <i class="star" style="--x:55.31%;--y:11.39%;--s:2.6px;--d:1.02s;--dur:5.33s"></i>
+      <i class="star star--big" style="--x:97.0%;--y:22.88%;--s:3.4px;--d:3.31s;--dur:4.83s"></i>
+      <i class="star" style="--x:4.98%;--y:74.97%;--s:2.2px;--d:2.52s;--dur:4.61s"></i>
+      <i class="star" style="--x:32.15%;--y:6.34%;--s:2.6px;--d:4.66s;--dur:5.03s"></i>
+      <i class="star" style="--x:94.89%;--y:34.53%;--s:2.2px;--d:3.9s;--dur:3.25s"></i>
+      <i class="star" style="--x:77.56%;--y:68.59%;--s:2.6px;--d:3.19s;--dur:3.97s"></i>
+      <i class="star" style="--x:15.7%;--y:39.84%;--s:2.2px;--d:3.69s;--dur:4.34s"></i>
+      <i class="star star--big" style="--x:16.95%;--y:80.86%;--s:3.4px;--d:1.42s;--dur:3.42s"></i>
+      <i class="star star--big" style="--x:47.69%;--y:27.23%;--s:3px;--d:1.14s;--dur:3.43s"></i>
+      <i class="star" style="--x:86.13%;--y:52.08%;--s:2.2px;--d:0.45s;--dur:5.38s"></i>
+      <i class="star star--big" style="--x:42.48%;--y:19.88%;--s:3.4px;--d:1.14s;--dur:2.78s"></i>
+      <i class="star" style="--x:7.0%;--y:25.33%;--s:1.6px;--d:4.09s;--dur:3.39s"></i>
+      <i class="star" style="--x:24.56%;--y:33.99%;--s:1.8px;--d:0.86s;--dur:4.66s"></i>
+      <i class="star" style="--x:88.53%;--y:29.88%;--s:2.6px;--d:3.44s;--dur:3.06s"></i>
+      <i class="star star--big" style="--x:6.1%;--y:26.38%;--s:3.4px;--d:3.13s;--dur:4.64s"></i>
+      <i class="star star--big" style="--x:93.85%;--y:6.79%;--s:3px;--d:2.73s;--dur:5.36s"></i>
+      <i class="star star--big" style="--x:37.22%;--y:78.97%;--s:3px;--d:0.41s;--dur:3.47s"></i>
+      <i class="star" style="--x:26.93%;--y:31.9%;--s:2.6px;--d:1.02s;--dur:4.89s"></i>
+      <i class="star star--big" style="--x:58.39%;--y:11.38%;--s:3px;--d:2.9s;--dur:3.48s"></i>
+      <i class="star" style="--x:25.87%;--y:35.2%;--s:2.6px;--d:1.19s;--dur:4.5s"></i>
+      <i class="star star--big" style="--x:29.24%;--y:22.37%;--s:3.4px;--d:4.18s;--dur:4.73s"></i>
+      <i class="star" style="--x:25.28%;--y:36.52%;--s:1.8px;--d:4.18s;--dur:5.14s"></i>
+      <i class="star" style="--x:75.04%;--y:58.63%;--s:1.8px;--d:3.5s;--dur:4.14s"></i>
+      <i class="star" style="--x:36.93%;--y:81.99%;--s:2.2px;--d:3.1s;--dur:2.96s"></i>
+      <i class="star" style="--x:96.26%;--y:11.69%;--s:1.8px;--d:2.4s;--dur:3.83s"></i>
+      <i class="star" style="--x:52.86%;--y:6.25%;--s:1.6px;--d:0.91s;--dur:3.17s"></i>
+      <i class="star" style="--x:74.71%;--y:40.15%;--s:2.2px;--d:4.59s;--dur:4.71s"></i>
+      <i class="star" style="--x:65.88%;--y:6.83%;--s:2.6px;--d:0.15s;--dur:2.71s"></i>
+      <i class="star" style="--x:3.99%;--y:21.07%;--s:2.2px;--d:3.95s;--dur:3.67s"></i>
+      <i class="star" style="--x:76.19%;--y:61.33%;--s:1.6px;--d:3.96s;--dur:4.42s"></i>
+      <i class="star" style="--x:59.28%;--y:18.12%;--s:2.2px;--d:1.91s;--dur:2.82s"></i>
+      <i class="star" style="--x:5.76%;--y:15.58%;--s:2.6px;--d:3.87s;--dur:5.02s"></i>
+      <i class="star" style="--x:11.7%;--y:53.25%;--s:1.8px;--d:0.05s;--dur:2.91s"></i>
+      <i class="star" style="--x:17.83%;--y:44.99%;--s:2.6px;--d:0.61s;--dur:3.69s"></i>
+      <i class="star star--big" style="--x:22.15%;--y:49.88%;--s:3.4px;--d:0.48s;--dur:3.08s"></i>
+      <i class="star" style="--x:10.79%;--y:23.7%;--s:2.2px;--d:2.84s;--dur:5.12s"></i>
+      <i class="star" style="--x:32.87%;--y:85.93%;--s:2px;--d:3.01s;--dur:4.84s"></i>
+      <i class="star" style="--x:36.11%;--y:81.9%;--s:1.6px;--d:3.8s;--dur:4.16s"></i>
+      <i class="star" style="--x:19.22%;--y:52.98%;--s:1.6px;--d:1.77s;--dur:3.56s"></i>
+      <i class="star" style="--x:90.18%;--y:65.61%;--s:1.6px;--d:2.52s;--dur:4.13s"></i>
+      <i class="star" style="--x:85.63%;--y:20.77%;--s:1.8px;--d:4.91s;--dur:4.38s"></i>
+      <i class="star" style="--x:90.46%;--y:6.94%;--s:2.6px;--d:1.12s;--dur:4.51s"></i>
+      <span class="shooting-star shooting-star--1"><i></i></span>
+      <span class="shooting-star shooting-star--2"><i></i></span>
+    </div>
+  </div>
   <div class="grass-field" aria-hidden="true">
-    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+    <svg viewBox="0 0 2880 160" preserveAspectRatio="none">
       <defs>
         <linearGradient id="grass1" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0%" stop-color="oklch(65% 0.1 140)"/>
@@ -1293,35 +2182,240 @@ main { position: relative; z-index: 1; }
           <stop offset="0%" stop-color="oklch(62% 0.09 143)"/>
           <stop offset="100%" stop-color="oklch(80% 0.06 130)"/>
         </linearGradient>
+        <linearGradient id="grass4" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="oklch(54% 0.10 146)"/>
+          <stop offset="100%" stop-color="oklch(70% 0.09 141)"/>
+        </linearGradient>
+        <linearGradient id="grass5" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stop-color="oklch(70% 0.11 130)"/>
+          <stop offset="100%" stop-color="oklch(85% 0.07 124)"/>
+        </linearGradient>
       </defs>
-      <g class="grass-blade"><path d="M30 160 Q35 100 25 30" stroke="url(#grass1)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M60 160 Q55 110 65 25" stroke="url(#grass2)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M90 160 Q92 95 80 20" stroke="url(#grass1)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M130 160 Q128 105 140 28" stroke="url(#grass3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M170 160 Q168 100 175 22" stroke="url(#grass2)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M210 160 Q215 108 205 35" stroke="url(#grass1)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M260 160 Q255 98 268 18" stroke="url(#grass3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M310 160 Q312 102 300 30" stroke="url(#grass2)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M370 160 Q368 95 380 25" stroke="url(#grass1)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M430 160 Q435 110 425 32" stroke="url(#grass3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M500 160 Q498 100 510 20" stroke="url(#grass2)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M580 160 Q582 108 572 28" stroke="url(#grass1)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M660 160 Q655 97 668 24" stroke="url(#grass3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M740 160 Q742 105 732 35" stroke="url(#grass2)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M820 160 Q818 100 830 22" stroke="url(#grass1)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M900 160 Q905 112 895 30" stroke="url(#grass3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M980 160 Q978 98 990 26" stroke="url(#grass2)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M1060 160 Q1062 110 1052 34" stroke="url(#grass1)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M1140 160 Q1138 102 1150 20" stroke="url(#grass3)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M1220 160 Q1225 108 1215 28" stroke="url(#grass2)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M1300 160 Q1298 97 1310 32" stroke="url(#grass1)" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M1380 160 Q1382 105 1370 22" stroke="url(#grass3)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
-      <g class="grass-blade"><path d="M1430 160 Q1435 112 1422 36" stroke="url(#grass2)" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+      <g class="grass-clump" style="--dur:4.04s;--d:-3.12s;--amp:2.1deg">
+        <path d="M2.85 160 Q0.23 90.54 -13.46 47.96 Q-1.19 108.46 5.15 160 Z" fill="url(#grass3)"/>
+        <path d="M26.89 160 Q30.44 118.03 45.43 92.31 Q34.21 128.86 28.44 160 Z" fill="url(#grass2)" opacity="0.88"/>
+        <path d="M40.71 160 Q34.68 91.88 6.27 50.12 Q29.79 109.46 41.92 160 Z" fill="url(#grass5)"/>
+        <path d="M54.8 160 Q50.82 84.83 30.67 38.75 Q48.37 104.23 57.5 160 Z" fill="url(#grass3)"/>
+        <path d="M78.47 160 Q80.21 70.92 87.14 16.33 Q82.3 93.91 79.82 160 Z" fill="url(#grass2)"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.89s;--d:-3.4s;--amp:2.1deg">
+        <path d="M98.58 160 Q101.15 82.53 111.84 35.06 Q103.99 102.53 99.96 160 Z" fill="url(#grass3)"/>
+        <path d="M117.47 160 Q116.47 121.29 110.18 97.57 Q116.5 131.28 119.77 160 Z" fill="url(#grass1)" opacity="0.66"/>
+        <path d="M136.85 160 Q138.74 108.61 145.84 77.11 Q141.21 121.87 138.83 160 Z" fill="url(#grass1)" opacity="0.67"/>
+        <path d="M160.01 160 Q165.51 79.94 188.84 30.87 Q171.34 100.6 162.34 160 Z" fill="url(#grass4)"/>
+        <path d="M177.24 160 Q172.19 121.96 147.53 98.65 Q168.57 131.78 179.42 160 Z" fill="url(#grass4)" opacity="0.66"/>
+        <path d="M200.24 160 Q197.56 68.03 184.27 11.67 Q195.76 91.77 201.68 160 Z" fill="url(#grass4)"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.49s;--d:-5.33s;--amp:2.3deg">
+        <path d="M225.03 160 Q229.96 76.08 251.05 24.64 Q235.06 97.73 226.83 160 Z" fill="url(#grass1)"/>
+        <path d="M247.37 160 Q254.32 92.39 284.0 50.96 Q261.57 109.84 250.03 160 Z" fill="url(#grass4)"/>
+        <path d="M264.69 160 Q267.42 118.82 278.4 93.58 Q270.6 129.45 266.6 160 Z" fill="url(#grass3)" opacity="0.69"/>
+        <path d="M284.89 160 Q291.49 100.86 319.56 64.62 Q298.44 116.12 287.58 160 Z" fill="url(#grass3)" opacity="0.73"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.28s;--d:-2.31s;--amp:2.0deg">
+        <path d="M304.63 160 Q300.9 76.43 282.9 25.21 Q298.14 98.0 305.99 160 Z" fill="url(#grass4)"/>
+        <path d="M316.66 160 Q314.27 77.37 301.44 26.73 Q313.22 98.69 319.31 160 Z" fill="url(#grass1)"/>
+        <path d="M337.37 160 Q335.05 74.95 323.03 22.82 Q333.79 96.9 339.35 160 Z" fill="url(#grass1)"/>
+        <path d="M361.39 160 Q358.92 74.64 346.03 22.32 Q357.58 96.67 363.54 160 Z" fill="url(#grass4)"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.02s;--d:-5.17s;--amp:3.2deg">
+        <path d="M380.39 160 Q387.15 93.16 416.24 52.19 Q394.05 110.41 382.63 160 Z" fill="url(#grass2)"/>
+        <path d="M396.45 160 Q403.63 110.63 435.2 80.38 Q410.63 123.37 397.98 160 Z" fill="url(#grass3)" opacity="0.83"/>
+        <path d="M408.81 160 Q403.6 98.43 378.81 60.7 Q399.57 114.32 410.27 160 Z" fill="url(#grass5)" opacity="0.62"/>
+        <path d="M421.94 160 Q424.11 94.12 432.02 53.74 Q427.07 111.12 424.54 160 Z" fill="url(#grass3)"/>
+        <path d="M434.75 160 Q441.8 117.77 472.97 91.89 Q448.56 128.67 436.0 160 Z" fill="url(#grass3)" opacity="0.8"/>
+        <path d="M458.22 160 Q457.08 99.39 450.89 62.24 Q456.61 115.03 459.57 160 Z" fill="url(#grass5)" opacity="0.77"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.38s;--d:-3.5s;--amp:2.0deg">
+        <path d="M477.34 160 Q472.57 75.22 449.51 23.26 Q469.05 97.1 479.13 160 Z" fill="url(#grass3)"/>
+        <path d="M491.21 160 Q494.85 96.19 510.09 57.08 Q498.84 112.66 493.06 160 Z" fill="url(#grass2)" opacity="0.75"/>
+        <path d="M513.56 160 Q507.45 110.82 478.52 80.67 Q502.59 123.51 515.0 160 Z" fill="url(#grass2)" opacity="0.65"/>
+        <path d="M531.71 160 Q533.64 106.99 540.79 74.5 Q536.22 120.67 533.88 160 Z" fill="url(#grass3)" opacity="0.63"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.1s;--d:-5.19s;--amp:2.1deg">
+        <path d="M552.84 160 Q558.58 121.76 583.5 98.32 Q564.36 131.63 554.52 160 Z" fill="url(#grass4)" opacity="0.75"/>
+        <path d="M565.65 160 Q568.57 67.43 580.1 10.7 Q572.14 91.32 568.05 160 Z" fill="url(#grass1)"/>
+        <path d="M587.87 160 Q586.88 91.76 580.87 49.94 Q586.81 109.37 589.88 160 Z" fill="url(#grass4)"/>
+        <path d="M606.86 160 Q608.83 116.01 616.03 89.05 Q611.52 127.36 609.21 160 Z" fill="url(#grass2)" opacity="0.78"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.48s;--d:-5.59s;--amp:1.8deg">
+        <path d="M630.2 160 Q632.15 105.71 639.34 72.43 Q634.81 119.72 632.49 160 Z" fill="url(#grass2)" opacity="0.8"/>
+        <path d="M648.67 160 Q646.49 90.34 635.51 47.65 Q645.11 108.32 650.06 160 Z" fill="url(#grass1)"/>
+        <path d="M665.15 160 Q663.96 119.22 657.3 94.23 Q663.56 129.74 666.8 160 Z" fill="url(#grass2)" opacity="0.83"/>
+        <path d="M684.05 160 Q683.13 103.44 677.21 68.78 Q683.24 118.04 686.37 160 Z" fill="url(#grass5)" opacity="0.85"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.43s;--d:-2.2s;--amp:1.8deg">
+        <path d="M708.83 160 Q710.76 70.01 717.92 14.85 Q713.35 93.23 711.01 160 Z" fill="url(#grass2)"/>
+        <path d="M724.29 160 Q723.17 101.9 717.01 66.29 Q722.76 116.89 725.73 160 Z" fill="url(#grass4)" opacity="0.79"/>
+        <path d="M741.35 160 Q738.19 100.31 721.78 63.72 Q736.46 115.71 744.05 160 Z" fill="url(#grass3)" opacity="0.8"/>
+        <path d="M756.66 160 Q751.48 103.57 726.15 68.99 Q747.79 118.13 758.96 160 Z" fill="url(#grass1)" opacity="0.66"/>
+        <path d="M778.79 160 Q774.6 117.04 754.37 90.7 Q771.51 128.12 780.35 160 Z" fill="url(#grass1)" opacity="0.63"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.18s;--d:-5.24s;--amp:1.7deg">
+        <path d="M798.87 160 Q803.15 86.31 821.52 41.14 Q807.54 105.32 800.35 160 Z" fill="url(#grass2)"/>
+        <path d="M819.43 160 Q825.47 69.03 851.01 13.28 Q831.91 92.51 822.1 160 Z" fill="url(#grass1)"/>
+        <path d="M839.78 160 Q843.42 94.44 858.32 54.26 Q847.55 111.36 842.02 160 Z" fill="url(#grass3)"/>
+        <path d="M857.59 160 Q862.75 93.65 884.76 52.98 Q868.14 110.77 859.6 160 Z" fill="url(#grass1)"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.59s;--d:-1.54s;--amp:1.7deg">
+        <path d="M874.25 160 Q871.72 84.37 859.15 38.01 Q870.01 103.89 875.61 160 Z" fill="url(#grass2)"/>
+        <path d="M893.74 160 Q888.5 109.55 863.59 78.63 Q884.41 122.57 895.15 160 Z" fill="url(#grass2)" opacity="0.89"/>
+        <path d="M906.93 160 Q911.38 72.49 930.06 18.86 Q916.2 95.08 909.08 160 Z" fill="url(#grass5)"/>
+        <path d="M928.69 160 Q930.79 117.27 938.56 91.08 Q933.61 128.3 931.08 160 Z" fill="url(#grass1)" opacity="0.67"/>
+        <path d="M941.1 160 Q945.02 98.08 961.39 60.13 Q949.28 114.06 943.06 160 Z" fill="url(#grass5)" opacity="0.74"/>
+        <path d="M966.1 160 Q961.64 112.4 940.4 83.22 Q958.16 124.68 967.32 160 Z" fill="url(#grass1)" opacity="0.71"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.13s;--d:-4.12s;--amp:2.2deg">
+        <path d="M984.53 160 Q981.85 109.05 967.93 77.83 Q980.38 122.2 986.8 160 Z" fill="url(#grass4)" opacity="0.62"/>
+        <path d="M997.56 160 Q991.78 102.78 963.67 67.71 Q987.61 117.54 999.96 160 Z" fill="url(#grass5)" opacity="0.88"/>
+        <path d="M1020.26 160 Q1022.12 83.01 1029.19 35.82 Q1024.52 102.88 1022.13 160 Z" fill="url(#grass1)"/>
+        <path d="M1036.07 160 Q1042.56 74.82 1070.44 22.62 Q1049.22 96.8 1038.3 160 Z" fill="url(#grass1)"/>
+        <path d="M1055.03 160 Q1061.14 117.71 1087.4 91.79 Q1067.4 128.62 1057.11 160 Z" fill="url(#grass3)" opacity="0.79"/>
+      </g>
+      <g class="grass-clump" style="--dur:3.68s;--d:-5.11s;--amp:2.1deg">
+        <path d="M1073.87 160 Q1075.72 76.43 1082.78 25.2 Q1078.09 97.99 1075.69 160 Z" fill="url(#grass1)"/>
+        <path d="M1088.0 160 Q1094.67 117.22 1123.56 91.0 Q1101.41 128.26 1090.01 160 Z" fill="url(#grass2)" opacity="0.66"/>
+        <path d="M1111.06 160 Q1110.11 72.79 1104.14 19.33 Q1110.13 95.29 1113.23 160 Z" fill="url(#grass1)"/>
+        <path d="M1132.36 160 Q1136.08 70.6 1151.9 15.81 Q1139.98 93.67 1133.84 160 Z" fill="url(#grass3)"/>
+        <path d="M1146.34 160 Q1150.99 98.6 1170.8 60.96 Q1155.89 114.44 1148.22 160 Z" fill="url(#grass3)" opacity="0.82"/>
+        <path d="M1166.07 160 Q1162.19 88.83 1142.52 45.21 Q1159.81 107.2 1168.73 160 Z" fill="url(#grass1)"/>
+      </g>
+      <g class="grass-clump" style="--dur:3.65s;--d:-5.49s;--amp:2.4deg">
+        <path d="M1182.12 160 Q1189.08 120.78 1219.41 96.75 Q1196.0 130.9 1183.96 160 Z" fill="url(#grass2)" opacity="0.74"/>
+        <path d="M1197.69 160 Q1201.08 80.2 1215.34 31.3 Q1204.71 100.8 1199.24 160 Z" fill="url(#grass3)"/>
+        <path d="M1221.01 160 Q1214.53 123.75 1183.98 101.53 Q1209.34 133.11 1222.41 160 Z" fill="url(#grass1)" opacity="0.62"/>
+        <path d="M1235.28 160 Q1233.2 73.29 1222.25 20.15 Q1232.1 95.67 1237.19 160 Z" fill="url(#grass1)"/>
+        <path d="M1254.17 160 Q1252.26 75.5 1241.79 23.71 Q1251.5 97.3 1256.53 160 Z" fill="url(#grass5)"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.46s;--d:-1.17s;--amp:2.3deg">
+        <path d="M1277.51 160 Q1272.33 83.69 1247.76 36.93 Q1268.28 103.39 1278.85 160 Z" fill="url(#grass4)"/>
+        <path d="M1290.76 160 Q1296.09 108.4 1318.36 76.77 Q1301.9 121.71 1293.45 160 Z" fill="url(#grass5)" opacity="0.62"/>
+        <path d="M1314.8 160 Q1313.19 97.07 1304.66 58.51 Q1312.41 113.31 1316.41 160 Z" fill="url(#grass5)" opacity="0.89"/>
+        <path d="M1339.29 160 Q1341.03 96.93 1347.95 58.27 Q1343.09 113.2 1340.6 160 Z" fill="url(#grass1)" opacity="0.73"/>
+        <path d="M1351.72 160 Q1346.91 104.44 1324.08 70.39 Q1343.14 118.78 1352.97 160 Z" fill="url(#grass5)" opacity="0.84"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.65s;--d:-2.27s;--amp:2.4deg">
+        <path d="M1365.95 160 Q1373.21 115.65 1404.53 88.47 Q1380.61 127.09 1368.31 160 Z" fill="url(#grass2)" opacity="0.8"/>
+        <path d="M1384.23 160 Q1386.11 92.18 1393.22 50.62 Q1388.58 109.69 1386.21 160 Z" fill="url(#grass4)"/>
+        <path d="M1406.74 160 Q1412.79 94.93 1438.85 55.04 Q1418.99 111.72 1408.77 160 Z" fill="url(#grass3)" opacity="0.81"/>
+        <path d="M1418.93 160 Q1425.96 91.41 1456.44 49.37 Q1433.03 109.11 1420.99 160 Z" fill="url(#grass1)"/>
+        <path d="M1435.08 160 Q1434.21 103.06 1428.35 68.16 Q1434.46 117.75 1437.63 160 Z" fill="url(#grass5)" opacity="0.75"/>
+        <path d="M1456.88 160 Q1459.08 98.88 1468.0 61.43 Q1461.61 114.66 1458.34 160 Z" fill="url(#grass2)" opacity="0.77"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.51s;--d:-3.49s;--amp:1.7deg">
+        <path d="M1473.66 160 Q1468.7 119.4 1444.75 94.52 Q1465.02 129.88 1475.48 160 Z" fill="url(#grass2)" opacity="0.89"/>
+        <path d="M1496.1 160 Q1498.13 123.27 1506.29 100.76 Q1500.51 132.75 1497.54 160 Z" fill="url(#grass1)" opacity="0.66"/>
+        <path d="M1509.77 160 Q1511.87 81.0 1520.25 32.58 Q1514.38 101.39 1511.37 160 Z" fill="url(#grass2)"/>
+        <path d="M1533.45 160 Q1537.38 87.22 1553.77 42.61 Q1541.69 106.0 1535.48 160 Z" fill="url(#grass2)"/>
+        <path d="M1546.84 160 Q1548.77 82.17 1555.92 34.46 Q1551.33 102.25 1548.99 160 Z" fill="url(#grass4)"/>
+        <path d="M1567.29 160 Q1561.28 122.36 1532.79 99.29 Q1556.51 132.08 1568.74 160 Z" fill="url(#grass2)" opacity="0.84"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.41s;--d:-1.86s;--amp:2.0deg">
+        <path d="M1582.67 160 Q1590.04 122.03 1621.74 98.75 Q1597.59 131.83 1585.17 160 Z" fill="url(#grass1)" opacity="0.69"/>
+        <path d="M1596.66 160 Q1603.54 74.7 1633.74 22.42 Q1610.23 96.71 1598.12 160 Z" fill="url(#grass4)"/>
+        <path d="M1608.81 160 Q1613.85 107.14 1634.77 74.74 Q1619.4 120.78 1611.51 160 Z" fill="url(#grass3)" opacity="0.81"/>
+        <path d="M1630.96 160 Q1635.43 120.37 1653.79 96.09 Q1640.47 130.6 1633.63 160 Z" fill="url(#grass2)" opacity="0.71"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.67s;--d:-4.55s;--amp:3.1deg">
+        <path d="M1643.88 160 Q1646.64 68.58 1657.89 12.54 Q1649.83 92.17 1645.69 160 Z" fill="url(#grass2)"/>
+        <path d="M1655.99 160 Q1659.41 76.01 1672.97 24.53 Q1663.52 97.68 1658.68 160 Z" fill="url(#grass3)"/>
+        <path d="M1675.81 160 Q1681.2 72.07 1704.86 18.17 Q1686.51 94.76 1677.07 160 Z" fill="url(#grass3)"/>
+        <path d="M1692.1 160 Q1688.99 70.01 1673.06 14.86 Q1687.17 93.23 1694.45 160 Z" fill="url(#grass4)"/>
+        <path d="M1713.68 160 Q1719.41 104.41 1744.55 70.34 Q1725.03 118.76 1714.99 160 Z" fill="url(#grass1)" opacity="0.73"/>
+        <path d="M1732.17 160 Q1737.25 123.35 1758.94 100.89 Q1742.53 132.81 1734.09 160 Z" fill="url(#grass3)" opacity="0.86"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.36s;--d:-3.51s;--amp:2.2deg">
+        <path d="M1752.13 160 Q1755.68 113.05 1770.22 84.27 Q1759.72 125.16 1754.32 160 Z" fill="url(#grass5)" opacity="0.64"/>
+        <path d="M1772.21 160 Q1774.22 120.85 1781.47 96.86 Q1777.01 130.95 1774.73 160 Z" fill="url(#grass5)" opacity="0.84"/>
+        <path d="M1788.6 160 Q1782.76 69.83 1754.47 14.57 Q1778.44 93.1 1790.81 160 Z" fill="url(#grass3)"/>
+        <path d="M1809.73 160 Q1803.34 98.21 1773.19 60.35 Q1798.23 114.16 1811.14 160 Z" fill="url(#grass1)" opacity="0.67"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.24s;--d:-0.07s;--amp:2.7deg">
+        <path d="M1826.96 160 Q1825.96 70.95 1819.94 16.37 Q1825.85 93.93 1828.91 160 Z" fill="url(#grass4)"/>
+        <path d="M1848.29 160 Q1850.89 67.03 1860.86 10.05 Q1854.19 91.02 1850.77 160 Z" fill="url(#grass1)"/>
+        <path d="M1872.44 160 Q1871.28 112.31 1865.08 83.09 Q1870.77 124.62 1873.72 160 Z" fill="url(#grass3)" opacity="0.73"/>
+        <path d="M1896.19 160 Q1895.01 117.22 1888.54 91.0 Q1894.55 128.26 1897.66 160 Z" fill="url(#grass4)" opacity="0.72"/>
+        <path d="M1920.08 160 Q1918.95 77.61 1912.76 27.11 Q1918.49 98.87 1921.45 160 Z" fill="url(#grass4)"/>
+      </g>
+      <g class="grass-clump" style="--dur:3.82s;--d:-2.87s;--amp:3.1deg">
+        <path d="M1934.17 160 Q1930.28 103.15 1910.78 68.31 Q1927.74 117.82 1936.49 160 Z" fill="url(#grass1)" opacity="0.79"/>
+        <path d="M1957.19 160 Q1961.23 77.71 1978.08 27.28 Q1965.64 98.95 1959.24 160 Z" fill="url(#grass2)"/>
+        <path d="M1975.41 160 Q1974.3 103.8 1968.15 69.36 Q1973.91 118.3 1976.89 160 Z" fill="url(#grass1)" opacity="0.75"/>
+        <path d="M1989.78 160 Q1988.79 102.7 1982.78 67.59 Q1988.71 117.49 1991.78 160 Z" fill="url(#grass5)" opacity="0.66"/>
+        <path d="M2005.71 160 Q2000.26 93.5 1973.5 52.75 Q1996.46 110.66 2008.31 160 Z" fill="url(#grass3)"/>
+        <path d="M2019.25 160 Q2021.1 107.19 2028.17 74.82 Q2023.48 120.81 2021.08 160 Z" fill="url(#grass1)" opacity="0.8"/>
+      </g>
+      <g class="grass-clump" style="--dur:3.72s;--d:-2.2s;--amp:1.7deg">
+        <path d="M2042.05 160 Q2044.04 117.83 2051.27 91.98 Q2046.77 128.71 2044.48 160 Z" fill="url(#grass3)" opacity="0.78"/>
+        <path d="M2058.56 160 Q2064.43 114.95 2090.2 87.34 Q2070.17 126.58 2059.87 160 Z" fill="url(#grass5)" opacity="0.65"/>
+        <path d="M2081.64 160 Q2078.69 89.63 2063.46 46.5 Q2077.05 107.79 2084.08 160 Z" fill="url(#grass3)"/>
+        <path d="M2103.84 160 Q2102.79 110.04 2096.7 79.41 Q2102.53 122.93 2105.55 160 Z" fill="url(#grass3)" opacity="0.69"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.24s;--d:-2.36s;--amp:2.1deg">
+        <path d="M2120.88 160 Q2123.59 116.68 2133.96 90.12 Q2127.06 127.86 2123.52 160 Z" fill="url(#grass2)" opacity="0.84"/>
+        <path d="M2136.06 160 Q2133.14 95.3 2118.34 55.65 Q2131.35 112.0 2138.07 160 Z" fill="url(#grass1)" opacity="0.64"/>
+        <path d="M2156.87 160 Q2152.83 101.22 2133.36 65.2 Q2149.8 116.39 2158.28 160 Z" fill="url(#grass1)" opacity="0.61"/>
+        <path d="M2176.94 160 Q2173.2 75.54 2154.49 23.78 Q2170.77 97.34 2179.17 160 Z" fill="url(#grass3)"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.57s;--d:-1.04s;--amp:3.1deg">
+        <path d="M2191.35 160 Q2188.38 102.99 2173.25 68.04 Q2186.62 117.7 2193.53 160 Z" fill="url(#grass2)" opacity="0.75"/>
+        <path d="M2205.91 160 Q2202.14 101.66 2183.97 65.9 Q2199.35 116.71 2207.28 160 Z" fill="url(#grass2)" opacity="0.66"/>
+        <path d="M2219.9 160 Q2221.68 82.6 2228.65 35.17 Q2223.85 102.58 2221.4 160 Z" fill="url(#grass5)"/>
+        <path d="M2238.16 160 Q2234.92 105.15 2218.75 71.53 Q2232.79 119.3 2240.04 160 Z" fill="url(#grass3)" opacity="0.61"/>
+      </g>
+      <g class="grass-clump" style="--dur:5.42s;--d:-1.19s;--amp:3.1deg">
+        <path d="M2250.91 160 Q2256.05 78.65 2278.22 28.78 Q2261.29 99.64 2252.58 160 Z" fill="url(#grass1)"/>
+        <path d="M2266.55 160 Q2272.19 88.17 2296.46 44.15 Q2277.97 106.71 2268.46 160 Z" fill="url(#grass1)"/>
+        <path d="M2285.94 160 Q2292.58 103.74 2321.34 69.26 Q2299.27 118.26 2287.92 160 Z" fill="url(#grass3)" opacity="0.74"/>
+        <path d="M2306.99 160 Q2306.05 83.89 2300.1 37.24 Q2306.1 103.53 2309.21 160 Z" fill="url(#grass1)"/>
+        <path d="M2324.35 160 Q2323.33 87.29 2317.28 42.73 Q2323.16 106.05 2326.2 160 Z" fill="url(#grass3)"/>
+        <path d="M2349.24 160 Q2344.16 113.31 2319.58 84.7 Q2340.4 125.36 2351.14 160 Z" fill="url(#grass4)" opacity="0.69"/>
+      </g>
+      <g class="grass-clump" style="--dur:3.63s;--d:-3.67s;--amp:2.2deg">
+        <path d="M2362.71 160 Q2366.54 81.53 2382.82 33.44 Q2370.57 101.78 2364.28 160 Z" fill="url(#grass5)"/>
+        <path d="M2384.48 160 Q2380.85 74.18 2362.89 21.59 Q2378.38 96.33 2386.37 160 Z" fill="url(#grass1)"/>
+        <path d="M2408.06 160 Q2412.0 97.96 2428.66 59.93 Q2416.2 113.97 2409.8 160 Z" fill="url(#grass2)" opacity="0.62"/>
+        <path d="M2432.85 160 Q2437.44 106.94 2457.13 74.42 Q2442.19 120.63 2434.5 160 Z" fill="url(#grass1)" opacity="0.7"/>
+      </g>
+      <g class="grass-clump" style="--dur:3.66s;--d:-0.07s;--amp:3.1deg">
+        <path d="M2447.57 160 Q2450.8 75.53 2463.67 23.75 Q2454.67 97.33 2450.04 160 Z" fill="url(#grass2)"/>
+        <path d="M2459.62 160 Q2461.66 73.98 2468.95 21.26 Q2464.54 96.18 2462.28 160 Z" fill="url(#grass4)"/>
+        <path d="M2480.61 160 Q2476.95 78.2 2458.65 28.06 Q2474.58 99.31 2482.8 160 Z" fill="url(#grass1)"/>
+        <path d="M2502.42 160 Q2501.58 80.0 2495.76 30.97 Q2501.91 100.64 2505.1 160 Z" fill="url(#grass4)"/>
+        <path d="M2519.5 160 Q2517.88 118.03 2509.07 92.31 Q2517.21 128.86 2521.41 160 Z" fill="url(#grass4)" opacity="0.78"/>
+      </g>
+      <g class="grass-clump" style="--dur:3.97s;--d:-3.62s;--amp:2.3deg">
+        <path d="M2544.03 160 Q2541.4 97.06 2528.27 58.49 Q2539.71 113.31 2545.62 160 Z" fill="url(#grass1)" opacity="0.73"/>
+        <path d="M2564.71 160 Q2568.41 73.16 2583.5 19.94 Q2572.63 95.57 2567.04 160 Z" fill="url(#grass3)"/>
+        <path d="M2585.79 160 Q2589.1 75.17 2602.38 23.18 Q2593.0 97.06 2588.18 160 Z" fill="url(#grass5)"/>
+        <path d="M2598.74 160 Q2603.12 100.83 2621.77 64.56 Q2607.7 116.1 2600.47 160 Z" fill="url(#grass2)" opacity="0.63"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.85s;--d:-4.5s;--amp:2.9deg">
+        <path d="M2617.28 160 Q2624.52 104.38 2655.68 70.29 Q2631.96 118.73 2619.76 160 Z" fill="url(#grass1)" opacity="0.83"/>
+        <path d="M2637.42 160 Q2639.21 107.19 2646.2 74.82 Q2641.43 120.82 2638.98 160 Z" fill="url(#grass5)" opacity="0.89"/>
+        <path d="M2650.41 160 Q2652.29 80.73 2659.38 32.14 Q2654.74 101.19 2652.36 160 Z" fill="url(#grass3)"/>
+        <path d="M2667.19 160 Q2664.19 72.05 2649.32 18.15 Q2662.15 94.75 2668.78 160 Z" fill="url(#grass4)"/>
+        <path d="M2680.28 160 Q2686.79 73.61 2714.58 20.66 Q2693.55 95.9 2682.74 160 Z" fill="url(#grass4)"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.2s;--d:-0.74s;--amp:3.2deg">
+        <path d="M2692.41 160 Q2698.14 119.16 2722.27 94.14 Q2704.29 129.7 2695.05 160 Z" fill="url(#grass1)" opacity="0.61"/>
+        <path d="M2707.06 160 Q2702.35 110.82 2679.52 80.67 Q2698.91 123.51 2708.91 160 Z" fill="url(#grass5)" opacity="0.72"/>
+        <path d="M2725.59 160 Q2727.61 72.58 2734.88 19.0 Q2730.43 95.14 2728.16 160 Z" fill="url(#grass3)"/>
+        <path d="M2747.66 160 Q2750.0 97.97 2758.8 59.95 Q2753.08 113.98 2750.14 160 Z" fill="url(#grass5)" opacity="0.89"/>
+        <path d="M2768.24 160 Q2766.43 71.34 2756.46 17.0 Q2765.73 94.22 2770.53 160 Z" fill="url(#grass3)"/>
+        <path d="M2783.85 160 Q2785.73 118.29 2792.84 92.73 Q2788.2 129.05 2785.83 160 Z" fill="url(#grass1)" opacity="0.86"/>
+      </g>
+      <g class="grass-clump" style="--dur:4.04s;--d:-4.46s;--amp:1.6deg">
+        <path d="M2796.03 160 Q2800.41 88.39 2818.89 44.5 Q2805.08 106.87 2797.98 160 Z" fill="url(#grass2)"/>
+        <path d="M2818.79 160 Q2824.76 68.09 2850.2 11.76 Q2830.99 91.81 2821.12 160 Z" fill="url(#grass3)"/>
+        <path d="M2832.47 160 Q2826.43 110.35 2797.56 79.92 Q2821.8 123.16 2834.3 160 Z" fill="url(#grass5)" opacity="0.73"/>
+        <path d="M2849.04 160 Q2851.04 103.76 2858.29 69.29 Q2853.82 118.28 2851.54 160 Z" fill="url(#grass5)" opacity="0.84"/>
+      </g>
     </svg>
   </div>
-  <div class="watercolor-blob" aria-hidden="true"></div>
-  <div class="watercolor-blob" aria-hidden="true"></div>
-  <div class="watercolor-blob" aria-hidden="true"></div>
+  <div class="watercolor-blob blob--1" aria-hidden="true"></div>
+  <div class="watercolor-blob blob--2" aria-hidden="true"></div>
+  <div class="watercolor-blob blob--3" aria-hidden="true"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">thơ · vui vẻ · bình yên</div>
     <h1>Gi gỉ gì gi <em>cái gì</em> cũng viết. Có khi chẳng biết viết cái gì.</h1>
@@ -1360,65 +2454,209 @@ main { position: relative; z-index: 1; }
 <section class="poems-section" data-od-id="poems-grid">
   <div class="poems-grid" id="poemsGrid">
     
-      <article class="poem-card" data-category="da-dang">
+      
+      <article class="poem-card" data-category="da-dang"
+               data-palette="mint" style="--ch:9">
         <div class="card-deco"></div>
+        <span class="card-orn" aria-hidden="true">
+<svg viewBox="0 0 64 64" aria-hidden="true">
+  
+    <path d="M4 4 Q11 12 15.5 17"/>
+    <circle cx="21" cy="21" r="3.4"/>
+    <circle cx="28.5" cy="15" r="2.6"/>
+    <circle cx="15" cy="28.5" r="2.6"/>
+    <circle cx="29" cy="29" r="2"/>
+    <path d="M6 12 Q9 26 8 40"/>
+    <circle class="dot" cx="8.5" cy="45" r="1.7"/>
+    <path d="M12 6 Q26 9 40 8"/>
+    <circle class="dot" cx="45" cy="8.5" r="1.7"/>
+  
+</svg>
+</span>
         <div class="card-category">đa dạng :o</div>
         <a href="/tho/tinh-yeu/" class="card-title" style="view-transition-name: poem-tinh-yeu;">Tình yêu</a>
+        <div class="card-rule" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <path d="M4 8 H47"/><path d="M73 8 H116"/>
+    <circle class="dot" cx="60" cy="8" r="2.8"/>
+  
+</svg>
+</div>
         <p class="card-excerpt">
           Tôi nghe có tiếng thầm thì Trong đôi mắt trên khóe mi Tôi thấy tình yêu màu gì Màu của …
         </p>
         <div class="card-date">22 tháng 07, 2026</div>
       </article>
+      
     
-      <article class="poem-card" data-category="da-dang">
+      
+      <article class="poem-card" data-category="da-dang"
+               data-palette="nang" style="--ch:-14">
         <div class="card-deco"></div>
+        <span class="card-orn" aria-hidden="true">
+<svg viewBox="0 0 64 64" aria-hidden="true">
+  
+    <path d="M4 4 Q11 12 15.5 17"/>
+    <circle cx="21" cy="21" r="3.4"/>
+    <circle cx="28.5" cy="15" r="2.6"/>
+    <circle cx="15" cy="28.5" r="2.6"/>
+    <circle cx="29" cy="29" r="2"/>
+    <path d="M6 12 Q9 26 8 40"/>
+    <circle class="dot" cx="8.5" cy="45" r="1.7"/>
+    <path d="M12 6 Q26 9 40 8"/>
+    <circle class="dot" cx="45" cy="8.5" r="1.7"/>
+  
+</svg>
+</span>
         <div class="card-category">đa dạng :o</div>
         <a href="/tho/song/" class="card-title" style="view-transition-name: poem-song;">Sông</a>
+        <div class="card-rule" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <path d="M2 8 H37"/><path d="M83 8 H118"/>
+    <path d="M60 8 Q48 -1 37 8 Q48 17 60 8 Z"/>
+    <path d="M60 8 Q72 -1 83 8 Q72 17 60 8 Z"/>
+    <circle class="dot" cx="60" cy="8" r="1.5"/>
+  
+</svg>
+</div>
         <p class="card-excerpt">
           Nếu cuộc đời là giấc mộng Tôi sẽ mơ là con sông Thư thả trôi theo gợn sóng Đi qua …
         </p>
         <div class="card-date">15 tháng 07, 2026</div>
       </article>
+      
     
-      <article class="poem-card" data-category="da-dang">
+      
+      <article class="poem-card" data-category="da-dang"
+               data-palette="hong-phan" style="--ch:-13">
         <div class="card-deco"></div>
+        <span class="card-orn" aria-hidden="true">
+<svg viewBox="0 0 64 64" aria-hidden="true">
+  
+    <path d="M4 4 Q24 24 50 50"/>
+    <path d="M14 14 Q27 3 34 7 Q29 16 14 14 Z"/>
+    <path d="M25 25 Q11 27 13 41 Q23 35 25 25 Z"/>
+    <path d="M35 35 Q48 24 55 28 Q50 37 35 35 Z"/>
+  
+</svg>
+</span>
         <div class="card-category">đa dạng :o</div>
         <a href="/tho/yeu/" class="card-title" style="view-transition-name: poem-yeu;">Yêu</a>
+        <div class="card-rule" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <path d="M2 8 H44"/><path d="M76 8 H118"/>
+    <path d="M60 1.4 L66.6 8 L60 14.6 L53.4 8 Z"/>
+    <circle class="dot" cx="48.5" cy="8" r="1.2"/>
+    <circle class="dot" cx="71.5" cy="8" r="1.2"/>
+  
+</svg>
+</div>
         <p class="card-excerpt">
           Có khó đâu một buổi chiều Anh hẹn người ăn bún riêu Hai ta tâm sự nhiều điều Tâm trí …
         </p>
         <div class="card-date">08 tháng 07, 2026</div>
       </article>
+      
     
-      <article class="poem-card" data-category="da-dang">
+      
+      <article class="poem-card" data-category="da-dang"
+               data-palette="hong-phan" style="--ch:11">
         <div class="card-deco"></div>
+        <span class="card-orn" aria-hidden="true">
+<svg viewBox="0 0 64 64" aria-hidden="true">
+  
+    <path d="M4 4 Q24 24 50 50"/>
+    <path d="M14 14 Q27 3 34 7 Q29 16 14 14 Z"/>
+    <path d="M25 25 Q11 27 13 41 Q23 35 25 25 Z"/>
+    <path d="M35 35 Q48 24 55 28 Q50 37 35 35 Z"/>
+  
+</svg>
+</span>
         <div class="card-category">đa dạng :o</div>
         <a href="/tho/cuoi/" class="card-title" style="view-transition-name: poem-cuoi;">Cười</a>
+        <div class="card-rule" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <circle class="dot" cx="44" cy="8" r="2.2"/>
+    <circle class="dot" cx="60" cy="8" r="3.2"/>
+    <circle class="dot" cx="76" cy="8" r="2.2"/>
+  
+</svg>
+</div>
         <p class="card-excerpt">
           Mỗi ngày được thấy em cười Anh như nhìn ngắm hoa tươi trong vườn Tâm trí có sức sống hơn …
         </p>
         <div class="card-date">30 tháng 06, 2026</div>
       </article>
+      
     
-      <article class="poem-card" data-category="da-dang">
+      
+      <article class="poem-card" data-category="da-dang"
+               data-palette="mint" style="--ch:0">
         <div class="card-deco"></div>
+        <span class="card-orn" aria-hidden="true">
+<svg viewBox="0 0 64 64" aria-hidden="true">
+  
+    <path d="M5 5 Q30 5 30 26 Q30 43 15.5 43 Q5 43 5 32.5 Q5 24 14 24 Q20.5 24 20.5 30.5"/>
+    <circle class="dot" cx="45" cy="12" r="2"/>
+    <circle class="dot" cx="12" cy="52" r="1.6"/>
+    <circle class="dot" cx="40" cy="40" r="1.3"/>
+  
+</svg>
+</span>
         <div class="card-category">đa dạng :o</div>
         <a href="/tho/vo/" class="card-title" style="view-transition-name: poem-vo;">Vỡ</a>
+        <div class="card-rule" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <circle class="dot" cx="44" cy="8" r="2.2"/>
+    <circle class="dot" cx="60" cy="8" r="3.2"/>
+    <circle class="dot" cx="76" cy="8" r="2.2"/>
+  
+</svg>
+</div>
         <p class="card-excerpt">
           Mở tưởng cao xa Những điều quý giá Hoài bão ngọc ngà Ước nguyện ra quả Khép lại giấc mơ …
         </p>
         <div class="card-date">24 tháng 06, 2026</div>
       </article>
+      
     
-      <article class="poem-card" data-category="da-dang">
+      
+      <article class="poem-card" data-category="da-dang"
+               data-palette="bien" style="--ch:12">
         <div class="card-deco"></div>
+        <span class="card-orn" aria-hidden="true">
+<svg viewBox="0 0 64 64" aria-hidden="true">
+  
+    <path d="M5 5 Q30 5 30 26 Q30 43 15.5 43 Q5 43 5 32.5 Q5 24 14 24 Q20.5 24 20.5 30.5"/>
+    <circle class="dot" cx="45" cy="12" r="2"/>
+    <circle class="dot" cx="12" cy="52" r="1.6"/>
+    <circle class="dot" cx="40" cy="40" r="1.3"/>
+  
+</svg>
+</span>
         <div class="card-category">đa dạng :o</div>
         <a href="/tho/hoa/" class="card-title" style="view-transition-name: poem-hoa;">Hoa</a>
+        <div class="card-rule" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <path d="M2 8 H37"/><path d="M83 8 H118"/>
+    <path d="M60 8 Q48 -1 37 8 Q48 17 60 8 Z"/>
+    <path d="M60 8 Q72 -1 83 8 Q72 17 60 8 Z"/>
+    <circle class="dot" cx="60" cy="8" r="1.5"/>
+  
+</svg>
+</div>
         <p class="card-excerpt">
           Con ong đi theo mùi hương Như anh lặng lẽ vấn vương bóng người Người ơi người là hoa tươi …
         </p>
         <div class="card-date">16 tháng 06, 2026</div>
       </article>
+      
     
   </div>
 
@@ -1894,10 +3132,14 @@ document.querySelectorAll('.poem-card').forEach(card => observer.observe(card));
 // ── Parallax hero background ──
 const heroBg = document.querySelector('.hero-bg');
 const grassField = document.querySelector('.grass-field');
+const skyLayer = document.querySelector('.sky');
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   if (scrollY <= window.innerHeight && heroBg) {
     heroBg.style.transform = `translateY(${scrollY * 0.25}px)`;
+  }
+  if (scrollY <= window.innerHeight && skyLayer) {
+    skyLayer.style.transform = `translateY(${scrollY * 0.12}px)`;
   }
   if (grassField && scrollY <= window.innerHeight * 0.5) {
     grassField.style.transform = `translateY(${scrollY * 0.15}px)`;
