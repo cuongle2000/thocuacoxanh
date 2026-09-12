@@ -10,5 +10,6 @@ Disallow: */trang-*/trang-*
 Disallow: */about/*/about/*
 Disallow: */tim-kiem/*/tim-kiem/*
 Disallow: */tra-van/*/tra-van/*
+Disallow: */choi-tu/*/choi-tu/*
 
 Sitemap: https://thocuacoxanh.vn/sitemap.xml
