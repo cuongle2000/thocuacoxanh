@@ -12,29 +12,29 @@
       } catch (e) {}
     })();
     </script>
-    <meta name="description" content="Bài thơ Tự thân khắc họa khoảnh khắc chia tay, khi con người phải tự đứng vững, vượt qua thử thách. Đọc để cảm nhận sự mạnh mẽ và hy vọng.">
-    <meta name="keywords" content="thơ tự thân, thơ về tự lập, thơ chia tay, thơ động viên, thơ hay, thơ buồn, cảm xúc">
-    <title>Bài thơ Tự thân: Cảm xúc chia ly và tinh thần tự lập</title>
+    <meta name="description" content="Khám phá tuyển tập thơ về đóng quỹ, nơi những bài thơ vui vẻ gửi gắm tâm tư và kỷ niệm trong công việc.">
+    <meta name="keywords" content="tuyển tập thơ, những bài thơ hay, thơ về đóng quỹ, thơ vui vẻ, thơ công sở">
+    <title>Tuyển Tập Thơ Về Đóng Quỹ - Những Bài Thơ Hay</title>
     <link rel="icon" href="/static/poems/images/favicon.088bf193f6e4.ico" type="image/x-icon">
-    <link rel="canonical" href="https://thocuacoxanh.vn/tho/tu-than/">
+    <link rel="canonical" href="https://thocuacoxanh.vn/tuyen-tap/tho-ve-ong-quy/">
     
     
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Thơ của Cỏ Xanh">
-    <meta property="og:title" content="Tự thân - Khi chia tay là lúc ta học cách tự đứng lên">
-    <meta property="og:description" content="Bài thơ Tự thân với từng câu chữ nhẹ nhàng mà sâu lắng, gợi lên nỗi buồn chia ly và ý chí tự thân vượt khó. Nhấn đọc để cảm nhận thông điệp ý nghĩa này.">
-    <meta property="og:url" content="https://thocuacoxanh.vn/tho/tu-than/">
+    <meta property="og:title" content="Tuyển Tập Thơ Về Đóng Quỹ - Những Bài Thơ Vui Vẻ">
+    <meta property="og:description" content="Đừng bỏ lỡ tuyển tập thơ về đóng quỹ với những bài thơ thú vị, mang lại tiếng cười và kỷ niệm đáng nhớ từ công việc.">
+    <meta property="og:url" content="https://thocuacoxanh.vn/tuyen-tap/tho-ve-ong-quy/">
     <meta property="og:locale" content="vi_VN">
-    <meta property="og:image" content="https://thocuacoxanh.vn/static/poems/og/tu-than.jpg">
+    <meta property="og:image" content="https://thocuacoxanh.vn/static/poems/og/col-tho-ve-ong-quy.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Tự thân - thơ của Cỏ Xanh">
+    <meta property="og:image:alt" content="Thơ về đóng quỹ - tuyển tập thơ của Cỏ Xanh">
     
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tự thân - Khi chia tay là lúc ta học cách tự đứng lên">
-    <meta name="twitter:description" content="Bài thơ Tự thân với từng câu chữ nhẹ nhàng mà sâu lắng, gợi lên nỗi buồn chia ly và ý chí tự thân vượt khó. Nhấn đọc để cảm nhận thông điệp ý nghĩa này.">
-    <meta name="twitter:image" content="https://thocuacoxanh.vn/static/poems/og/tu-than.jpg">
+    <meta name="twitter:title" content="Tuyển Tập Thơ Về Đóng Quỹ - Những Bài Thơ Vui Vẻ">
+    <meta name="twitter:description" content="Đừng bỏ lỡ tuyển tập thơ về đóng quỹ với những bài thơ thú vị, mang lại tiếng cười và kỷ niệm đáng nhớ từ công việc.">
+    <meta name="twitter:image" content="https://thocuacoxanh.vn/static/poems/og/col-tho-ve-ong-quy.jpg">
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6LMXDGZQ1"></script>
@@ -2299,26 +2299,256 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
 </style>
     
 <style>
-.in-cols {
-  max-width: 640px; width: 100%; margin: 36px auto 0;
-  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px;
+/* ── Thẻ tuyển tập: một xấp giấy thơ buộc lại, nhuộm theo bảng màu riêng ──
+   :where() để không đè lên [data-palette] (cùng độ ưu tiên, khai báo sau). */
+:where(.col-card) { --poem-h: 145; --poem-c: 0.105; }
+.col-card {
+  --poem-line: oklch(56% var(--poem-c) var(--poem-h));
+  --poem-soft: oklch(74% calc(var(--poem-c) * 0.8) var(--poem-h));
+  --poem-edge: oklch(84% calc(var(--poem-c) * 0.45) var(--poem-h) / 0.7);
+  --paper: var(--surface);
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: 28px 28px 24px 34px;
+  border-radius: 22px;
+  background: var(--paper);
+  border: 1px solid var(--poem-edge);
+  text-decoration: none; color: var(--fg);
+  box-shadow: 0 10px 30px oklch(40% 0.05 var(--poem-h) / 0.07);
+  isolation: isolate;
+  transition: transform 0.35s cubic-bezier(.34,1.3,.64,1), box-shadow 0.35s, border-color 0.35s;
 }
-.in-cols__label {
-  width: 100%; text-align: center;
+[data-theme='dark'] .col-card {
+  --poem-line: oklch(76% calc(var(--poem-c) * 0.85) var(--poem-h));
+  --poem-soft: oklch(60% calc(var(--poem-c) * 0.8) var(--poem-h));
+  --poem-edge: oklch(42% calc(var(--poem-c) * 0.5) var(--poem-h) / 0.6);
+  --paper: oklch(18% 0.02 145);
+  box-shadow: 0 10px 30px oklch(5% 0.02 145 / 0.4);
+}
+/* hai tờ giấy lót phía sau, xoè ra khi rê chuột */
+.col-card::before, .col-card::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  border-radius: inherit;
+  background: var(--paper);
+  border: 1px solid var(--poem-edge);
+  transition: transform 0.4s cubic-bezier(.34,1.3,.64,1);
+}
+.col-card::before { transform: rotate(-2.2deg) translate(-3px, 4px); opacity: 0.75; }
+.col-card::after  { transform: rotate(1.6deg)  translate(4px, 6px);  opacity: 0.5; }
+.col-card:hover { transform: translateY(-5px); border-color: var(--poem-soft); box-shadow: 0 20px 44px oklch(40% 0.06 var(--poem-h) / 0.14); }
+.col-card:hover::before { transform: rotate(-4deg) translate(-8px, 6px); }
+.col-card:hover::after  { transform: rotate(3.4deg) translate(9px, 9px); }
+/* gáy sách bên trái */
+.col-card__spine {
+  position: absolute; left: 14px; top: 22px; bottom: 22px; width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--poem-line), var(--poem-soft) 60%, transparent);
+  opacity: 0.7;
+}
+.col-card__orn {
+  position: absolute; top: -12px; right: -12px;
+  width: 54px; height: 54px; opacity: 0.42; rotate: 90deg;
+  pointer-events: none;
+}
+.col-card__orn svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.col-card__orn path, .col-card__orn circle { fill: none; stroke: var(--poem-line); stroke-width: 1.15; stroke-linecap: round; }
+.col-card__orn .dot { fill: var(--poem-line); stroke: none; }
+.col-card__eyebrow {
+  display: flex; align-items: center; gap: 8px;
   font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted);
+  color: var(--poem-line);
+  margin-bottom: 10px;
 }
-.in-cols a {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px 8px 12px; border-radius: 999px;
-  font-family: var(--font-display); font-size: 15px;
-  color: var(--poem-line); text-decoration: none;
-  border: 1px dashed var(--poem-edge); background: var(--surface);
-  transition: transform 0.3s, border-color 0.3s, background 0.3s;
+.col-card__eyebrow span + span::before { content: '·'; margin-right: 8px; opacity: 0.6; }
+.col-card__name {
+  font-family: var(--font-display);
+  font-size: 25px; font-weight: 500; line-height: 1.25;
+  color: var(--fg); margin: 0 0 10px;
+  transition: color 0.3s;
 }
-.in-cols a:hover { transform: translateY(-2px); border-style: solid; background: oklch(72% var(--poem-c) var(--poem-h) / 0.1); }
-.in-cols svg { width: 15px; height: 15px; flex: none; }
-.in-cols path { fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; }
+.col-card:hover .col-card__name { color: var(--poem-line); }
+.col-card__rule { display: flex; margin: 0 0 12px; opacity: 0.65; }
+.col-card__rule svg { width: 84px; height: 12px; overflow: visible; }
+.col-card__rule path, .col-card__rule circle { fill: none; stroke: var(--poem-line); stroke-width: 1.3; stroke-linecap: round; }
+.col-card__rule .dot { fill: var(--poem-line); stroke: none; }
+.col-card__intro {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 15px; line-height: 1.7; color: var(--muted);
+  margin: 0 0 16px;
+}
+.col-card__cats { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.col-card__cats span {
+  font-size: 11.5px; padding: 3px 11px; border-radius: 999px;
+  color: var(--poem-line); border: 1px solid var(--poem-edge);
+}
+.col-card__cta {
+  margin-top: auto; align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.03em;
+  color: var(--poem-line);
+}
+.col-card__cta span { display: inline-block; transition: transform 0.3s; }
+.col-card:hover .col-card__cta span { transform: translateX(4px); }
+.col-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 26px;
+}
+
+/* ── Trang danh sách ── */
+.col-hero {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 140px 24px 36px; position: relative; z-index: 1;
+}
+.col-hero .eyebrow {
+  font-size: 11px; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--accent); margin-bottom: 14px;
+}
+.col-hero h1 {
+  font-family: var(--font-display); font-size: clamp(32px, 5.5vw, 52px); font-weight: 400;
+  line-height: 1.2; letter-spacing: -0.02em; color: var(--fg); margin: 0 0 14px;
+}
+.col-hero h1 em { font-style: italic; color: var(--accent); }
+.col-hero .subtitle {
+  font-family: var(--font-display); font-style: italic; font-size: clamp(15px, 2.2vw, 19px);
+  color: var(--muted); max-width: 560px; margin: 0;
+}
+.col-hero__rule { display: flex; justify-content: center; margin-top: 26px; opacity: 0.7; }
+.col-hero__rule svg { width: 120px; height: 16px; overflow: visible; }
+.col-hero__rule path, .col-hero__rule circle { fill: none; stroke: var(--accent-soft); stroke-width: 1.3; stroke-linecap: round; }
+.col-hero__rule .dot { fill: var(--accent-soft); stroke: none; }
+.col-list { max-width: 900px; margin: 0 auto; padding: 24px 24px 110px; position: relative; z-index: 1; }
+.col-empty {
+  text-align: center; color: var(--muted);
+  font-family: var(--font-display); font-style: italic; font-size: 17px;
+  padding: 40px 0;
+}
+
+/* ── Trang chi tiết ── */
+.col-frame .poem-meta { flex-wrap: wrap; }
+.col-count { font-size: 13px; color: var(--muted); }
+.col-frame .poem-title-detail { margin-bottom: 14px; }
+.col-cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 22px; }
+.col-cats a {
+  font-size: 12px; padding: 4px 13px; border-radius: 999px;
+  color: var(--poem-line); border: 1px dashed var(--poem-edge);
+  text-decoration: none; transition: background 0.3s, border-color 0.3s;
+}
+.col-cats a:hover { background: oklch(72% var(--poem-c) var(--poem-h) / 0.12); border-style: solid; }
+.col-text {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 17px; line-height: 1.85; color: var(--muted);
+  text-align: center;
+}
+.col-text p + p { margin-top: 12px; }
+.col-text--intro { margin: 0 0 26px; }
+.col-text--outro { margin: 6px 0 22px; }
+
+/* mục lục đầu tuyển tập */
+.col-toc {
+  margin: 4px 0 8px; padding: 18px 20px 14px;
+  border: 1px dashed var(--poem-edge); border-radius: 18px;
+  background: oklch(72% var(--poem-c) var(--poem-h) / 0.05);
+}
+.col-toc__label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--poem-line); text-align: center; margin-bottom: 10px;
+}
+.col-toc ol { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 18px; }
+.col-toc a {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 6px 8px; border-radius: 10px;
+  font-family: var(--font-display); font-size: 16px; color: var(--fg); text-decoration: none;
+  transition: background 0.25s, color 0.25s;
+}
+.col-toc a:hover { background: oklch(72% var(--poem-c) var(--poem-h) / 0.1); color: var(--poem-line); }
+.col-toc__num { font-style: italic; font-size: 14px; color: var(--poem-soft); min-width: 20px; }
+
+/* từng bài thơ in đủ trong tuyển tập — mỗi bài giữ tông màu riêng của nó */
+.col-piece {
+  --poem-line: oklch(56% var(--poem-c) var(--poem-h));
+  --poem-soft: oklch(74% calc(var(--poem-c) * 0.8) var(--poem-h));
+  --poem-edge: oklch(84% calc(var(--poem-c) * 0.45) var(--poem-h) / 0.6);
+  padding: 34px 0 8px;
+  text-align: center;
+  scroll-margin-top: 84px;
+}
+[data-theme='dark'] .col-piece {
+  --poem-line: oklch(76% calc(var(--poem-c) * 0.85) var(--poem-h));
+  --poem-soft: oklch(60% calc(var(--poem-c) * 0.8) var(--poem-h));
+  --poem-edge: oklch(42% calc(var(--poem-c) * 0.5) var(--poem-h) / 0.55);
+}
+.col-piece__num {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 14px; color: var(--poem-line); opacity: 0.85;
+  margin-bottom: 4px;
+}
+.col-piece__title {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(24px, 3.6vw, 30px); line-height: 1.25; letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+.col-piece__title a { color: var(--fg); text-decoration: none; transition: color 0.3s; }
+.col-piece__title a:hover { color: var(--poem-line); }
+.col-piece__sub {
+  font-family: var(--font-display); font-style: italic;
+  font-size: 15px; line-height: 1.6; color: var(--muted);
+  margin: 0 auto 6px; max-width: 460px;
+}
+.col-piece__stanzas { gap: 20px; margin-top: 20px; }
+.col-piece__foot {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 16px;
+  margin-top: 22px;
+  font-size: 12.5px;
+}
+.col-piece__foot a { text-decoration: none; transition: opacity 0.25s, background 0.25s; }
+.col-piece__cat {
+  padding: 3px 12px; border-radius: 999px;
+  color: var(--poem-line); border: 1px solid var(--poem-edge);
+}
+.col-piece__cat:hover { background: oklch(72% var(--poem-c) var(--poem-h) / 0.12); }
+.col-piece__open { color: var(--poem-line); font-weight: 500; }
+.col-piece__open span { display: inline-block; transition: transform 0.3s; }
+.col-piece__open:hover span { transform: translateX(3px); }
+.col-piece__top { color: var(--muted); opacity: 0.7; }
+.col-piece__top:hover { opacity: 1; }
+.col-sep { display: flex; justify-content: center; padding-top: 26px; opacity: 0.55; }
+.col-sep svg { width: 92px; height: 14px; overflow: visible; }
+.col-sep path, .col-sep circle { fill: none; stroke: var(--poem-line); stroke-width: 1.3; stroke-linecap: round; }
+.col-sep .dot { fill: var(--poem-line); stroke: none; }
+
+.col-social { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+.col-social a {
+  font-size: 12.5px; padding: 6px 15px; border-radius: 999px;
+  color: var(--poem-line); border: 1px solid var(--poem-edge);
+  text-decoration: none; transition: background 0.3s;
+}
+.col-social a:hover { background: oklch(72% var(--poem-c) var(--poem-h) / 0.12); }
+
+.col-more { max-width: 760px; width: 100%; margin: 56px auto 0; }
+.col-more h2 {
+  font-family: var(--font-display); font-size: 20px; font-weight: 600;
+  color: var(--fg); margin-bottom: 6px; text-align: center;
+}
+.col-more .col-grid { gap: 26px 22px; }
+.col-more .col-card { padding: 24px 24px 20px 30px; }
+.col-more .col-card__name { font-size: 21px; }
+.col-more .col-card__intro { font-size: 14px; }
+
+@media (max-width: 680px) {
+  .col-grid { grid-template-columns: 1fr; gap: 26px; }
+  .col-hero { padding: 116px 20px 28px; }
+  .col-list { padding: 18px 18px 96px; }
+  .col-card { padding: 24px 22px 20px 30px; }
+  .col-card__name { font-size: 22px; }
+  .col-text { font-size: 16px; }
+  .col-toc { padding: 16px 12px 10px; }
+  .col-toc ol { grid-template-columns: 1fr; }
+  .col-toc a { font-size: 15px; }
+  .col-piece { padding-top: 28px; }
+  .col-piece__stanzas { gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .col-card, .col-card::before, .col-card::after { transition: none; }
+}
 </style>
 
 </head>
@@ -2429,8 +2659,7 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
 
   
 
-
-<div class="reading-page" data-palette="nang">
+<div class="reading-page" data-palette="mint">
 
 <div class="reading-progress" id="readingProgress"></div>
 
@@ -2438,13 +2667,16 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
 <div class="reading-bg" aria-hidden="true">
   
     <div class="watercolor-dot" data-side="left"
-         style="--top:64.6%;--off:-80px;--size:220px;--dh:-21;--dur:23.9s;--d:-4.3s;--op:0.115"></div>
+         style="--top:65.2%;--off:-130px;--size:320px;--dh:15;--dur:25.6s;--d:-6.9s;--op:0.13"></div>
   
     <div class="watercolor-dot" data-side="right"
-         style="--top:58.0%;--off:-120px;--size:180px;--dh:-14;--dur:21.2s;--d:-6.7s;--op:0.061"></div>
+         style="--top:9.0%;--off:-100px;--size:190px;--dh:10;--dur:15.1s;--d:-22.2s;--op:0.107"></div>
   
     <div class="watercolor-dot" data-side="left"
-         style="--top:68.7%;--off:30px;--size:190px;--dh:-21;--dur:21.4s;--d:-21.0s;--op:0.129"></div>
+         style="--top:25.6%;--off:-140px;--size:220px;--dh:-17;--dur:24.2s;--d:-25.4s;--op:0.121"></div>
+  
+    <div class="watercolor-dot" data-side="right"
+         style="--top:77.2%;--off:40px;--size:250px;--dh:-3;--dur:21.9s;--d:-16.5s;--op:0.092"></div>
   
 </div>
 
@@ -2454,36 +2686,36 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
 <div class="side-day">
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:134px;--h:102px;--op:0.36;--dur:4.28s;--d:-0.4s;--amp:1.8deg"><path d="M18.58 100 Q20.48 40.5 27 4 Q23.3 55.8 21.42 100 Z"/></svg>
+         style="--x:128px;--h:76px;--op:0.38;--dur:4.51s;--d:-5.83s;--amp:2.0deg"><path d="M18.85 100 Q21.17 40.5 30 4 Q24.15 55.8 21.15 100 Z"/></svg>
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:94px;--h:56px;--op:0.53;--dur:5.54s;--d:-0.64s;--amp:1.7deg"><path d="M18.75 100 Q16.97 40.5 7 4 Q16.39 55.8 21.25 100 Z"/></svg>
+         style="--x:114px;--h:54px;--op:0.55;--dur:4.67s;--d:-3.12s;--amp:2.7deg"><path d="M18.23 100 Q19.75 40.5 24 4 Q22.51 55.8 21.77 100 Z"/></svg>
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:4px;--h:108px;--op:0.5;--dur:4.99s;--d:-3.54s;--amp:2.6deg"><path d="M18.45 100 Q21.31 40.5 32 4 Q25.09 55.8 21.55 100 Z"/></svg>
+         style="--x:80px;--h:66px;--op:0.36;--dur:5.28s;--d:-2.38s;--amp:2.0deg"><path d="M18.16 100 Q20.97 40.5 31 4 Q24.94 55.8 21.84 100 Z"/></svg>
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:34px;--h:110px;--op:0.5;--dur:5.69s;--d:-4.98s;--amp:2.7deg"><path d="M18.57 100 Q17.23 40.5 9 4 Q17.19 55.8 21.43 100 Z"/></svg>
+         style="--x:114px;--h:132px;--op:0.53;--dur:5.73s;--d:-3.62s;--amp:1.5deg"><path d="M18.13 100 Q17.89 40.5 14 4 Q19.18 55.8 21.87 100 Z"/></svg>
   
   
-    <i class="petal" style="--x:18px;--size:12px;--dur:16.7s;--d:-9.9s;--spin:-300deg;--drift:-21px"></i>
+    <i class="petal" style="--x:30px;--size:14px;--dur:19.3s;--d:-0.4s;--spin:-300deg;--drift:18px"></i>
   
-    <i class="petal" style="--x:114px;--size:14px;--dur:19.6s;--d:-3.4s;--spin:320deg;--drift:-25px"></i>
+    <i class="petal" style="--x:76px;--size:13px;--dur:17.1s;--d:-11.2s;--spin:320deg;--drift:25px"></i>
   
-    <i class="petal" style="--x:144px;--size:12px;--dur:18.4s;--d:-0.6s;--spin:260deg;--drift:22px"></i>
+    <i class="petal" style="--x:158px;--size:9px;--dur:21.6s;--d:-4.6s;--spin:-300deg;--drift:-6px"></i>
   
 </div>
 <div class="side-night">
   
-    <i class="spark" style="--x:148px;--y:75.8%;--s:2.4px;--dur:4.97s;--d:-1.97s"></i>
+    <i class="spark" style="--x:116px;--y:21.5%;--s:2.7px;--dur:4.61s;--d:-3.59s"></i>
   
-    <i class="spark" style="--x:58px;--y:56.9%;--s:2.4px;--dur:3.54s;--d:-2.11s"></i>
+    <i class="spark" style="--x:8px;--y:86.7%;--s:2.0px;--dur:3.07s;--d:-1.73s"></i>
   
-    <i class="spark" style="--x:18px;--y:40.6%;--s:3.0px;--dur:4.68s;--d:-4.12s"></i>
+    <i class="spark" style="--x:30px;--y:65.0%;--s:3.4px;--dur:3.57s;--d:-2.71s"></i>
   
-    <i class="spark" style="--x:40px;--y:33.1%;--s:2.6px;--dur:4.89s;--d:-3.06s"></i>
+    <i class="spark" style="--x:108px;--y:12.5%;--s:2.9px;--dur:4.14s;--d:-3.59s"></i>
   
-    <i class="spark" style="--x:82px;--y:52.2%;--s:2.6px;--dur:3.26s;--d:-5.3s"></i>
+    <i class="spark" style="--x:116px;--y:53.8%;--s:2.8px;--dur:5.37s;--d:-5.02s"></i>
   
 </div>
 
@@ -2493,82 +2725,204 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
 <div class="side-day">
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:116px;--h:102px;--op:0.37;--dur:5.22s;--d:-4.44s;--amp:2.4deg"><path d="M18.14 100 Q18.44 40.5 17 4 Q20.19 55.8 21.86 100 Z"/></svg>
+         style="--x:76px;--h:130px;--op:0.31;--dur:5.49s;--d:-1.34s;--amp:2.1deg"><path d="M18.52 100 Q19.01 40.5 19 4 Q20.62 55.8 21.48 100 Z"/></svg>
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:38px;--h:100px;--op:0.32;--dur:5.42s;--d:-4.08s;--amp:2.6deg"><path d="M18.62 100 Q20.32 40.5 26 4 Q22.94 55.8 21.38 100 Z"/></svg>
+         style="--x:16px;--h:114px;--op:0.52;--dur:5.81s;--d:-5.58s;--amp:2.0deg"><path d="M18.34 100 Q19.81 40.5 24 4 Q22.44 55.8 21.66 100 Z"/></svg>
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:138px;--h:126px;--op:0.47;--dur:3.75s;--d:-1.22s;--amp:2.2deg"><path d="M18.27 100 Q20.85 40.5 30 4 Q24.52 55.8 21.73 100 Z"/></svg>
+         style="--x:30px;--h:78px;--op:0.55;--dur:4.78s;--d:-3.65s;--amp:1.8deg"><path d="M18.3 100 Q16.73 40.5 7 4 Q16.68 55.8 21.7 100 Z"/></svg>
   
     <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
-         style="--x:28px;--h:110px;--op:0.49;--dur:6.07s;--d:-2.07s;--amp:2.8deg"><path d="M18.54 100 Q18.84 40.5 18 4 Q20.27 55.8 21.46 100 Z"/></svg>
+         style="--x:28px;--h:112px;--op:0.39;--dur:5.72s;--d:-3.21s;--amp:2.9deg"><path d="M18.26 100 Q17.96 40.5 14 4 Q19.09 55.8 21.74 100 Z"/></svg>
+  
+    <svg class="sprig" viewBox="0 0 40 100" preserveAspectRatio="none" aria-hidden="true"
+         style="--x:70px;--h:72px;--op:0.49;--dur:4.82s;--d:-4.99s;--amp:1.6deg"><path d="M18.51 100 Q19.72 40.5 23 4 Q21.99 55.8 21.49 100 Z"/></svg>
   
   
-    <i class="petal" style="--x:34px;--size:14px;--dur:20.3s;--d:-1.3s;--spin:320deg;--drift:-28px"></i>
+    <i class="petal" style="--x:108px;--size:7px;--dur:16.2s;--d:-13.9s;--spin:-240deg;--drift:-25px"></i>
   
-    <i class="petal" style="--x:52px;--size:11px;--dur:19.3s;--d:-14.2s;--spin:-300deg;--drift:-26px"></i>
+    <i class="petal" style="--x:40px;--size:12px;--dur:17.4s;--d:-7.4s;--spin:-300deg;--drift:-12px"></i>
   
 </div>
 <div class="side-night">
   
-    <i class="spark" style="--x:166px;--y:44.1%;--s:2.0px;--dur:2.84s;--d:-5.33s"></i>
+    <i class="spark" style="--x:30px;--y:33.5%;--s:3.3px;--dur:5.21s;--d:-1.64s"></i>
   
-    <i class="spark" style="--x:148px;--y:86.0%;--s:2.2px;--dur:4.7s;--d:-2.81s"></i>
+    <i class="spark" style="--x:104px;--y:67.1%;--s:2.1px;--dur:4.98s;--d:-3.57s"></i>
   
-    <i class="spark" style="--x:136px;--y:57.6%;--s:2.4px;--dur:5.35s;--d:-4.09s"></i>
+    <i class="spark" style="--x:92px;--y:53.4%;--s:2.5px;--dur:4.79s;--d:-1.48s"></i>
   
-    <i class="spark" style="--x:102px;--y:33.4%;--s:2.3px;--dur:5.1s;--d:-3.12s"></i>
-  
-    <i class="spark" style="--x:36px;--y:70.5%;--s:2.9px;--dur:2.92s;--d:-5.16s"></i>
+    <i class="spark" style="--x:22px;--y:53.6%;--s:2.3px;--dur:2.82s;--d:-1.73s"></i>
   
 </div>
 
 </div>
 
 <main class="reading-main">
-  <a href="/" class="back-link">← Về vườn thơ</a>
+  <a href="/tuyen-tap/" class="back-link">← Tất cả tuyển tập</a>
 
-  
   <nav class="breadcrumb" aria-label="Đường dẫn">
     <a href="/">Trang chủ</a> ›
-    <a href="/the-loai/da-dang/">đa dạng :o</a> ›
-    <span aria-current="page">Tự thân</span>
+    <a href="/tuyen-tap/">Tuyển tập</a> ›
+    <span aria-current="page">Thơ về đóng quỹ</span>
   </nav>
 
-  <article class="reading-frame">
+  <article class="reading-frame col-frame">
     <span class="corner-orn corner-orn--tl" aria-hidden="true">
 <svg viewBox="0 0 64 64" aria-hidden="true">
   
-    <path d="M4 24 A20 20 0 0 1 24 4"/>
-    <path d="M4 38 A34 34 0 0 1 38 4"/>
-    <path d="M4 52 A48 48 0 0 1 52 4"/>
+    <path d="M5 5 Q30 5 30 26 Q30 43 15.5 43 Q5 43 5 32.5 Q5 24 14 24 Q20.5 24 20.5 30.5"/>
+    <circle class="dot" cx="45" cy="12" r="2"/>
+    <circle class="dot" cx="12" cy="52" r="1.6"/>
+    <circle class="dot" cx="40" cy="40" r="1.3"/>
   
 </svg>
 </span>
     <span class="corner-orn corner-orn--br" aria-hidden="true">
 <svg viewBox="0 0 64 64" aria-hidden="true">
   
-    <path d="M4 24 A20 20 0 0 1 24 4"/>
-    <path d="M4 38 A34 34 0 0 1 38 4"/>
-    <path d="M4 52 A48 48 0 0 1 52 4"/>
+    <path d="M5 5 Q30 5 30 26 Q30 43 15.5 43 Q5 43 5 32.5 Q5 24 14 24 Q20.5 24 20.5 30.5"/>
+    <circle class="dot" cx="45" cy="12" r="2"/>
+    <circle class="dot" cx="12" cy="52" r="1.6"/>
+    <circle class="dot" cx="40" cy="40" r="1.3"/>
   
 </svg>
 </span>
     <div class="poem-meta">
-      <span class="category-tag">đa dạng :o</span>
-      <span class="poem-date">30 tháng 04, 2026</span>
+      <span class="category-tag">Tuyển tập</span>
+      <span class="col-count">8 bài thơ</span>
       <button class="poem-meta__share" type="button" id="shareBtn"
-              data-title="Tự thân"
-              data-url="https://thocuacoxanh.vn/tho/tu-than/">Chia sẻ</button>
+              data-title="Thơ về đóng quỹ"
+              data-url="https://thocuacoxanh.vn/tuyen-tap/tho-ve-ong-quy/">Chia sẻ</button>
     </div>
 
-    <h1 class="poem-title-detail" style="view-transition-name: poem-tu-than;">Tự thân</h1>
+    <h1 class="poem-title-detail">Thơ về đóng quỹ</h1>
+
+    
+      <div class="col-cats">
+        <a href="/the-loai/vui-vui/">vui vui :)</a>
+      </div>
+    
+
+    
+      <div class="col-text col-text--intro"><p>Hồi ở công ty, tình cờ họ đc giao làm thủ quỹ, do không biết phải làm sao đê mọi người tự giác nên mỗi cuối tháng thường làm 1 bài thơ để mọi người biết :D haha...</p></div>
     
 
     <div class="decorative-line" aria-hidden="true">
 <svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
   
+    <path d="M4 8 H47"/><path d="M73 8 H116"/>
+    <circle class="dot" cx="60" cy="8" r="2.8"/>
+  
+</svg>
+</div>
+
+    
+      
+      <nav class="col-toc" aria-labelledby="col-toc-h">
+        <p class="col-toc__label" id="col-toc-h">Mục lục · 8 bài</p>
+        <ol>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-1-nam-2025-1"><span class="col-toc__num">01</span>Thông báo đóng quỹ tháng 1 năm 2025</a></li>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-2-nam-2025"><span class="col-toc__num">02</span>Thông báo đóng quỹ tháng 2 năm 2025</a></li>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-4-nam-2025"><span class="col-toc__num">03</span>Thông báo đóng quỹ tháng 4 năm 2025</a></li>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-5-nam-2025"><span class="col-toc__num">04</span>Thông báo đóng quỹ tháng 5 năm 2025</a></li>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-6-nam-2025"><span class="col-toc__num">05</span>Thông báo đóng quỹ tháng 6 năm 2025</a></li>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-7-nam-2025"><span class="col-toc__num">06</span>Thông báo đóng quỹ tháng 7 năm 2025</a></li>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-7-nam-2025-khong-ang"><span class="col-toc__num">07</span>Thông báo đóng quỹ tháng 7 năm 2025 - không đăng</a></li>
+          
+            <li><a href="/tuyen-tap/tho-ve-ong-quy/index.html#thong-bao-ong-quy-thang-8-nam-2025"><span class="col-toc__num">08</span>Thông báo đóng quỹ tháng 8 năm 2025</a></li>
+          
+        </ol>
+      </nav>
+
+      
+        
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-1-nam-2025-1" data-palette="hong-phan" aria-labelledby="h-thong-bao-ong-quy-thang-1-nam-2025-1">
+          <p class="col-piece__num">Bài 01</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-1-nam-2025-1"><a href="/tho/thong-bao-ong-quy-thang-1-nam-2025-1/">Thông báo đóng quỹ tháng 1 năm 2025</a></h2>
+          <p class="col-piece__sub">Muốn làm một chút gì đó thơ nhân dịp đầu năm, sẵn tiện mình vừa được giao làm thủ quỹ, làm luôn bài thơ mơi mơi đóng tiền mới được :)))</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Mỗi năm hoa đào nở 🌷</p><p>Lại thấy màu xuân về 🌞</p><p>Không khí tết tràn trề 😁</p><p>Hãy đóng quỹ ngay đê 💰</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-1-nam-2025-1/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
+      
+        
+        
+          <div class="col-sep" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <path d="M6 8 Q21 1 36 8 Q51 15 66 8 Q81 1 96 8 Q107 13.5 114 9.5"/>
+  
+</svg>
+</div>
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-2-nam-2025" data-palette="oai-huong" aria-labelledby="h-thong-bao-ong-quy-thang-2-nam-2025">
+          <p class="col-piece__num">Bài 02</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-2-nam-2025"><a href="/tho/thong-bao-ong-quy-thang-2-nam-2025/">Thông báo đóng quỹ tháng 2 năm 2025</a></h2>
+          <p class="col-piece__sub">Tháng 2 đến nhanh quá, mùa xuân vẫn đang rộn ràng, thông báo đóng quỹ thôi</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Xuân đến, xuân về, xuân lại đi 🌻</p><p>Xuân qua còn nhớ mong làm gì 😘</p><p>Tiếng xuân trong nắng đang thầm thì ☀️</p><p>Chi bằng đóng quỹ tháng 2 đi 💰</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-2-nam-2025/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
+      
+        
+        
+          <div class="col-sep" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <path d="M4 8 H47"/><path d="M73 8 H116"/>
+    <circle class="dot" cx="60" cy="8" r="2.8"/>
+  
+</svg>
+</div>
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-4-nam-2025" data-palette="co-xanh" aria-labelledby="h-thong-bao-ong-quy-thang-4-nam-2025">
+          <p class="col-piece__num">Bài 03</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-4-nam-2025"><a href="/tho/thong-bao-ong-quy-thang-4-nam-2025/">Thông báo đóng quỹ tháng 4 năm 2025</a></h2>
+          <p class="col-piece__sub">Tháng trước mình bận nên không thời gian thông báo, tháng này thông báo thì mùa xuân đã qua đi, mùa xuân được nghỉ tết đã qua nên hơi luối tiếc. Mùa Hạ đến rồi</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Xuân đi qua mau, Hạ đến thay màu 🍀</p><p>Tiếng ve đang đến, tiếng chim còn dư 🕊</p><p>Nắng chiều chiếu rọi ánh sáng từ từ ☀️</p><p>Như hỏi sao chưa đóng quỹ tháng tư 🙄</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-4-nam-2025/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
+      
+        
+        
+          <div class="col-sep" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
     <path d="M2 8 H37"/><path d="M83 8 H118"/>
     <path d="M60 8 Q48 -1 37 8 Q48 17 60 8 Z"/>
     <path d="M60 8 Q72 -1 83 8 Q72 17 60 8 Z"/>
@@ -2576,146 +2930,210 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
   
 </svg>
 </div>
-
-    <div class="poem-stanzas has-dropcap" id="poem-stanzas">
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-5-nam-2025" data-palette="oai-huong" aria-labelledby="h-thong-bao-ong-quy-thang-5-nam-2025">
+          <p class="col-piece__num">Bài 04</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-5-nam-2025"><a href="/tho/thong-bao-ong-quy-thang-5-nam-2025/">Thông báo đóng quỹ tháng 5 năm 2025</a></h2>
+          <p class="col-piece__sub">Tháng 5 này nắng nóng quá, mình vẫn chưa quen lắm. Thôi thì thông báo đóng quỹ thôi</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Tháng năm nắng chói chang ☀️</p><p>Chiếu rọi khung cửa ngang 🌤</p><p>Đêm qua mau đến sáng 💫</p><p>Nắng nóng chiếm không gian 🔥</p><p>Mát mẻ chợt biến tan 🥵</p><p>Như tiền quỹ hàng tháng 💰</p><p>Chưa được đóng hoàn toàn 🎯</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-5-nam-2025/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
       
-        <div class="stanza">
-          <p>Phút giây gần tới chia tay</p><p>Còn đâu những lúc dở hay đỡ đần</p><p>Đành thôi cố gắng tự thân</p><p>Biết rằng việc khó vài lần thử qua</p><p>Đến nơi người đã đi xa</p><p>Kiếm thêm quả ngọt cây hoa đâm chồi</p>
-        </div>
+        
+        
+          <div class="col-sep" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <path d="M6 8 Q21 1 36 8 Q51 15 66 8 Q81 1 96 8 Q107 13.5 114 9.5"/>
+  
+</svg>
+</div>
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-6-nam-2025" data-palette="oai-huong" aria-labelledby="h-thong-bao-ong-quy-thang-6-nam-2025">
+          <p class="col-piece__num">Bài 05</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-6-nam-2025"><a href="/tho/thong-bao-ong-quy-thang-6-nam-2025/">Thông báo đóng quỹ tháng 6 năm 2025</a></h2>
+          <p class="col-piece__sub">Tháng này mưa nhiều quá, mình đi làm hay dính mưa, thông báo đóng quỹ tháng này thôi</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Tháng Sáu của những cơn mưa dào 🌧</p><p>Trời đen sầm sì mưa rơi ào ào 🌚</p><p>Nước trôi nhanh ngập cả bờ ao 🌊</p><p>Tiếng gió thổi như thét gào 💨</p><p>Làm ta tự hỏi đóng quỹ khó vậy sao 🤔</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-6-nam-2025/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
       
-    </div>
+        
+        
+          <div class="col-sep" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <circle class="dot" cx="44" cy="8" r="2.2"/>
+    <circle class="dot" cx="60" cy="8" r="3.2"/>
+    <circle class="dot" cx="76" cy="8" r="2.2"/>
+  
+</svg>
+</div>
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-7-nam-2025" data-palette="bien" aria-labelledby="h-thong-bao-ong-quy-thang-7-nam-2025">
+          <p class="col-piece__num">Bài 06</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-7-nam-2025"><a href="/tho/thong-bao-ong-quy-thang-7-nam-2025/">Thông báo đóng quỹ tháng 7 năm 2025</a></h2>
+          <p class="col-piece__sub">Tháng này mưa bão to quá, mong tháng sau ổn ổn hơn. Nhưng gì thì cũng phải thông báo đóng quỹ thôi</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Tháng Bảy mưa to gió lớn ⛈</p><p>Mây đen sóng đánh từng cơn ☁️</p><p>Gió bão thổi đến lạnh ớn 💨</p><p>Làm lòng người thấy gờn gợn 😰</p><p>Như thể phải đóng quỹ nhiều hơn 🤑</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-7-nam-2025/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
+      
+        
+        
+          <div class="col-sep" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <circle class="dot" cx="44" cy="8" r="2.2"/>
+    <circle class="dot" cx="60" cy="8" r="3.2"/>
+    <circle class="dot" cx="76" cy="8" r="2.2"/>
+  
+</svg>
+</div>
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-7-nam-2025-khong-ang" data-palette="mint" aria-labelledby="h-thong-bao-ong-quy-thang-7-nam-2025-khong-ang">
+          <p class="col-piece__num">Bài 07</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-7-nam-2025-khong-ang"><a href="/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/">Thông báo đóng quỹ tháng 7 năm 2025 - không đăng</a></h2>
+          <p class="col-piece__sub">Tháng 7 mình đã viết 1 bài thơ lúc đầu tháng để sẵn để cuối tháng đăng, nhưng đến lúc cuối tháng mưa to quá, nó lại không giống nội dung bài thơ nên đành viết 1 bài khác.</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Tháng Bảy mưa thuận gió hòa 🌞</p><p>Nắng dịu nhẹ làn gió thổi qua ✨</p><p>Làm tán cây đung đưa cành lá 🌳</p><p>Đóng tiền quỹ ăn hương ăn hoa 💐</p><p>Để tiền quỹ đầy như cây ra quả 🌴</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
+      
+        
+        
+          <div class="col-sep" aria-hidden="true">
+<svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
+  
+    <circle class="dot" cx="44" cy="8" r="2.2"/>
+    <circle class="dot" cx="60" cy="8" r="3.2"/>
+    <circle class="dot" cx="76" cy="8" r="2.2"/>
+  
+</svg>
+</div>
+        
+        <section class="col-piece" id="thong-bao-ong-quy-thang-8-nam-2025" data-palette="bien" aria-labelledby="h-thong-bao-ong-quy-thang-8-nam-2025">
+          <p class="col-piece__num">Bài 08</p>
+          <h2 class="col-piece__title" id="h-thong-bao-ong-quy-thang-8-nam-2025"><a href="/tho/thong-bao-ong-quy-thang-8-nam-2025/">Thông báo đóng quỹ tháng 8 năm 2025</a></h2>
+          <p class="col-piece__sub">Tháng 8 mưa bão quá, mong cho mọi người đều bình yên. Cơ mà vẫn phải thông báo đóng quỹ thôi.</p>
+          <div class="poem-stanzas col-piece__stanzas">
+            
+              <div class="stanza"><p>Tháng Tám như cơn bão vụt qua 🌊</p><p>Làm nước dâng nên ngập cả nhà 💧</p><p>Cây cối nghiêng ngả rơi cành lá 🍃</p><p>Lương về như cây ra hoa 🌷</p><p>Đóng thêm tiền quỹ để hoa ra quả 🌱</p><p>[Link danh sách đóng quỹ]</p></div>
+            
+          </div>
+          <div class="col-piece__foot">
+            <a class="col-piece__cat" href="/the-loai/da-dang/">đa dạng :o</a>
+            <a class="col-piece__open" href="/tho/thong-bao-ong-quy-thang-8-nam-2025/">Đọc riêng bài này <span aria-hidden="true">→</span></a>
+            <a class="col-piece__top" href="/tuyen-tap/tho-ve-ong-quy/index.html#col-toc-h">↑ Mục lục</a>
+          </div>
+        </section>
+        
+      
+    
 
     <div class="poem-footer-detail">
       <div class="decorative-line decorative-line--end" aria-hidden="true">
 <svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
   
-    <path d="M2 8 H37"/><path d="M83 8 H118"/>
-    <path d="M60 8 Q48 -1 37 8 Q48 17 60 8 Z"/>
-    <path d="M60 8 Q72 -1 83 8 Q72 17 60 8 Z"/>
-    <circle class="dot" cx="60" cy="8" r="1.5"/>
+    <path d="M4 8 H47"/><path d="M73 8 H116"/>
+    <circle class="dot" cx="60" cy="8" r="2.8"/>
   
 </svg>
 </div>
+      
+        <div class="col-text col-text--outro"><p>Giờ đã làm ở công ty khác rồi mà vẫn còn nhớ phết :D</p></div>
+      
       <p class="signature">— Cỏ Xanh</p>
+      
     </div>
   </article>
 
-  <nav class="poem-nav" aria-label="Chuyển bài thơ">
-    
-      <a class="poem-nav__prev" href="/tho/ruou-say/" rel="prev">
-        <span class="poem-nav__arrow" aria-hidden="true">&laquo;</span>
-        <span class="poem-nav__text">
-          <span class="poem-nav__label">Bài trước</span>
-          <span class="poem-nav__title">Rượu say</span>
-        </span>
-      </a>
-    
-    
-      <a class="poem-nav__next" href="/tho/moi-gap/" rel="next">
-        <span class="poem-nav__text">
-          <span class="poem-nav__label">Bài sau</span>
-          <span class="poem-nav__title">Mới gặp</span>
-        </span>
-        <span class="poem-nav__arrow" aria-hidden="true">&raquo;</span>
-      </a>
-    
-  </nav>
-
   
-
-  
-  <section class="related" aria-labelledby="related-h">
-    <h2 id="related-h">Cùng mạch cảm xúc</h2>
+  <section class="col-more" aria-labelledby="col-more-h">
+    <h2 id="col-more-h">Tuyển tập khác</h2>
     <div class="section-orn" aria-hidden="true">
 <svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
   
-    <path d="M2 8 H37"/><path d="M83 8 H118"/>
-    <path d="M60 8 Q48 -1 37 8 Q48 17 60 8 Z"/>
-    <path d="M60 8 Q72 -1 83 8 Q72 17 60 8 Z"/>
-    <circle class="dot" cx="60" cy="8" r="1.5"/>
+    <path d="M4 8 H47"/><path d="M73 8 H116"/>
+    <circle class="dot" cx="60" cy="8" r="2.8"/>
   
 </svg>
 </div>
-    <ul class="related__list">
+    <div class="col-grid">
       
-        <li>
-          <a href="/tho/som-ong/">
-            <span class="related__title">Sớm đông</span>
-            <span class="related__excerpt">Mới đó đã đến mùa đông</span>
-            <span class="related__go">đọc tiếp <span aria-hidden="true">→</span></span>
-          </a>
-        </li>
-      
-        <li>
-          <a href="/tho/ngay-ngo/">
-            <span class="related__title">Ngây ngô</span>
-            <span class="related__excerpt">Đôi khi chỉ muốn nhẹ đi một chút...</span>
-            <span class="related__go">đọc tiếp <span aria-hidden="true">→</span></span>
-          </a>
-        </li>
-      
-        <li>
-          <a href="/tho/phai/">
-            <span class="related__title">Phai</span>
-            <span class="related__excerpt">Thoáng nhớ về nhưng tình cảm đã qua...</span>
-            <span class="related__go">đọc tiếp <span aria-hidden="true">→</span></span>
-          </a>
-        </li>
-      
-        <li>
-          <a href="/tho/en/">
-            <span class="related__title">Đèn</span>
-            <span class="related__excerpt">Một chuyện tốt, nhẽ ra nên vui thay vì cảm thấy chẳng vui đ…</span>
-            <span class="related__go">đọc tiếp <span aria-hidden="true">→</span></span>
-          </a>
-        </li>
-      
-    </ul>
-    
-      <a class="related__more" href="/the-loai/da-dang/">Xem tất cả thơ đa dạng :o →</a>
-    
-  </section>
-  
 
+<a class="col-card" href="/tuyen-tap/tho-tinh-yeu-nhe-nhang-ngot-ngao-nao-nao/" data-palette="hong-phan">
+  <span class="col-card__spine" aria-hidden="true"></span>
+  <span class="col-card__orn" aria-hidden="true">
+<svg viewBox="0 0 64 64" aria-hidden="true">
   
-  <section class="discover" aria-labelledby="discover-h">
-    <h2 id="discover-h">Có thể bạn muốn đọc</h2>
-    <div class="section-orn" aria-hidden="true">
+    <path d="M5 5 Q21 25 13 53"/>
+    <path d="M5 5 Q25 21 53 13"/>
+    <path d="M5 5 Q25 27 39 39"/>
+    <path d="M5 5 Q12 21 6 33"/>
+    <path d="M5 5 Q21 12 33 6"/>
+  
+</svg>
+</span>
+  <span class="col-card__eyebrow"><span>Tuyển tập</span><span>10 bài thơ</span></span>
+  <h3 class="col-card__name">Thơ tình yêu nhẹ nhàng, ngọt ngào, nao nao</h3>
+  <span class="col-card__rule" aria-hidden="true">
 <svg viewBox="0 0 120 16" width="120" height="16" aria-hidden="true">
   
-    <path d="M2 8 H37"/><path d="M83 8 H118"/>
-    <path d="M60 8 Q48 -1 37 8 Q48 17 60 8 Z"/>
-    <path d="M60 8 Q72 -1 83 8 Q72 17 60 8 Z"/>
-    <circle class="dot" cx="60" cy="8" r="1.5"/>
+    <path d="M2 8 H44"/><path d="M76 8 H118"/>
+    <path d="M60 1.4 L66.6 8 L60 14.6 L53.4 8 Z"/>
+    <circle class="dot" cx="48.5" cy="8" r="1.2"/>
+    <circle class="dot" cx="71.5" cy="8" r="1.2"/>
   
 </svg>
-</div>
-    <ul>
-      
-        <li><a href="/tho/nang/">
-          <span class="discover__leaf" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2.5 13.5 Q2.5 4 13.5 2.5 Q12.5 12.5 2.5 13.5 Z"/><path d="M3.5 12.5 Q7.5 8.5 11.5 5.5"/></svg></span>
-          <span class="discover__name">Nàng</span>
-          <em>tình yêu &lt;3</em>
-        </a></li>
-      
-        <li><a href="/tho/nho-em/">
-          <span class="discover__leaf" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2.5 13.5 Q2.5 4 13.5 2.5 Q12.5 12.5 2.5 13.5 Z"/><path d="M3.5 12.5 Q7.5 8.5 11.5 5.5"/></svg></span>
-          <span class="discover__name">Nhớ em</span>
-          <em>tình yêu &lt;3</em>
-        </a></li>
-      
-        <li><a href="/tho/anh-mong/">
-          <span class="discover__leaf" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2.5 13.5 Q2.5 4 13.5 2.5 Q12.5 12.5 2.5 13.5 Z"/><path d="M3.5 12.5 Q7.5 8.5 11.5 5.5"/></svg></span>
-          <span class="discover__name">Anh mong</span>
-          <em>vui vui :)</em>
-        </a></li>
-      
-    </ul>
+</span>
+  <p class="col-card__intro">Tình cảm có lúc vui lúc buồn, lúc làm người ta nhơ nhung day dứt, lúc lại chỉ muốn thoát ra chính thứ tình cảm ấy...</p>
+  
+    <span class="col-card__cats"><span>tình yêu &lt;3</span></span>
+  
+  <span class="col-card__cta">Mở tuyển tập <span aria-hidden="true">→</span></span>
+</a>
+
+
+    </div>
   </section>
   
 
   <nav class="poem-footer-nav">
-    <a href="/">← Tất cả bài thơ</a>
+    <a href="/tuyen-tap/">← Tất cả tuyển tập</a>
     <a class="poem-footer-nav__random" href="/ngau-nhien/">🍀 Một bài thơ ngẫu nhiên</a>
   </nav>
 </main>
@@ -2726,28 +3144,28 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Poem",
-  "name": "Tự thân",
-  "headline": "Tự thân",
+  "@type": "CollectionPage",
+  "name": "Thơ về đóng quỹ",
+  "description": "Hồi ở công ty, tình cờ họ đc giao làm thủ quỹ, do không biết phải làm sao đê mọi người tự giác nên mỗi cuối tháng thường làm 1 bài thơ để mọi người biết :D haha...",
   "inLanguage": "vi-VN",
-  "url": "https://thocuacoxanh.vn/tho/tu-than/",
-  "datePublished": "2026-04-30T16:37:39+00:00",
-  "dateModified": "2026-04-30T16:38:39.696483+00:00",
-  "author": {
-    "@type": "Person",
-    "name": "Cỏ Xanh",
-    "url": "https://thocuacoxanh.vn/about/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Thơ của Cỏ Xanh",
-    "url": "https://thocuacoxanh.vn/"
-  },
-  "genre": "thơ",
-  "keywords": "thơ tự thân, thơ về tự lập, thơ chia tay, thơ động viên, thơ hay, thơ buồn, cảm xúc",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://thocuacoxanh.vn/tho/tu-than/"
+  "url": "https://thocuacoxanh.vn/tuyen-tap/tho-ve-ong-quy/",
+  "datePublished": "2026-10-03T03:33:52+00:00",
+  "dateModified": "2026-10-03T03:37:10.378559+00:00",
+  "author": {"@type": "Person", "name": "Cỏ Xanh", "url": "https://thocuacoxanh.vn/about/"},
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": 8,
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 1 năm 2025", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-1-nam-2025-1/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}},
+      {"@type": "ListItem", "position": 2, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 2 năm 2025", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-2-nam-2025/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}},
+      {"@type": "ListItem", "position": 3, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 4 năm 2025", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-4-nam-2025/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}},
+      {"@type": "ListItem", "position": 4, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 5 năm 2025", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-5-nam-2025/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}},
+      {"@type": "ListItem", "position": 5, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 6 năm 2025", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-6-nam-2025/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}},
+      {"@type": "ListItem", "position": 6, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 7 năm 2025", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-7-nam-2025/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}},
+      {"@type": "ListItem", "position": 7, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 7 năm 2025 - không đăng", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-7-nam-2025-khong-ang/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}},
+      {"@type": "ListItem", "position": 8, "item": {"@type": "Poem", "name": "Thông báo đóng quỹ tháng 8 năm 2025", "url": "https://thocuacoxanh.vn/tho/thong-bao-ong-quy-thang-8-nam-2025/", "author": {"@type": "Person", "name": "Cỏ Xanh"}, "inLanguage": "vi-VN"}}
+      
+    ]
   }
 }
 </script>
@@ -2756,13 +3174,12 @@ body:has(.reading-page[data-palette='bien'])      .masthead { --nav-h: 240; --na
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://thocuacoxanh.vn/"}
-    
-    ,{"@type": "ListItem", "position": 2, "name": "Tự thân"}
+    {"@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://thocuacoxanh.vn/"},
+    {"@type": "ListItem", "position": 2, "name": "Tuyển tập", "item": "https://thocuacoxanh.vn/tuyen-tap/"},
+    {"@type": "ListItem", "position": 3, "name": "Thơ về đóng quỹ"}
   ]
 }
 </script>
-
 
 
   <footer class="footer">
@@ -3184,47 +3601,10 @@ setInterval(() => {
 // ── Reading progress bar ──
 const progressBar = document.getElementById('readingProgress');
 window.addEventListener('scroll', () => {
-  const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
   progressBar.style.width = `${Math.min(progress, 100)}%`;
 }, { passive: true });
-
-// ── Fade-in stanzas (progressive enhancement, poem already renders without JS) ──
-(() => {
-  const stanzas = document.querySelectorAll('.stanza');
-  if (!stanzas.length || !('IntersectionObserver' in window)) return;
-
-  document.documentElement.classList.add('js-anim');
-
-  const reveal = el => el.classList.add('visible');
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const i = Array.prototype.indexOf.call(el.parentNode.children, el);
-      el.style.transitionDelay = `${Math.min(i, 6) * 0.09}s`;
-      reveal(el);
-      io.unobserve(el);
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
-
-  stanzas.forEach(s => io.observe(s));
-
-  setTimeout(() => stanzas.forEach(reveal), 2000);
-})();
-
-// ── Điều hướng bằng phím mũi tên ──
-(() => {
-  const prev = document.querySelector('.poem-nav__prev')?.href;
-  const next = document.querySelector('.poem-nav__next')?.href;
-  document.addEventListener('keydown', e => {
-    if (e.target.matches('input, textarea')) return;
-    if (e.key === 'ArrowLeft' && prev) location.href = prev;
-    if (e.key === 'ArrowRight' && next) location.href = next;
-  });
-})();
 
 // ── Chia sẻ (Web Share API, fallback copy link) ──
 document.getElementById('shareBtn')?.addEventListener('click', async function () {
@@ -3239,35 +3619,6 @@ document.getElementById('shareBtn')?.addEventListener('click', async function ()
     } catch (e) {}
   }
 });
-
-// ── Đo mức độ giữ chân (đã có gtag.js sẵn trong base.html) ──
-(() => {
-  const body = document.querySelector('.poem-stanzas');
-  if (body && 'IntersectionObserver' in window && typeof gtag === 'function') {
-    new IntersectionObserver(([entry], obs) => {
-      if (entry.isIntersecting) {
-        gtag('event', 'poem_read_complete', { poem: document.title });
-        obs.disconnect();
-      }
-    }, { threshold: 1.0 }).observe(body);
-  }
-
-  document.querySelectorAll('.related a, .poem-nav a, .discover a, .poem-footer-nav__random').forEach(a => {
-    a.addEventListener('click', () => {
-      if (typeof gtag === 'function') {
-        gtag('event', 'poem_to_poem', { from: location.pathname, to: a.pathname });
-      }
-    });
-  });
-
-  try {
-    const n = (+sessionStorage.getItem('tcx:count') || 0) + 1;
-    sessionStorage.setItem('tcx:count', n);
-    if (typeof gtag === 'function' && (n === 3 || n === 5)) {
-      gtag('event', `engaged_reader_${n}`);
-    }
-  } catch (e) {}
-})();
 </script>
 
 
